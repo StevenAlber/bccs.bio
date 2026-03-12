@@ -191,6 +191,14 @@ header {
 /* ===== SECTIONS ===== */
 section {
   padding: clamp(4rem, 8vh, 8rem) clamp(1.5rem, 8vw, 10rem);
+  overflow: hidden;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
 }
 
 .section-label {
@@ -305,6 +313,8 @@ section {
   display: flex;
   margin-top: 3rem;
   gap: 1px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .state-cell {
@@ -355,6 +365,7 @@ section {
 .asset-table {
   margin-top: 3rem;
   width: 100%;
+  min-width: 500px;
   border-collapse: collapse;
 }
 
@@ -436,6 +447,7 @@ section {
   font-size: 0.85rem;
   color: var(--bronze-light);
   margin-top: 1.2rem;
+  word-break: break-word;
 }
 
 /* ===== CTA ===== */
@@ -685,6 +697,7 @@ footer {
   <div class="section-label">Founding Oracle Program</div>
   <div class="section-title">Seven asset classes. Seven founding positions.</div>
   <p class="section-body">KRYONIS is accrediting one Founding Oracle Network per biological asset class. The first to verify becomes the global reference. The window closes December 31, 2026.</p>
+  <div class="table-wrap">
   <table class="asset-table">
     <thead>
       <tr>
@@ -739,6 +752,7 @@ footer {
       </tr>
     </tbody>
   </table>
+  </div>
 </section>
 
 <!-- FOUNDING -->
