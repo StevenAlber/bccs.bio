@@ -703,6 +703,70 @@
     margin: 0;
   }
 
+  /* ── DOCS GRID ── */
+  .docs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  .doc-card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    text-decoration: none;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+
+  .doc-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+  }
+
+  .doc-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--green-glow);
+    border: 1px solid var(--border-accent);
+    border-radius: 3px;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  .doc-icon {
+    font-size: 1.4rem;
+    color: var(--green);
+    margin-bottom: 0.8rem;
+  }
+
+  .doc-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+  }
+
+  .doc-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -732,6 +796,7 @@
     .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
     .token-grid { grid-template-columns: 1fr; }
     .token-card.featured { grid-column: span 1; }
+    .docs-grid { grid-template-columns: 1fr; }
     .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
     .tier-row.tier-header { display: none; }
     .tier-desc { grid-column: span 2; }
@@ -752,6 +817,7 @@
     <a href="#solution">Protocol</a>
     <a href="#tokenomics">Token</a>
     <a href="#sale">Node Sale</a>
+    <a href="#docs">Docs</a>
     <span class="nav-badge">BASE L2</span>
   </div>
 </nav>
@@ -1008,6 +1074,44 @@
       <h3>Deflationary Equilibrium</h3>
       <p>Full DePIN scaling across biomes. Institutional integration: sovereign wealth, reinsurance, ESG analytics. Daily agentic demand exceeds emissions.</p>
     </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ── DOCUMENTS ── -->
+<section id="docs">
+  <div class="section-tag fade-in">06 — Documents</div>
+  <h2 class="section-title fade-in">Protocol Documentation</h2>
+  <p class="section-desc fade-in">Full technical specifications, tokenomics, and strategic overview. All documents are versioned and maintained by KRYONIS.</p>
+
+  <div class="docs-grid fade-in">
+    <a href="BCCS_Tokenomics_Litepaper_v1.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">NEW</div>
+      <div class="doc-icon">&#9672;</div>
+      <h3>Tokenomics Litepaper v1.0</h3>
+      <p>$BCCS token utility, supply architecture, Genesis Validator License Sale, vesting schedules, and deflationary equilibrium model.</p>
+      <span class="doc-meta">PDF &middot; 8 pages &middot; March 2026</span>
+    </a>
+    <a href="BCCS_BAIN_ID_Specification_v1.2.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v1.2</div>
+      <div class="doc-icon">&#9670;</div>
+      <h3>BAIN ID Technical Specification</h3>
+      <p>Bio-Asset Identification Number format, 8-state lifecycle model, asset taxonomy, API schema, and validation rules.</p>
+      <span class="doc-meta">PDF &middot; 10 pages &middot; March 2026</span>
+    </a>
+    <a href="BCCS_Whitepaper_v1.1.pdf" target="_blank" class="doc-card">
+      <div class="doc-icon">&#9671;</div>
+      <h3>Whitepaper v1.1</h3>
+      <p>The Biological Control Plane &mdash; full protocol architecture, verification framework, and technical design.</p>
+      <span class="doc-meta">PDF &middot; March 2026</span>
+    </a>
+    <a href="BCCS_Executive_Brief_v1.pdf" target="_blank" class="doc-card">
+      <div class="doc-icon">&#9673;</div>
+      <h3>Executive Brief v1</h3>
+      <p>Two-minute strategic overview for institutional decision-makers, funds, and strategic partners.</p>
+      <span class="doc-meta">PDF &middot; March 2026</span>
+    </a>
   </div>
 </section>
 
