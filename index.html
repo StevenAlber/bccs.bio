@@ -1020,7 +1020,7 @@
   <p class="section-desc fade-in">The intersection of autonomous agents and planetary biology is empty. We are laying the concrete. Alpha tier opens exclusively to whitelisted partners.</p>
 
   <div class="waitlist-form fade-in">
-    <input type="email" id="waitlist-email" placeholder="your@email.com" aria-label="Email address">
+    <input type="email" id="waitlist-email" placeholder="your@email.com" aria-label="Email address" onkeydown="if(event.key==='Enter')handleWaitlist()">
     <button class="btn-primary" onclick="handleWaitlist()">Join Waitlist</button>
   </div>
   <p class="cta-note fade-in">We&rsquo;ll notify you when Alpha opens. No spam. Unsubscribe anytime.</p>
@@ -1054,17 +1054,54 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // ── Waitlist handler (placeholder — hook to your backend / Google Form / Typeform) ──
-  function handleWaitlist() {
-    const email = document.getElementById('waitlist-email').value.trim();
-    if (!email || !email.includes('@')) {
-      alert('Please enter a valid email address.');
+  // ── Waitlist handler via Formspree ──
+  // SETUP: 1) Go to formspree.io → Sign up → New Form
+  //        2) Copy your form ID (e.g. "xpwdbjkq")
+  //        3) Replace YOUR_FORM_ID below
+  const FORMSPREE_ID = 'xojkwqbg';
+
+  async function handleWaitlist() {
+    const input = document.getElementById('waitlist-email');
+    const btn = document.querySelector('.waitlist-form .btn-primary');
+    const email = input.value.trim();
+
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      input.style.borderColor = '#EF4444';
+      input.setAttribute('placeholder', 'Enter a valid email');
+      setTimeout(() => { input.style.borderColor = ''; input.setAttribute('placeholder', 'your@email.com'); }, 2000);
       return;
     }
-    // TODO: Replace with actual form submission (Typeform, Google Forms, or API)
-    // window.open(`https://docs.google.com/forms/d/YOUR_FORM_ID/viewform?usp=pp_url&entry.FIELD_ID=${encodeURIComponent(email)}`, '_blank');
-    alert('Thank you! You\'ve been added to the Genesis Validator waitlist. We\'ll be in touch.');
-    document.getElementById('waitlist-email').value = '';
+
+    // Loading state
+    btn.textContent = 'Submitting...';
+    btn.style.opacity = '0.7';
+    btn.style.pointerEvents = 'none';
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email, _subject: 'BCCS Genesis Waitlist', source: 'bccs.bio' })
+      });
+
+      if (res.ok) {
+        // Success — replace form with confirmation
+        const form = document.querySelector('.waitlist-form');
+        form.innerHTML = '<div style="text-align:center;padding:1rem 0;"><span style="color:#3ECF8E;font-size:1.4rem;margin-right:0.5rem;">&#10003;</span><span style="color:#E8EBE9;font-size:1rem;">You\'re on the list. We\'ll be in touch before Alpha opens.</span></div>';
+        document.querySelector('.cta-note').textContent = email;
+        document.querySelector('.cta-note').style.color = '#7A8580';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      btn.textContent = 'Join Waitlist';
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+      input.value = '';
+      input.setAttribute('placeholder', 'Something went wrong — try again');
+      input.style.borderColor = '#EF4444';
+      setTimeout(() => { input.style.borderColor = ''; input.setAttribute('placeholder', 'your@email.com'); }, 3000);
+    }
   }
 </script>
 
