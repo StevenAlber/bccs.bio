@@ -26,7 +26,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   font-family: 'IBM Plex Sans', sans-serif;
@@ -35,6 +35,7 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* ===== NOISE OVERLAY ===== */
@@ -547,14 +548,22 @@ footer {
   .state-bar { flex-wrap: wrap; }
   .state-cell { min-width: calc(25% - 1px); }
   .founding-grid { grid-template-columns: 1fr; }
+  .founding-card { padding: 1.5rem; }
   .header-nav { display: none; }
   .footer-right { display: none; }
+  .assets { overflow-x: hidden; }
+  .asset-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
 
 @media (max-width: 600px) {
   .arch-grid { grid-template-columns: 1fr; }
   .arch-grid .arch-card:last-child { grid-column: span 1; }
   .state-cell { min-width: calc(50% - 1px); }
+  .asset-table th, .asset-table td { padding: 0.8rem 0.6rem; font-size: 0.8rem; }
+  .asset-code { font-size: 0.75rem; }
+  .asset-status { font-size: 0.6rem; padding: 0.15rem 0.4rem; }
+  .founding-card { padding: 1.2rem; }
+  .founding-card-value { font-size: 0.75rem; }
 }
 </style>
 </head>
@@ -764,7 +773,7 @@ footer {
 <section class="cta-section" id="contact">
   <div class="cta-quote">The first infrastructure provider to build a verified, agent-operated pipeline for biological assets will capture a foundational position in what could become a multi-trillion dollar bioeconomy.</div>
   <p class="cta-body">The full protocol documentation suite — Whitepaper, BAIN ID Technical Specification, Partnership Framework, and Founding Oracle Pilot Proposal — is available under mutual NDA. One conversation is the first step.</p>
-  <a href="mailto:protocol@kryonis.global" class="cta-btn">Request Briefing</a>
+  <a href="/cdn-cgi/l/email-protection#6414160b100b070b08240f161d0b0a0d174a03080b060508" class="cta-btn">Request Briefing</a>
 </section>
 
 <!-- FOOTER -->
@@ -785,9 +794,3 @@ footer {
       <a href="#founding">Partnership</a>
       <a href="#contact">Request Briefing</a>
       <a href="https://kryonis.global">kryonis.global</a>
-    </div>
-  </div>
-</footer>
-
-</body>
-</html>
