@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCCS — Bio-Capital Classification Standard</title>
+<meta name="description" content="The Biological Control Plane. Global verification, policy, and state-transition protocol for biological capital in the age of autonomous systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest: #1B4D3E;
+  --forest-light: #2A6B56;
+  --bronze: #8B6914;
+  --bronze-light: #B8922E;
+  --graphite: #0A0C0E;
+  --surface: #111314;
+  --surface-2: #181A1C;
+  --surface-3: #1E2022;
+  --border: #2A2D30;
+  --text: #E8E6E3;
+  --text-dim: #8A8985;
+  --text-faint: #555550;
+  --white: #F5F4F0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--graphite);
+  color: var(--text);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== NOISE OVERLAY ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 12, 14, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--white);
+}
+
+.header-logo span { color: var(--forest-light); }
+
+.header-nav { display: flex; gap: 2rem; align-items: center; }
+
+.header-nav a {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.header-nav a:hover { color: var(--white); }
+
+.header-cta {
+  padding: 0.5rem 1.2rem;
+  background: var(--forest);
+  color: var(--white) !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.12em !important;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.header-cta:hover { background: var(--forest-light) !important; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(6rem, 12vh, 10rem) clamp(1.5rem, 8vw, 10rem);
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(ellipse at 80% 40%, rgba(27, 77, 62, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest-light);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--white);
+  max-width: 14ch;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--bronze-light);
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--text-dim);
+  max-width: 52ch;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.hero-meta-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.hero-meta-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: clamp(4rem, 8vh, 8rem) clamp(1.5rem, 8vw, 10rem);
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--forest-light);
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  max-width: 20ch;
+}
+
+.section-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+  max-width: 60ch;
+}
+
+/* ===== PROBLEM ===== */
+.problem {
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.problem-left { padding-top: 1rem; }
+.problem-right { padding-top: 1rem; }
+
+.problem-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.problem-stat:first-child { border-top: 1px solid var(--border); }
+
+.problem-stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  color: var(--bronze-light);
+}
+
+.problem-stat-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ===== ARCHITECTURE ===== */
+.arch {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.arch-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 3rem;
+}
+
+.arch-card {
+  background: var(--surface);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: background 0.3s;
+}
+
+.arch-card:hover { background: var(--surface-2); }
+
+.arch-card-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--forest-light);
+  letter-spacing: 0.15em;
+}
+
+.arch-card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  color: var(--white);
+}
+
+.arch-card-desc {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* ===== STATE ENGINE ===== */
+.states {
+  border-top: 1px solid var(--border);
+}
+
+.state-bar {
+  display: flex;
+  margin-top: 3rem;
+  gap: 1px;
+}
+
+.state-cell {
+  flex: 1;
+  padding: 1.2rem 0.8rem;
+  background: var(--surface);
+  border-top: 3px solid var(--forest);
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.state-cell:hover {
+  background: var(--surface-2);
+  border-top-color: var(--forest-light);
+}
+
+.state-cell.reversed { border-top-color: var(--bronze); }
+.state-cell.depleted { border-top-color: #6B2D2D; }
+
+.state-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.4rem;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.state-name {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 0.4rem;
+}
+
+.state-policy {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+
+/* ===== ASSET CLASSES ===== */
+.assets {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.asset-table {
+  margin-top: 3rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.asset-table th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-align: left;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.asset-table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  vertical-align: top;
+}
+
+.asset-table tr:hover td { color: var(--text); }
+
+.asset-code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--forest-light);
+  font-weight: 500;
+}
+
+.asset-status {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  display: inline-block;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+
+.asset-status.active { border-color: var(--forest); color: var(--forest-light); }
+
+/* ===== FOUNDING ===== */
+.founding {
+  border-top: 1px solid var(--border);
+}
+
+.founding-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  margin-top: 3rem;
+}
+
+.founding-card {
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.3s;
+}
+
+.founding-card:hover { border-color: var(--forest); }
+
+.founding-card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.founding-card-body {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.founding-card-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--bronze-light);
+  margin-top: 1.2rem;
+}
+
+/* ===== CTA ===== */
+.cta-section {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: clamp(5rem, 10vh, 10rem) clamp(1.5rem, 8vw, 10rem);
+}
+
+.cta-quote {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-style: italic;
+  color: var(--bronze-light);
+  max-width: 40ch;
+  margin: 0 auto 2rem;
+  line-height: 1.4;
+}
+
+.cta-body {
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  max-width: 50ch;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--forest);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: 1px solid var(--forest);
+}
+
+.cta-btn:hover {
+  background: transparent;
+  color: var(--forest-light);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem clamp(1.5rem, 8vw, 10rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.footer-left {}
+
+.footer-brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.footer-legal {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  line-height: 1.6;
+}
+
+.footer-right {
+  display: flex;
+  gap: 3rem;
+}
+
+.footer-col-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.8rem;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-bottom: 0.4rem;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--white); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .problem { grid-template-columns: 1fr; }
+  .arch-grid { grid-template-columns: repeat(2, 1fr); }
+  .arch-grid .arch-card:last-child { grid-column: span 2; }
+  .state-bar { flex-wrap: wrap; }
+  .state-cell { min-width: calc(25% - 1px); }
+  .founding-grid { grid-template-columns: 1fr; }
+  .header-nav { display: none; }
+  .footer-right { display: none; }
+}
+
+@media (max-width: 600px) {
+  .arch-grid { grid-template-columns: 1fr; }
+  .arch-grid .arch-card:last-child { grid-column: span 1; }
+  .state-cell { min-width: calc(50% - 1px); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">BCCS<span>.BIO</span></div>
+  <nav class="header-nav">
+    <a href="#architecture">Architecture</a>
+    <a href="#states">Protocol</a>
+    <a href="#assets">Asset Classes</a>
+    <a href="#founding">Founding Program</a>
+    <a href="#contact" class="header-cta">Request Briefing</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">The Biological Control Plane</div>
+  <h1>The missing layer between <em>autonomous agents</em> and biological capital</h1>
+  <p class="hero-sub">BCCS is the global verification, policy, and state-transition protocol that makes biological capital — forests, permafrost, soil, marine ecosystems — legible to autonomous systems. Not a token. Not a marketplace. Infrastructure.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-value">BAIN ID</span>
+      <span class="hero-meta-label">Immutable asset identifier</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-value">8 States</span>
+      <span class="hero-meta-label">Verification engine</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-value">7 Asset Classes</span>
+      <span class="hero-meta-label">Biological taxonomy</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-value">Machine-Readable</span>
+      <span class="hero-meta-label">Policy engine + API</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="problem-left">
+    <div class="section-label">The Problem</div>
+    <div class="section-title">The agentic economy has no bridge to biological reality</div>
+    <p class="section-body">Over 50 million machine-to-machine transactions have been processed. Agent wallets, payment rails, and policy engines are being built at extraordinary speed. But this entire infrastructure assumes digital assets — binary, deterministic, instantly verifiable. The majority of Earth's real economic value is biological, analog, and thermodynamically unstable.</p>
+  </div>
+  <div class="problem-right">
+    <div class="problem-stat">
+      <div class="problem-stat-value">$0</div>
+      <div class="problem-stat-desc">Biological assets currently verifiable by autonomous agents through standardized protocols.</div>
+    </div>
+    <div class="problem-stat">
+      <div class="problem-stat-value">50M+</div>
+      <div class="problem-stat-desc">Machine-to-machine transactions processed on digital-only rails. Zero on biological assets.</div>
+    </div>
+    <div class="problem-stat">
+      <div class="problem-stat-value">PDF Oracle</div>
+      <div class="problem-stat-desc">The current state of biological asset verification: manual audits, static certificates, months of latency. Architecturally incompatible with autonomous systems.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="arch" id="architecture">
+  <div class="section-label">Architecture</div>
+  <div class="section-title">Five components. One control plane.</div>
+  <p class="section-body">BCCS sits between biological reality and digital infrastructure. Every component is designed for machine consumption.</p>
+  <div class="arch-grid">
+    <div class="arch-card">
+      <div class="arch-card-num">01</div>
+      <div class="arch-card-title">BAIN ID</div>
+      <div class="arch-card-desc">Immutable Bio-Asset Identification Number. Like ISIN for securities — but for forests, permafrost, soil, and ecosystems. 21-character canonical format.</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-num">02</div>
+      <div class="arch-card-title">8-State Engine</div>
+      <div class="arch-card-desc">Formal state machine: Observed → Registered → Verified → Standardized → Insured → Final. Plus Reversed (degradation) and Depleted (terminal).</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-num">03</div>
+      <div class="arch-card-title">Oracle Network</div>
+      <div class="arch-card-desc">Accredited physical verification fabric. Credentialed scientists and sensor networks providing ground-truth attestation under protocol rules.</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-num">04</div>
+      <div class="arch-card-title">Policy Engine</div>
+      <div class="arch-card-desc">Machine-readable authorization layer. Tells autonomous agents what they may do with a bio-asset, in its current state, under what constraints.</div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-card-num">05</div>
+      <div class="arch-card-title">API Surface</div>
+      <div class="arch-card-desc">Standard endpoints for agent wallets, payment rails, treasury systems, insurance platforms, and sovereign registries. Infrastructure-agnostic.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATES -->
+<section class="states" id="states">
+  <div class="section-label">Protocol</div>
+  <div class="section-title">Eight states. Entropic by design.</div>
+  <p class="section-body">Biological tokens must mathematically degrade unless continuous verification confirms their state — and must die when the biology dies.</p>
+  <div class="state-bar">
+    <div class="state-cell depleted"><div class="state-num">00</div><div class="state-name">Depleted</div><div class="state-policy">Terminal. No action.</div></div>
+    <div class="state-cell"><div class="state-num">01</div><div class="state-name">Observed</div><div class="state-policy">Query only</div></div>
+    <div class="state-cell"><div class="state-num">02</div><div class="state-name">Registered</div><div class="state-policy">Informational</div></div>
+    <div class="state-cell"><div class="state-num">03</div><div class="state-name">Verified</div><div class="state-policy">Restricted</div></div>
+    <div class="state-cell"><div class="state-num">04</div><div class="state-name">Standardized</div><div class="state-policy">Standard txn</div></div>
+    <div class="state-cell"><div class="state-num">05</div><div class="state-name">Insured</div><div class="state-policy">Full authority</div></div>
+    <div class="state-cell"><div class="state-num">06</div><div class="state-name">Final</div><div class="state-policy">Unrestricted</div></div>
+    <div class="state-cell reversed"><div class="state-num">RV</div><div class="state-name">Reversed</div><div class="state-policy">Frozen. Re-verify.</div></div>
+  </div>
+</section>
+
+<!-- ASSET CLASSES -->
+<section class="assets" id="assets">
+  <div class="section-label">Founding Oracle Program</div>
+  <div class="section-title">Seven asset classes. Seven founding positions.</div>
+  <p class="section-body">KRYONIS is accrediting one Founding Oracle Network per biological asset class. The first to verify becomes the global reference. The window closes December 31, 2026.</p>
+  <table class="asset-table">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Asset Class</th>
+        <th>Target Jurisdictions</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="asset-code">PFRS</span></td>
+        <td>Permafrost Reserve</td>
+        <td>Russia, Canada, Norway</td>
+        <td><span class="asset-status active">Active discussions</span></td>
+      </tr>
+      <tr>
+        <td><span class="asset-code">FRCS</span></td>
+        <td>Forest Carbon System</td>
+        <td>Brazil, Indonesia, Canada</td>
+        <td><span class="asset-status active">Preliminary contact</span></td>
+      </tr>
+      <tr>
+        <td><span class="asset-code">SOIL</span></td>
+        <td>Soil Microbiome System</td>
+        <td>Kazakhstan, Australia, India</td>
+        <td><span class="asset-status">Exploratory</span></td>
+      </tr>
+      <tr>
+        <td><span class="asset-code">MARE</span></td>
+        <td>Marine Ecosystem</td>
+        <td>Norway, Indonesia, UAE</td>
+        <td><span class="asset-status">Early engagement</span></td>
+      </tr>
+      <tr>
+        <td><span class="asset-code">AGRI</span></td>
+        <td>Agricultural Production</td>
+        <td>Brazil, India, Kazakhstan</td>
+        <td><span class="asset-status">Multiple candidates</span></td>
+      </tr>
+      <tr>
+        <td><span class="asset-code">GENE</span></td>
+        <td>Genetic &amp; Biodiversity Resource</td>
+        <td>Brazil, South Africa, Japan</td>
+        <td><span class="asset-status">Methodology phase</span></td>
+      </tr>
+      <tr>
+        <td><span class="asset-code">BIOM</span></td>
+        <td>Biomass Energy Flow</td>
+        <td>Russia, Brazil, Sweden</td>
+        <td><span class="asset-status">Exploratory</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOUNDING -->
+<section class="founding" id="founding">
+  <div class="section-label">Engagement</div>
+  <div class="section-title">Built for institutions, not experiments</div>
+  <div class="founding-grid">
+    <div class="founding-card">
+      <div class="founding-card-title">Oracle Network Partner</div>
+      <div class="founding-card-body">National scientific societies, biotechnology associations, forestry services, and research institutions that provide physical ground-truth verification under BCCS accreditation.</div>
+      <div class="founding-card-value">Founding Pilot: USD 1.2M → Exclusive 5-year territorial rights</div>
+    </div>
+    <div class="founding-card">
+      <div class="founding-card-title">Integration Partner</div>
+      <div class="founding-card-body">Agent wallet providers, payment rail operators, oracle data networks, and enterprise treasury platforms that integrate BCCS state queries and policy enforcement.</div>
+      <div class="founding-card-value">USD 120K — 1.5M/year · Tiered API access</div>
+    </div>
+    <div class="founding-card">
+      <div class="founding-card-title">Sovereign Implementation</div>
+      <div class="founding-card-body">National governments and intergovernmental organizations implementing BCCS as the official classification and verification standard for biological capital.</div>
+      <div class="founding-card-value">USD 200K — 5M/year · Phased deployment</div>
+    </div>
+    <div class="founding-card">
+      <div class="founding-card-title">Strategic Advisory</div>
+      <div class="founding-card-body">Reinsurance companies, development banks, climate finance institutions, and industry consortia exploring BCCS integration for biological risk management.</div>
+      <div class="founding-card-value">USD 25K — 500K/year · Briefing to retained advisory</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-quote">The first infrastructure provider to build a verified, agent-operated pipeline for biological assets will capture a foundational position in what could become a multi-trillion dollar bioeconomy.</div>
+  <p class="cta-body">The full protocol documentation suite — Whitepaper, BAIN ID Technical Specification, Partnership Framework, and Founding Oracle Pilot Proposal — is available under mutual NDA. One conversation is the first step.</p>
+  <a href="mailto:protocol@kryonis.global" class="cta-btn">Request Briefing</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-brand">KRYONIS SOVEREIGN SYSTEMS LIMITED · HONG KONG</div>
+    <div class="footer-legal">© 2026 KRYONIS Sovereign Systems Limited. All rights reserved.<br>BCCS, BAIN ID, and The Biological Control Plane are proprietary standards of KRYONIS.</div>
+  </div>
+  <div class="footer-right">
+    <div class="footer-col">
+      <div class="footer-col-title">Protocol</div>
+      <a href="#architecture">Architecture</a>
+      <a href="#states">State Engine</a>
+      <a href="#assets">Asset Classes</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Engage</div>
+      <a href="#founding">Partnership</a>
+      <a href="#contact">Request Briefing</a>
+      <a href="https://kryonis.global">kryonis.global</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
