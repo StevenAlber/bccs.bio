@@ -3,925 +3,1070 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BCCS — Bio-Capital Classification Standard</title>
-<meta name="description" content="The Biological Control Plane. Global verification, policy, and state-transition protocol for biological capital in the age of autonomous systems.">
+<title>BCCS — The Biological Control Plane</title>
+<meta name="description" content="The First DePIN Control Plane for the Agentic Bioeconomy. Built on Base.">
+<meta property="og:title" content="BCCS — Biological Capital Control Standard">
+<meta property="og:description" content="The First DePIN Security Layer for the Agentic Bioeconomy. Proof-of-Physical-State consensus on Base L2.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bccs.bio">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --forest: #1B4D3E;
-  --forest-light: #2A6B56;
-  --bronze: #8B6914;
-  --bronze-light: #B8922E;
-  --graphite: #0A0C0E;
-  --surface: #111314;
-  --surface-2: #181A1C;
-  --surface-3: #1E2022;
-  --border: #2A2D30;
-  --text: #E8E6E3;
-  --text-dim: #8A8985;
-  --text-faint: #555550;
-  --white: #F5F4F0;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; overflow-x: hidden; }
-
-body {
-  font-family: 'IBM Plex Sans', sans-serif;
-  background: var(--graphite);
-  color: var(--text);
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  max-width: 100vw;
-}
-
-/* ===== NOISE OVERLAY ===== */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* ===== HEADER ===== */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 0 clamp(1.5rem, 4vw, 4rem);
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(10, 12, 14, 0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-
-.header-logo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  color: var(--white);
-}
-
-.header-logo span { color: var(--forest-light); }
-
-.header-nav { display: flex; gap: 2rem; align-items: center; }
-
-.header-nav a {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.header-nav a:hover { color: var(--white); }
-
-.header-cta {
-  padding: 0.5rem 1.2rem;
-  background: var(--forest);
-  color: var(--white) !important;
-  font-size: 0.7rem !important;
-  letter-spacing: 0.12em !important;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.header-cta:hover { background: var(--forest-light) !important; }
-
-/* ===== HERO ===== */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(6rem, 12vh, 10rem) clamp(1.5rem, 8vw, 10rem);
-  position: relative;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background: radial-gradient(ellipse at 80% 40%, rgba(27, 77, 62, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--forest-light);
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.2s forwards;
-}
-
-.hero h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
-  font-weight: 400;
-  line-height: 1.05;
-  color: var(--white);
-  max-width: 14ch;
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.4s forwards;
-}
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--bronze-light);
-}
-
-.hero-sub {
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  line-height: 1.7;
-  color: var(--text-dim);
-  max-width: 52ch;
-  margin-bottom: 3rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.6s forwards;
-}
-
-.hero-meta {
-  display: flex;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.8s forwards;
-}
-
-.hero-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.hero-meta-value {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.8rem;
-  color: var(--white);
-  font-weight: 500;
-}
-
-.hero-meta-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-/* ===== SECTIONS ===== */
-section {
-  padding: clamp(4rem, 8vh, 8rem) clamp(1.5rem, 8vw, 10rem);
-  overflow: hidden;
-}
-
-.table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 0 -0.5rem;
-  padding: 0 0.5rem;
-}
-
-.section-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--forest-light);
-  margin-bottom: 1.5rem;
-}
-
-.section-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  font-weight: 400;
-  color: var(--white);
-  margin-bottom: 1.5rem;
-  max-width: 20ch;
-}
-
-.section-body {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--text-dim);
-  max-width: 60ch;
-}
-
-/* ===== PROBLEM ===== */
-.problem {
-  border-top: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 6vw, 6rem);
-  align-items: start;
-}
-
-.problem-left { padding-top: 1rem; }
-.problem-right { padding-top: 1rem; }
-
-.problem-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.problem-stat:first-child { border-top: 1px solid var(--border); }
-
-.problem-stat-value {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.8rem;
-  color: var(--bronze-light);
-}
-
-.problem-stat-desc {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-}
-
-/* ===== ARCHITECTURE ===== */
-.arch {
-  border-top: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.arch-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: var(--border);
-  margin-top: 3rem;
-}
-
-.arch-card {
-  background: var(--surface);
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  transition: background 0.3s;
-}
-
-.arch-card:hover { background: var(--surface-2); }
-
-.arch-card-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--forest-light);
-  letter-spacing: 0.15em;
-}
-
-.arch-card-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.15rem;
-  color: var(--white);
-}
-
-.arch-card-desc {
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: var(--text-dim);
-}
-
-/* ===== STATE ENGINE ===== */
-.states {
-  border-top: 1px solid var(--border);
-}
-
-.state-bar {
-  display: flex;
-  margin-top: 3rem;
-  gap: 1px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.state-cell {
-  flex: 1;
-  padding: 1.2rem 0.8rem;
-  background: var(--surface);
-  border-top: 3px solid var(--forest);
-  text-align: center;
-  transition: all 0.3s;
-}
-
-.state-cell:hover {
-  background: var(--surface-2);
-  border-top-color: var(--forest-light);
-}
-
-.state-cell.reversed { border-top-color: var(--bronze); }
-.state-cell.depleted { border-top-color: #6B2D2D; }
-
-.state-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.4rem;
-  color: var(--white);
-  font-weight: 500;
-}
-
-.state-name {
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-top: 0.4rem;
-}
-
-.state-policy {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  margin-top: 0.6rem;
-  line-height: 1.5;
-}
-
-/* ===== ASSET CLASSES ===== */
-.assets {
-  border-top: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.asset-table {
-  margin-top: 3rem;
-  width: 100%;
-  min-width: 500px;
-  border-collapse: collapse;
-}
-
-.asset-table th {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  text-align: left;
-  padding: 1rem 1.2rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.asset-table td {
-  padding: 1rem 1.2rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  vertical-align: top;
-}
-
-.asset-table tr:hover td { color: var(--text); }
-
-.asset-code {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--forest-light);
-  font-weight: 500;
-}
-
-.asset-status {
-  font-size: 0.7rem;
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--border);
-  display: inline-block;
-  letter-spacing: 0.05em;
-  color: var(--text-dim);
-}
-
-.asset-status.active { border-color: var(--forest); color: var(--forest-light); }
-
-/* ===== FOUNDING ===== */
-.founding {
-  border-top: 1px solid var(--border);
-}
-
-.founding-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  margin-top: 3rem;
-}
-
-.founding-card {
-  padding: 2.5rem;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: border-color 0.3s;
-}
-
-.founding-card:hover { border-color: var(--forest); }
-
-.founding-card-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.2rem;
-  color: var(--white);
-  margin-bottom: 1rem;
-}
-
-.founding-card-body {
-  font-size: 0.85rem;
-  line-height: 1.7;
-  color: var(--text-dim);
-}
-
-.founding-card-value {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--bronze-light);
-  margin-top: 1.2rem;
-  word-break: break-word;
-}
-
-/* ===== CTA ===== */
-.cta-section {
-  border-top: 1px solid var(--border);
-  text-align: center;
-  padding: clamp(5rem, 10vh, 10rem) clamp(1.5rem, 8vw, 10rem);
-}
-
-.cta-quote {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-style: italic;
-  color: var(--bronze-light);
-  max-width: 40ch;
-  margin: 0 auto 2rem;
-  line-height: 1.4;
-}
-
-.cta-body {
-  font-size: 0.95rem;
-  color: var(--text-dim);
-  max-width: 50ch;
-  margin: 0 auto 2.5rem;
-  line-height: 1.7;
-}
-
-.cta-btn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background: var(--forest);
-  color: var(--white);
-  text-decoration: none;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 500;
-  transition: all 0.3s;
-  border: 1px solid var(--forest);
-}
-
-.cta-btn:hover {
-  background: transparent;
-  color: var(--forest-light);
-}
-
-/* ===== FOOTER ===== */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 3rem clamp(1.5rem, 8vw, 10rem);
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.footer-left {}
-
-.footer-brand {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-}
-
-.footer-legal {
-  font-size: 0.7rem;
-  color: var(--text-faint);
-  line-height: 1.6;
-}
-
-.footer-right {
-  display: flex;
-  gap: 3rem;
-}
-
-.footer-col-title {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 0.8rem;
-}
-
-.footer-col a {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  text-decoration: none;
-  margin-bottom: 0.4rem;
-  transition: color 0.3s;
-}
-
-.footer-col a:hover { color: var(--white); }
-
-/* ===== DOCUMENTATION ===== */
-.docs {
-  border-top: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.docs-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-top: 3rem;
-  background: var(--border);
-}
-
-.doc-card {
-  display: flex;
-  align-items: start;
-  gap: 1.2rem;
-  padding: 1.5rem;
-  background: var(--surface);
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.doc-card.doc-open:hover { background: var(--surface-2); cursor: pointer; }
-.doc-card.doc-locked { opacity: 0.6; }
-
-.doc-icon {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.2rem;
-  color: var(--forest-light);
-  flex-shrink: 0;
-  width: 2rem;
-  text-align: center;
-  padding-top: 0.15rem;
-}
-
-.doc-locked .doc-icon { color: var(--text-faint); }
-
-.doc-info { flex: 1; }
-
-.doc-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.05rem;
-  color: var(--white);
-  margin-bottom: 0.4rem;
-}
-
-.doc-locked .doc-title { color: var(--text-dim); }
-
-.doc-desc {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--text-dim);
-  margin-bottom: 0.4rem;
-}
-
-.doc-access {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--forest-light);
-}
-
-.doc-locked .doc-access { color: var(--text-faint); }
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .problem { grid-template-columns: 1fr; }
-  .arch-grid { grid-template-columns: repeat(2, 1fr); }
-  .arch-grid .arch-card:last-child { grid-column: span 2; }
-  .state-bar { flex-wrap: wrap; }
-  .state-cell { min-width: calc(25% - 1px); }
-  .founding-grid { grid-template-columns: 1fr; }
-  .founding-card { padding: 1.5rem; }
-  .header-nav { display: none; }
-  .footer-right { display: none; }
-  .assets { overflow-x: hidden; }
-  .asset-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-}
-
-@media (max-width: 600px) {
-  .arch-grid { grid-template-columns: 1fr; }
-  .arch-grid .arch-card:last-child { grid-column: span 1; }
-  .state-cell { min-width: calc(50% - 1px); }
-  .asset-table th, .asset-table td { padding: 0.8rem 0.6rem; font-size: 0.8rem; }
-  .asset-code { font-size: 0.75rem; }
-  .asset-status { font-size: 0.6rem; padding: 0.15rem 0.4rem; }
-  .founding-card { padding: 1.2rem; }
-  .founding-card-value { font-size: 0.75rem; }
-}
+  :root {
+    --bg: #0A0C0B;
+    --bg-elevated: #111413;
+    --bg-card: #161A18;
+    --border: #1E2422;
+    --border-accent: #2A3A30;
+    --text: #E8EBE9;
+    --text-dim: #7A8580;
+    --text-muted: #4A5550;
+    --green: #3ECF8E;
+    --green-dim: #1B4D3E;
+    --green-glow: rgba(62, 207, 142, 0.12);
+    --bronze: #C4982A;
+    --bronze-dim: rgba(196, 152, 42, 0.15);
+    --red: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10, 12, 11, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--green);
+    letter-spacing: 0.15em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    color: var(--green);
+    background: var(--green-glow);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-tag span {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border-accent);
+    border-radius: 3px;
+    background: var(--green-glow);
+    margin-right: 0.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    background: var(--green);
+    color: #0A0C0B;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-primary:hover {
+    background: #4FE09F;
+    box-shadow: 0 0 30px rgba(62, 207, 142, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    background: transparent;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-secondary:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 680px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .problem-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .problem-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+  }
+
+  .problem-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .problem-card h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+  }
+
+  .problem-card p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* ── SOLUTION SECTION ── */
+  .solution-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .solution-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: var(--bg-card);
+    padding: 2rem;
+    gap: 2rem;
+    align-items: start;
+    transition: background 0.3s;
+  }
+
+  .solution-row:hover {
+    background: var(--bg-elevated);
+  }
+
+  .solution-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    padding-top: 0.15rem;
+  }
+
+  .solution-row h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .solution-row p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* ── TOKENOMICS ── */
+  .token-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .token-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+
+  .token-card.featured {
+    border-color: var(--green-dim);
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(27, 77, 62, 0.15) 100%);
+    grid-column: span 2;
+  }
+
+  .token-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  .token-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+
+  .token-card p {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  /* ── DISTRIBUTION TABLE ── */
+  .dist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+
+  .dist-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dist-table td {
+    padding: 1rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .dist-table td:first-child {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .dist-bar {
+    height: 4px;
+    background: var(--green-dim);
+    border-radius: 2px;
+    margin-top: 0.4rem;
+  }
+
+  .dist-bar-inner {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  /* ── NODE SALE ── */
+  .tier-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .tier-row {
+    display: grid;
+    grid-template-columns: 120px 140px 1fr 140px;
+    background: var(--bg-card);
+    padding: 1.5rem 2rem;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .tier-row.tier-header {
+    background: var(--bg-elevated);
+  }
+
+  .tier-row.tier-header span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tier-name {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .tier-name small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  .tier-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--green);
+  }
+
+  .tier-desc {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+  }
+
+  .tier-cum {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap-list {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .roadmap-list::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--green), var(--border));
+  }
+
+  .roadmap-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 2rem;
+  }
+
+  .roadmap-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.5rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 10px var(--green-glow);
+  }
+
+  .roadmap-phase {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .roadmap-item h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .roadmap-item p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 2rem 8rem;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-section .section-title {
+    margin-bottom: 1rem;
+  }
+
+  .cta-section .section-desc {
+    max-width: 100%;
+    margin: 0 auto 2.5rem;
+  }
+
+  .waitlist-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 480px;
+    margin: 0 auto 1rem;
+  }
+
+  .waitlist-form input {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .waitlist-form input:focus {
+    border-color: var(--green-dim);
+  }
+
+  .waitlist-form input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .cta-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .footer-brand a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-brand a:hover { color: var(--text); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text-dim); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a:not(.nav-badge) { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 4rem 1.5rem; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .token-grid { grid-template-columns: 1fr; }
+    .token-card.featured { grid-column: span 1; }
+    .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .tier-row.tier-header { display: none; }
+    .tier-desc { grid-column: span 2; }
+    .waitlist-form { flex-direction: column; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="header-logo">BCCS<span>.BIO</span></div>
-  <nav class="header-nav">
-    <a href="#architecture">Architecture</a>
-    <a href="#states">Protocol</a>
-    <a href="#assets">Asset Classes</a>
-    <a href="#docs">Documentation</a>
-    <a href="#founding">Founding Program</a>
-    <a href="#contact" class="header-cta">Request Briefing</a>
-  </nav>
-</header>
+<div class="grid-bg"></div>
 
-<!-- HERO -->
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">BCCS</a>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Protocol</a>
+    <a href="#tokenomics">Token</a>
+    <a href="#sale">Node Sale</a>
+    <span class="nav-badge">BASE L2</span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-label">The Biological Control Plane</div>
-  <h1>The missing layer between <em>autonomous agents</em> and biological capital</h1>
-  <p class="hero-sub">BCCS is the global verification, policy, and state-transition protocol that makes biological capital — forests, permafrost, soil, marine ecosystems — legible to autonomous systems. Not a token. Not a marketplace. Infrastructure.</p>
-  <div class="hero-meta">
-    <div class="hero-meta-item">
-      <span class="hero-meta-value">BAIN ID</span>
-      <span class="hero-meta-label">Immutable asset identifier</span>
+  <div class="hero-tag">
+    <span>DePIN</span> Biological Capital Control Standard
+  </div>
+  <h1>The First <em>Control Plane</em> for the Agentic Bioeconomy</h1>
+  <p class="hero-sub">AI agents are trading millions daily. But they are blind to the physical world. BCCS is the cryptographic API that makes planetary biology programmable, verifiable, and composable on-chain.</p>
+  <div class="hero-actions">
+    <a href="#waitlist" class="btn-primary">Join Genesis Waitlist &rarr;</a>
+    <a href="#solution" class="btn-secondary">Read the Protocol</a>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-value">$2T+</div>
+      <div class="stat-label">Addressable Gap</div>
     </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-value">8 States</span>
-      <span class="hero-meta-label">Verification engine</span>
+    <div class="stat">
+      <div class="stat-value">8-State</div>
+      <div class="stat-label">Lifecycle Engine</div>
     </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-value">7 Asset Classes</span>
-      <span class="hero-meta-label">Biological taxonomy</span>
+    <div class="stat">
+      <div class="stat-value">1B</div>
+      <div class="stat-label">Fixed Supply</div>
     </div>
-    <div class="hero-meta-item">
-      <span class="hero-meta-value">Machine-Readable</span>
-      <span class="hero-meta-label">Policy engine + API</span>
+    <div class="stat">
+      <div class="stat-value">Base L2</div>
+      <div class="stat-label">Coinbase Network</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROBLEM ── -->
+<section id="problem">
+  <div class="section-tag fade-in">01 — The Problem</div>
+  <h2 class="section-title fade-in">The Thermodynamic Oracle Problem</h2>
+  <p class="section-desc fade-in">Autonomous agents possess wallets and spending authority for digital assets. But biological capital is governed by entropy. Current infrastructure cannot bridge this gap.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card fade-in">
+      <div class="problem-icon">Failure 01</div>
+      <h3>Agentic Finance Is Blind</h3>
+      <p>AI agents execute transactions at machine speed across digital assets. But they cannot natively verify or price the thermodynamic state of physical, biological systems.</p>
+    </div>
+    <div class="problem-card fade-in">
+      <div class="problem-icon">Failure 02</div>
+      <h3>Biology Is Entropic</h3>
+      <p>Forests burn. Soil degrades. Permafrost thaws. Earth&rsquo;s actual capital decays on timescales that static financial instruments cannot capture.</p>
+    </div>
+    <div class="problem-card fade-in">
+      <div class="problem-icon">Failure 03</div>
+      <h3>The PDF Oracle</h3>
+      <p>Current bio-markets rely on human-audited certificates that become factually obsolete the moment biological conditions shift. Autonomous code cannot trust a PDF.</p>
     </div>
   </div>
 </section>
 
-<!-- PROBLEM -->
-<section class="problem" id="problem">
-  <div class="problem-left">
-    <div class="section-label">The Problem</div>
-    <div class="section-title">The agentic economy has no bridge to biological reality</div>
-    <p class="section-body">Over 50 million machine-to-machine transactions have been processed. Agent wallets, payment rails, and policy engines are being built at extraordinary speed. But this entire infrastructure assumes digital assets — binary, deterministic, instantly verifiable. The majority of Earth's real economic value is biological, analog, and thermodynamically unstable.</p>
-  </div>
-  <div class="problem-right">
-    <div class="problem-stat">
-      <div class="problem-stat-value">$0</div>
-      <div class="problem-stat-desc">Biological assets currently verifiable by autonomous agents through standardized protocols.</div>
+<hr class="section-divider">
+
+<!-- ── SOLUTION ── -->
+<section id="solution">
+  <div class="section-tag fade-in">02 — The Protocol</div>
+  <h2 class="section-title fade-in">Making Reality Programmable</h2>
+  <p class="section-desc fade-in">BCCS replaces the PDF Oracle with a continuous, cryptographic control plane for biological capital. Three primitives power the system:</p>
+
+  <div class="solution-stack fade-in">
+    <div class="solution-row">
+      <div class="solution-label">BAIN ID</div>
+      <div>
+        <h3>The ISIN for Nature</h3>
+        <p>A 21-character immutable identifier for every biological asset. Encodes asset type, jurisdiction, biome, and registration. Soulbound on Base. Non-transferable. The atomic unit of biological truth.</p>
+      </div>
     </div>
-    <div class="problem-stat">
-      <div class="problem-stat-value">50M+</div>
-      <div class="problem-stat-desc">Machine-to-machine transactions processed on digital-only rails. Zero on biological assets.</div>
+    <div class="solution-row">
+      <div class="solution-label">8-STATE ENGINE</div>
+      <div>
+        <h3>Thermodynamic Lifecycle</h3>
+        <p>Every BAIN ID moves through 8 states: Registered, Active, Suspended, Migrating, Dormant, Degraded, Depleted, Archived. Real-time physical state tracking from verification to terminal entropy.</p>
+      </div>
     </div>
-    <div class="problem-stat">
-      <div class="problem-stat-value">PDF Oracle</div>
-      <div class="problem-stat-desc">The current state of biological asset verification: manual audits, static certificates, months of latency. Architecturally incompatible with autonomous systems.</div>
+    <div class="solution-row">
+      <div class="solution-label">PoPS</div>
+      <div>
+        <h3>Proof-of-Physical-State</h3>
+        <p>A novel DePIN consensus mechanism. Validator Nodes cross-reference Oracle claims against satellite imagery, thermal data, and independent research streams. Fraudulent claims are algorithmically slashed.</p>
+      </div>
+    </div>
+    <div class="solution-row">
+      <div class="solution-label">BIOCLEARING</div>
+      <div>
+        <h3>Biological Settlement</h3>
+        <p>Protocol-native clearing mechanism. When a BAIN ID transitions state, the engine calculates net change in biological capital value and settles on-chain. Real-time, transparent, composable.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ARCHITECTURE -->
-<section class="arch" id="architecture">
-  <div class="section-label">Architecture</div>
-  <div class="section-title">Five components. One control plane.</div>
-  <p class="section-body">BCCS sits between biological reality and digital infrastructure. Every component is designed for machine consumption.</p>
-  <div class="arch-grid">
-    <div class="arch-card">
-      <div class="arch-card-num">01</div>
-      <div class="arch-card-title">BAIN ID</div>
-      <div class="arch-card-desc">Immutable Bio-Asset Identification Number. Like ISIN for securities — but for forests, permafrost, soil, and ecosystems. 21-character canonical format.</div>
+<hr class="section-divider">
+
+<!-- ── TOKENOMICS ── -->
+<section id="tokenomics">
+  <div class="section-tag fade-in">03 — Tokenomics</div>
+  <h2 class="section-title fade-in">$BCCS: The Fuel of the Bioeconomy</h2>
+  <p class="section-desc fade-in">Not a fundraising mechanism. The mathematical foundation of the protocol&rsquo;s trust model. Three utility functions create structural demand:</p>
+
+  <div class="token-grid fade-in">
+    <div class="token-card">
+      <div class="token-number">3A</div>
+      <h3>Cryptographic Surety</h3>
+      <p>Oracles must stake $BCCS to submit state transitions. As bio-assets scale globally, massive supply is structurally locked out of circulation. No fiat fees &mdash; pure skin in the game.</p>
     </div>
-    <div class="arch-card">
-      <div class="arch-card-num">02</div>
-      <div class="arch-card-title">8-State Engine</div>
-      <div class="arch-card-desc">Formal state machine: Observed → Registered → Verified → Standardized → Insured → Final. Plus Reversed (degradation) and Depleted (terminal).</div>
+    <div class="token-card">
+      <div class="token-number">3B</div>
+      <h3>Truth Enforcement</h3>
+      <p>Algorithmic slashing. Submit fraudulent thermodynamic data and your staked $BCCS is instantly burned or redistributed. Lying carries an immediate, irreversible financial penalty.</p>
     </div>
-    <div class="arch-card">
-      <div class="arch-card-num">03</div>
-      <div class="arch-card-title">Oracle Network</div>
-      <div class="arch-card-desc">Accredited physical verification fabric. Credentialed scientists and sensor networks providing ground-truth attestation under protocol rules.</div>
-    </div>
-    <div class="arch-card">
-      <div class="arch-card-num">04</div>
-      <div class="arch-card-title">Policy Engine</div>
-      <div class="arch-card-desc">Machine-readable authorization layer. Tells autonomous agents what they may do with a bio-asset, in its current state, under what constraints.</div>
-    </div>
-    <div class="arch-card">
-      <div class="arch-card-num">05</div>
-      <div class="arch-card-title">API Surface</div>
-      <div class="arch-card-desc">Standard endpoints for agent wallets, payment rails, treasury systems, insurance platforms, and sovereign registries. Infrastructure-agnostic.</div>
+    <div class="token-card featured">
+      <div class="token-number">3C</div>
+      <h3>Agentic Gas &mdash; The Demand Sink</h3>
+      <p>Every AI agent query, spatial operation, and policy verification pays a micro-fee in $BCCS. This creates continuous, high-velocity demand that scales linearly with machine-to-machine bio-commerce. Every time a Wall Street algorithm needs to know whether a Brazilian forest is still standing, $BCCS is consumed.</p>
     </div>
   </div>
-</section>
 
-<!-- STATES -->
-<section class="states" id="states">
-  <div class="section-label">Protocol</div>
-  <div class="section-title">Eight states. Entropic by design.</div>
-  <p class="section-body">Biological tokens must mathematically degrade unless continuous verification confirms their state — and must die when the biology dies.</p>
-  <div class="state-bar">
-    <div class="state-cell depleted"><div class="state-num">00</div><div class="state-name">Depleted</div><div class="state-policy">Terminal. No action.</div></div>
-    <div class="state-cell"><div class="state-num">01</div><div class="state-name">Observed</div><div class="state-policy">Query only</div></div>
-    <div class="state-cell"><div class="state-num">02</div><div class="state-name">Registered</div><div class="state-policy">Informational</div></div>
-    <div class="state-cell"><div class="state-num">03</div><div class="state-name">Verified</div><div class="state-policy">Restricted</div></div>
-    <div class="state-cell"><div class="state-num">04</div><div class="state-name">Standardized</div><div class="state-policy">Standard txn</div></div>
-    <div class="state-cell"><div class="state-num">05</div><div class="state-name">Insured</div><div class="state-policy">Full authority</div></div>
-    <div class="state-cell"><div class="state-num">06</div><div class="state-name">Final</div><div class="state-policy">Unrestricted</div></div>
-    <div class="state-cell reversed"><div class="state-num">RV</div><div class="state-name">Reversed</div><div class="state-policy">Frozen. Re-verify.</div></div>
-  </div>
-</section>
-
-<!-- ASSET CLASSES -->
-<section class="assets" id="assets">
-  <div class="section-label">Founding Oracle Program</div>
-  <div class="section-title">Seven asset classes. Seven founding positions.</div>
-  <p class="section-body">KRYONIS is accrediting one Founding Oracle Network per biological asset class. The first to verify becomes the global reference. The window closes December 31, 2026.</p>
-  <div class="table-wrap">
-  <table class="asset-table">
+  <!-- Distribution -->
+  <table class="dist-table fade-in" style="margin-top: 3rem;">
     <thead>
       <tr>
-        <th>Code</th>
-        <th>Asset Class</th>
-        <th>Target Jurisdictions</th>
-        <th>Status</th>
+        <th>Allocation</th>
+        <th>Share</th>
+        <th>Vesting</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="asset-code">PFRS</span></td>
-        <td>Permafrost Reserve</td>
-        <td>Russia, Canada, Norway</td>
-        <td><span class="asset-status active">Active discussions</span></td>
+        <td>Validator Node Emissions</td>
+        <td>45%</td>
+        <td>6-year halving schedule. No cliff. Early operators earn exponentially more.</td>
+        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 100%"></div></div></td>
       </tr>
       <tr>
-        <td><span class="asset-code">FRCS</span></td>
-        <td>Forest Carbon System</td>
-        <td>Brazil, Indonesia, Canada</td>
-        <td><span class="asset-status active">Preliminary contact</span></td>
+        <td>Ecosystem & Oracle Grants</td>
+        <td>20%</td>
+        <td>10% at TGE. 90% milestone-locked for Founding Oracle onboarding.</td>
+        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 44%"></div></div></td>
       </tr>
       <tr>
-        <td><span class="asset-code">SOIL</span></td>
-        <td>Soil Microbiome System</td>
-        <td>Kazakhstan, Australia, India</td>
-        <td><span class="asset-status">Exploratory</span></td>
+        <td>Core Team</td>
+        <td>15%</td>
+        <td>12-month cliff. 36-month linear daily vesting.</td>
+        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 33%"></div></div></td>
       </tr>
       <tr>
-        <td><span class="asset-code">MARE</span></td>
-        <td>Marine Ecosystem</td>
-        <td>Norway, Indonesia, UAE</td>
-        <td><span class="asset-status">Early engagement</span></td>
+        <td>Strategic Backers</td>
+        <td>12%</td>
+        <td>6-month cliff. 24-month linear vesting.</td>
+        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 27%"></div></div></td>
       </tr>
       <tr>
-        <td><span class="asset-code">AGRI</span></td>
-        <td>Agricultural Production</td>
-        <td>Brazil, India, Kazakhstan</td>
-        <td><span class="asset-status">Multiple candidates</span></td>
-      </tr>
-      <tr>
-        <td><span class="asset-code">GENE</span></td>
-        <td>Genetic &amp; Biodiversity Resource</td>
-        <td>Brazil, South Africa, Japan</td>
-        <td><span class="asset-status">Methodology phase</span></td>
-      </tr>
-      <tr>
-        <td><span class="asset-code">BIOM</span></td>
-        <td>Biomass Energy Flow</td>
-        <td>Russia, Brazil, Sweden</td>
-        <td><span class="asset-status">Exploratory</span></td>
+        <td>Public Sale & Liquidity</td>
+        <td>8%</td>
+        <td>100% at TGE. Deep order books on Aerodrome/Base.</td>
+        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 18%"></div></div></td>
       </tr>
     </tbody>
   </table>
-  </div>
 </section>
 
-<!-- FOUNDING -->
-<section class="founding" id="founding">
-  <div class="section-label">Engagement</div>
-  <div class="section-title">Built for institutions, not experiments</div>
-  <div class="founding-grid">
-    <div class="founding-card">
-      <div class="founding-card-title">Oracle Network Partner</div>
-      <div class="founding-card-body">National scientific societies, biotechnology associations, forestry services, and research institutions that provide physical ground-truth verification under BCCS accreditation.</div>
-      <div class="founding-card-value">Founding Pilot: USD 1.2M → Exclusive 5-year territorial rights</div>
-    </div>
-    <div class="founding-card">
-      <div class="founding-card-title">Integration Partner</div>
-      <div class="founding-card-body">Agent wallet providers, payment rail operators, oracle data networks, and enterprise treasury platforms that integrate BCCS state queries and policy enforcement.</div>
-      <div class="founding-card-value">USD 120K — 1.5M/year · Tiered API access</div>
-    </div>
-    <div class="founding-card">
-      <div class="founding-card-title">Sovereign Implementation</div>
-      <div class="founding-card-body">National governments and intergovernmental organizations implementing BCCS as the official classification and verification standard for biological capital.</div>
-      <div class="founding-card-value">USD 200K — 5M/year · Phased deployment</div>
-    </div>
-    <div class="founding-card">
-      <div class="founding-card-title">Strategic Advisory</div>
-      <div class="founding-card-body">Reinsurance companies, development banks, climate finance institutions, and industry consortia exploring BCCS integration for biological risk management.</div>
-      <div class="founding-card-value">USD 25K — 500K/year · Briefing to retained advisory</div>
-    </div>
-  </div>
-</section>
+<hr class="section-divider">
 
-<!-- DOCUMENTATION -->
-<section class="docs" id="docs">
-  <div class="section-label">Documentation</div>
-  <div class="section-title">Protocol suite</div>
-  <div class="docs-grid">
-    <a href="BCCS_Executive_Brief_v1.pdf" class="doc-card doc-open" target="_blank">
-      <div class="doc-icon">↓</div>
-      <div class="doc-info">
-        <div class="doc-title">Executive Brief</div>
-        <div class="doc-desc">2-page overview. Problem, architecture, market position, and engagement model.</div>
-        <div class="doc-access">Open access · PDF</div>
-      </div>
-    </a>
-    <a href="BCCS_Whitepaper_v1.1.pdf" class="doc-card doc-open" target="_blank">
-      <div class="doc-icon">↓</div>
-      <div class="doc-info">
-        <div class="doc-title">Whitepaper v1.1</div>
-        <div class="doc-desc">Full protocol narrative. Thermodynamic Oracle Problem, BCCS architecture, strategic context, and roadmap.</div>
-        <div class="doc-access">Open access · PDF</div>
-      </div>
-    </a>
-    <div class="doc-card doc-locked">
-      <div class="doc-icon">◇</div>
-      <div class="doc-info">
-        <div class="doc-title">BAIN ID Technical Specification v1.1</div>
-        <div class="doc-desc">Identifier format, asset taxonomy, 8-state encoding, spatial operations, API schema, and validation rules.</div>
-        <div class="doc-access">Available under NDA</div>
-      </div>
+<!-- ── NODE SALE ── -->
+<section id="sale">
+  <div class="section-tag fade-in">04 — Genesis Sale</div>
+  <h2 class="section-title fade-in">Validator Node Licenses</h2>
+  <p class="section-desc fade-in">Non-transferable ERC-721 software permits on Base. No ICO. No security offering. You buy the right to operate infrastructure and earn 45% of total $BCCS supply.</p>
+
+  <div class="tier-stack fade-in">
+    <div class="tier-row tier-header">
+      <span>Tier</span>
+      <span>Price (USDC)</span>
+      <span>Profile</span>
+      <span style="text-align:right">Cumulative</span>
     </div>
-    <div class="doc-card doc-locked">
-      <div class="doc-icon">◇</div>
-      <div class="doc-info">
-        <div class="doc-title">Partnership Framework v1</div>
-        <div class="doc-desc">Four partnership categories, accreditation requirements, commercial terms, and governance structure.</div>
-        <div class="doc-access">Available under NDA</div>
-      </div>
+    <div class="tier-row">
+      <div class="tier-name">Alpha<small>500 licenses</small></div>
+      <div class="tier-price">$1,000</div>
+      <div class="tier-desc">Whitelist: VC, Angels, KOLs</div>
+      <div class="tier-cum">$500K</div>
     </div>
-    <div class="doc-card doc-locked">
-      <div class="doc-icon">◇</div>
-      <div class="doc-info">
-        <div class="doc-title">Founding Oracle Pilot Proposal v1</div>
-        <div class="doc-desc">Pilot scope, deliverables, timeline, commercial terms, and Founding Partner program details.</div>
-        <div class="doc-access">Available under NDA</div>
-      </div>
+    <div class="tier-row">
+      <div class="tier-name">Beta<small>1,000 licenses</small></div>
+      <div class="tier-price">$1,500</div>
+      <div class="tier-desc">Waitlist: DePIN communities, syndicates</div>
+      <div class="tier-cum">$2.0M</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-name">Gamma<small>2,000 licenses</small></div>
+      <div class="tier-price">$2,200</div>
+      <div class="tier-desc">Public sale: DePIN operators</div>
+      <div class="tier-cum">$6.4M</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-name">Delta<small>3,000 licenses</small></div>
+      <div class="tier-price">$3,000</div>
+      <div class="tier-desc">Public sale: global community</div>
+      <div class="tier-cum">$15.4M</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-name">Epsilon<small>Dynamic</small></div>
+      <div class="tier-price">$3,500+</div>
+      <div class="tier-desc">Open market</div>
+      <div class="tier-cum">$20M+</div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section" id="contact">
-  <div class="cta-quote">The first infrastructure provider to build a verified, agent-operated pipeline for biological assets will capture a foundational position in what could become a multi-trillion dollar bioeconomy.</div>
-  <p class="cta-body">The full protocol documentation suite — Whitepaper, BAIN ID Technical Specification, Partnership Framework, and Founding Oracle Pilot Proposal — is available under mutual NDA. One conversation is the first step.</p>
-  <a href="mailto:protocol@kryonis.global" class="cta-btn">Request Briefing</a>
+<hr class="section-divider">
+
+<!-- ── ROADMAP ── -->
+<section id="roadmap">
+  <div class="section-tag fade-in">05 — Roadmap</div>
+  <h2 class="section-title fade-in">The Path to Planetary Attestation</h2>
+
+  <div class="roadmap-list fade-in">
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Q2 2026</div>
+      <h3>Foundation</h3>
+      <p>Protocol specification finalized. BAIN ID standard published. Founding Oracle pilot ($1.2M). Base testnet. Validator whitelist opens.</p>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Q3 2026</div>
+      <h3>Genesis Sale</h3>
+      <p>Alpha and Beta tier license sale. First 100 BAIN IDs minted. AI verification agent v1 on testnet. Partnership framework live.</p>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Q4 2026</div>
+      <h3>Mainnet</h3>
+      <p>Token Generation Event on Base. Gamma and Delta tiers. PoPS consensus v1 on mainnet. Bioclearing engine deployed. First data licensing deals.</p>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-phase">Q1 2027</div>
+      <h3>Scale</h3>
+      <p>Epsilon tier and open market. Ethereum bridge. On-chain governance. 1,000+ active BAIN IDs. First Oracle slashing validates trust model.</p>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-phase">2027 &mdash; 2028</div>
+      <h3>Deflationary Equilibrium</h3>
+      <p>Full DePIN scaling across biomes. Institutional integration: sovereign wealth, reinsurance, ESG analytics. Daily agentic demand exceeds emissions.</p>
+    </div>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<hr class="section-divider">
+
+<!-- ── CTA / WAITLIST ── -->
+<section class="cta-section" id="waitlist">
+  <div class="section-tag fade-in">Genesis Validator License Sale — Q3 2026</div>
+  <h2 class="section-title fade-in">Own the Infrastructure of the<br>Agentic Bioeconomy</h2>
+  <p class="section-desc fade-in">The intersection of autonomous agents and planetary biology is empty. We are laying the concrete. Alpha tier opens exclusively to whitelisted partners.</p>
+
+  <div class="waitlist-form fade-in">
+    <input type="email" id="waitlist-email" placeholder="your@email.com" aria-label="Email address">
+    <button class="btn-primary" onclick="handleWaitlist()">Join Waitlist</button>
+  </div>
+  <p class="cta-note fade-in">We&rsquo;ll notify you when Alpha opens. No spam. Unsubscribe anytime.</p>
+</section>
+
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-left">
-    <div class="footer-brand">KRYONIS SOVEREIGN SYSTEMS LIMITED · HONG KONG</div>
-    <div class="footer-legal">© 2026 KRYONIS Sovereign Systems Limited. All rights reserved.<br>BCCS, BAIN ID, and The Biological Control Plane are proprietary standards of KRYONIS.</div>
-  </div>
-  <div class="footer-right">
-    <div class="footer-col">
-      <div class="footer-col-title">Protocol</div>
-      <a href="#architecture">Architecture</a>
-      <a href="#states">State Engine</a>
-      <a href="#assets">Asset Classes</a>
-      <a href="#docs">Documentation</a>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="https://kryonis.global">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>
+      &copy; 2026. All rights reserved.
     </div>
-    <div class="footer-col">
-      <div class="footer-col-title">Engage</div>
-      <a href="#founding">Partnership</a>
-      <a href="#contact">Request Briefing</a>
+    <div class="footer-links">
+      <a href="https://bccs.bio">bccs.bio</a>
+      <a href="https://bioclearing.global">bioclearing.global</a>
       <a href="https://kryonis.global">kryonis.global</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Scroll animations ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Waitlist handler (placeholder — hook to your backend / Google Form / Typeform) ──
+  function handleWaitlist() {
+    const email = document.getElementById('waitlist-email').value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    // TODO: Replace with actual form submission (Typeform, Google Forms, or API)
+    // window.open(`https://docs.google.com/forms/d/YOUR_FORM_ID/viewform?usp=pp_url&entry.FIELD_ID=${encodeURIComponent(email)}`, '_blank');
+    alert('Thank you! You\'ve been added to the Genesis Validator waitlist. We\'ll be in touch.');
+    document.getElementById('waitlist-email').value = '';
+  }
+</script>
+
+</body>
+</html>
