@@ -546,6 +546,73 @@ footer {
 
 .footer-col a:hover { color: var(--white); }
 
+/* ===== DOCUMENTATION ===== */
+.docs {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.docs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 3rem;
+  background: var(--border);
+}
+
+.doc-card {
+  display: flex;
+  align-items: start;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.doc-card.doc-open:hover { background: var(--surface-2); cursor: pointer; }
+.doc-card.doc-locked { opacity: 0.6; }
+
+.doc-icon {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--forest-light);
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+  padding-top: 0.15rem;
+}
+
+.doc-locked .doc-icon { color: var(--text-faint); }
+
+.doc-info { flex: 1; }
+
+.doc-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.doc-locked .doc-title { color: var(--text-dim); }
+
+.doc-desc {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin-bottom: 0.4rem;
+}
+
+.doc-access {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--forest-light);
+}
+
+.doc-locked .doc-access { color: var(--text-faint); }
+
 /* ===== ANIMATIONS ===== */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -588,6 +655,7 @@ footer {
     <a href="#architecture">Architecture</a>
     <a href="#states">Protocol</a>
     <a href="#assets">Asset Classes</a>
+    <a href="#docs">Documentation</a>
     <a href="#founding">Founding Program</a>
     <a href="#contact" class="header-cta">Request Briefing</a>
   </nav>
@@ -783,11 +851,59 @@ footer {
   </div>
 </section>
 
+<!-- DOCUMENTATION -->
+<section class="docs" id="docs">
+  <div class="section-label">Documentation</div>
+  <div class="section-title">Protocol suite</div>
+  <div class="docs-grid">
+    <a href="BCCS_Executive_Brief_v1.pdf" class="doc-card doc-open" target="_blank">
+      <div class="doc-icon">↓</div>
+      <div class="doc-info">
+        <div class="doc-title">Executive Brief</div>
+        <div class="doc-desc">2-page overview. Problem, architecture, market position, and engagement model.</div>
+        <div class="doc-access">Open access · PDF</div>
+      </div>
+    </a>
+    <a href="BCCS_Whitepaper_v1.1.pdf" class="doc-card doc-open" target="_blank">
+      <div class="doc-icon">↓</div>
+      <div class="doc-info">
+        <div class="doc-title">Whitepaper v1.1</div>
+        <div class="doc-desc">Full protocol narrative. Thermodynamic Oracle Problem, BCCS architecture, strategic context, and roadmap.</div>
+        <div class="doc-access">Open access · PDF</div>
+      </div>
+    </a>
+    <div class="doc-card doc-locked">
+      <div class="doc-icon">◇</div>
+      <div class="doc-info">
+        <div class="doc-title">BAIN ID Technical Specification v1.1</div>
+        <div class="doc-desc">Identifier format, asset taxonomy, 8-state encoding, spatial operations, API schema, and validation rules.</div>
+        <div class="doc-access">Available under NDA</div>
+      </div>
+    </div>
+    <div class="doc-card doc-locked">
+      <div class="doc-icon">◇</div>
+      <div class="doc-info">
+        <div class="doc-title">Partnership Framework v1</div>
+        <div class="doc-desc">Four partnership categories, accreditation requirements, commercial terms, and governance structure.</div>
+        <div class="doc-access">Available under NDA</div>
+      </div>
+    </div>
+    <div class="doc-card doc-locked">
+      <div class="doc-icon">◇</div>
+      <div class="doc-info">
+        <div class="doc-title">Founding Oracle Pilot Proposal v1</div>
+        <div class="doc-desc">Pilot scope, deliverables, timeline, commercial terms, and Founding Partner program details.</div>
+        <div class="doc-access">Available under NDA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <div class="cta-quote">The first infrastructure provider to build a verified, agent-operated pipeline for biological assets will capture a foundational position in what could become a multi-trillion dollar bioeconomy.</div>
   <p class="cta-body">The full protocol documentation suite — Whitepaper, BAIN ID Technical Specification, Partnership Framework, and Founding Oracle Pilot Proposal — is available under mutual NDA. One conversation is the first step.</p>
-  <a href="/cdn-cgi/l/email-protection#6414160b100b070b08240f161d0b0a0d174a03080b060508" class="cta-btn">Request Briefing</a>
+  <a href="mailto:protocol@kryonis.global" class="cta-btn">Request Briefing</a>
 </section>
 
 <!-- FOOTER -->
@@ -802,6 +918,7 @@ footer {
       <a href="#architecture">Architecture</a>
       <a href="#states">State Engine</a>
       <a href="#assets">Asset Classes</a>
+      <a href="#docs">Documentation</a>
     </div>
     <div class="footer-col">
       <div class="footer-col-title">Engage</div>
