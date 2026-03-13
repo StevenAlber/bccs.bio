@@ -817,7 +817,7 @@
     font-size: 0.82rem;
     line-height: 1.8;
     color: var(--text-dim);
-    min-height: 200px;
+    min-height: 380px;
   }
 
   .terminal-body .prompt {
@@ -1434,7 +1434,6 @@
     let i = 0;
     function addLine() {
       if (i >= terminalLines.length) {
-        setTimeout(runTerminal, 6000);
         return;
       }
       const line = terminalLines[i];
