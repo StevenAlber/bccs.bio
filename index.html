@@ -767,6 +767,169 @@
     letter-spacing: 0.05em;
   }
 
+  /* ── API TERMINAL ── */
+  .terminal-section {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .terminal-window {
+    background: #0D0F0E;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'DM Mono', monospace;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  .terminal-dot.red { background: #EF4444; }
+  .terminal-dot.yellow { background: #F59E0B; }
+  .terminal-dot.green { background: #3ECF8E; }
+
+  .terminal-title {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .terminal-body {
+    padding: 1.5rem;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: var(--text-dim);
+    min-height: 200px;
+  }
+
+  .terminal-body .prompt {
+    color: var(--green);
+  }
+
+  .terminal-body .comment {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .terminal-body .key {
+    color: var(--bronze);
+  }
+
+  .terminal-body .value {
+    color: var(--green);
+  }
+
+  .terminal-body .string {
+    color: #E8EBE9;
+  }
+
+  .terminal-line {
+    opacity: 0;
+    animation: termLine 0.3s ease forwards;
+  }
+
+  @keyframes termLine {
+    from { opacity: 0; transform: translateX(-5px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── FOUNDER ── */
+  .founder-section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .founder-card {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.5rem;
+  }
+
+  .founder-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-accent);
+    flex-shrink: 0;
+  }
+
+  .founder-info h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+
+  .founder-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .founder-info p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER DISCLAIMER ── */
+  .footer-disclaimer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .footer-disclaimer p {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .footer-legal-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .footer-legal-links a {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-legal-links a:hover { color: var(--text-dim); }
+
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -802,6 +965,9 @@
     .tier-desc { grid-column: span 2; }
     .waitlist-form { flex-direction: column; }
     .footer-inner { flex-direction: column; text-align: center; }
+    .founder-card { flex-direction: column; text-align: center; gap: 1.5rem; }
+    .terminal-body { font-size: 0.72rem; padding: 1rem; }
+    .footer-legal-links { justify-content: center; }
   }
 </style>
 </head>
@@ -854,6 +1020,19 @@
       <div class="stat-value">Base L2</div>
       <div class="stat-label">Coinbase Network</div>
     </div>
+  </div>
+</div>
+
+<!-- ── API TERMINAL ── -->
+<div class="terminal-section fade-in">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">bccs-api &mdash; live query demo</span>
+    </div>
+    <div class="terminal-body" id="terminal"></div>
   </div>
 </div>
 
@@ -1117,6 +1296,21 @@
 
 <hr class="section-divider">
 
+<!-- ── FOUNDER ── -->
+<div class="founder-section">
+  <div class="section-tag fade-in">07 &mdash; Architect</div>
+  <div class="founder-card fade-in">
+    <img src="steven-alber.jpeg" alt="Steven Alber" class="founder-photo" loading="lazy">
+    <div class="founder-info">
+      <h3>Steven Alber</h3>
+      <div class="founder-role">Founder &amp; Protocol Architect</div>
+      <p>Two decades in strategic systems design across Asia-Pacific. KRYONIS Sovereign Systems Limited, Hong Kong.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
 <!-- ── CTA / WAITLIST ── -->
 <section class="cta-section" id="waitlist">
   <div class="section-tag fade-in">Genesis Validator License Sale — Q3 2026</div>
@@ -1141,6 +1335,13 @@
       <a href="https://bccs.bio">bccs.bio</a>
       <a href="https://bioclearing.global">bioclearing.global</a>
       <a href="https://kryonis.global">kryonis.global</a>
+    </div>
+  </div>
+  <div class="footer-disclaimer">
+    <p>This website and all associated documents are provided for informational purposes only and do not constitute a prospectus, an offer document, or a solicitation of investment in any jurisdiction. Validator Node Licenses are designed as software licenses and are not intended to constitute securities or investment contracts. Regulatory treatment may vary by jurisdiction. The $BQRY token is designed as a cryptographic utility token to secure the PoPS consensus mechanism and facilitate protocol queries; it is not intended as a speculative investment vehicle. Nothing on this website should be construed as legal, financial, or tax advice. KRYONIS Sovereign Systems Limited operates under the laws of Hong Kong SAR. Prospective participants should consult qualified legal and financial counsel in their jurisdiction before engaging.</p>
+    <div class="footer-legal-links">
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="privacy.html">Privacy Policy</a>
     </div>
   </div>
 </footer>
@@ -1204,6 +1405,62 @@
       setTimeout(() => { input.style.borderColor = ''; input.setAttribute('placeholder', 'your@email.com'); }, 3000);
     }
   }
+  // ── Terminal typing animation ──
+  const terminalLines = [
+    { text: '# AI agent queries biological asset state via BCCS API', cls: 'comment' },
+    { text: '', cls: '' },
+    { text: '> GET /asset/RU-PFRS-20260915-0000142/state', cls: 'prompt' },
+    { text: '', cls: '' },
+    { text: '{', cls: 'string' },
+    { text: '  <span class="key">"bain_id"</span>:       <span class="value">"RU-PFRS-20260915-0000142"</span>,', cls: '' },
+    { text: '  <span class="key">"asset_class"</span>:   <span class="value">"Permafrost Reserve"</span>,', cls: '' },
+    { text: '  <span class="key">"state"</span>:         <span class="value">"Active"</span>,', cls: '' },
+    { text: '  <span class="key">"confidence"</span>:    <span class="value">0.97</span>,', cls: '' },
+    { text: '  <span class="key">"last_verified"</span>: <span class="value">"2026-03-11T14:22:00Z"</span>,', cls: '' },
+    { text: '  <span class="key">"decay_deadline"</span>:<span class="value">"2028-03-11T14:22:00Z"</span>,', cls: '' },
+    { text: '  <span class="key">"permission"</span>:    <span class="value">"GRANTED"</span>,', cls: '' },
+    { text: '  <span class="key">"fee"</span>:           <span class="value">"0.012 $BQRY"</span>', cls: '' },
+    { text: '}', cls: 'string' },
+    { text: '', cls: '' },
+    { text: '> POST /asset/RU-PFRS-20260915-0000142/verify', cls: 'prompt' },
+    { text: '  <span class="key">oracle</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence</span>: <span class="value">SAR_sentinel_2B</span>', cls: '' },
+    { text: '  <span class="key">status</span>: <span class="value">✓ Attestation accepted. State confirmed: Active.</span>', cls: '' },
+  ];
+
+  function runTerminal() {
+    const el = document.getElementById('terminal');
+    if (!el) return;
+    el.innerHTML = '';
+    let i = 0;
+    function addLine() {
+      if (i >= terminalLines.length) {
+        setTimeout(runTerminal, 6000);
+        return;
+      }
+      const line = terminalLines[i];
+      const div = document.createElement('div');
+      div.className = 'terminal-line';
+      div.style.animationDelay = '0s';
+      if (line.cls) div.classList.add(line.cls);
+      div.innerHTML = line.text || '&nbsp;';
+      el.appendChild(div);
+      i++;
+      setTimeout(addLine, line.text ? 120 : 60);
+    }
+    addLine();
+  }
+
+  // Start terminal when visible
+  const termObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        runTerminal();
+        termObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const termEl = document.querySelector('.terminal-section');
+  if (termEl) termObs.observe(termEl);
 </script>
 
 </body>
