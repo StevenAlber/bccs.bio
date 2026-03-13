@@ -1123,7 +1123,7 @@
     <div class="token-card featured">
       <div class="token-number">3C</div>
       <h3>Query Settlement &mdash; Deflationary Engine</h3>
-      <p>AI agents pay USDC query fees via standard stablecoin rails &mdash; zero friction for autonomous systems already on Base. A programmatic portion of query revenue is routed to buy back and burn $BQRY, creating persistent buy-side pressure that strengthens as network usage scales.</p>
+      <p>AI agents pay USDC query fees via standard stablecoin rails &mdash; zero friction for autonomous systems already on Base. A programmatic portion of query revenue is routed to buy and distribute to active Validator Nodes $BQRY, creating persistent buy-side pressure that strengthens as network usage scales.</p>
     </div>
   </div>
 
@@ -1284,7 +1284,7 @@
     <a href="BCCS_Tokenomics_Litepaper_v1.0.pdf" target="_blank" class="doc-card">
       <div class="doc-icon">&#9672;</div>
       <h3>Tokenomics Litepaper v1.0</h3>
-      <p>$BQRY token utility, USDC settlement, buy-back-and-burn mechanics, Genesis Validator License Sale.</p>
+      <p>$BQRY token utility, USDC settlement, buy-and-distribute mechanics, Genesis Validator License Sale.</p>
       <span class="doc-meta">PDF &middot; 7 pages &middot; March 2026</span>
     </a>
     <a href="BCCS_BAIN_ID_Specification_v1.2.pdf" target="_blank" class="doc-card">
@@ -1439,10 +1439,10 @@
   const terminalLines = [
     { text: '# AI agent queries biological asset state via BCCS API', cls: 'comment' },
     { text: '', cls: '' },
-    { text: '> GET /asset/RU-PFRS-20260915-0000142/state', cls: 'prompt' },
+    { text: '> GET /asset/CA-PFRS-20260915-0000142/state', cls: 'prompt' },
     { text: '', cls: '' },
     { text: '{', cls: 'string' },
-    { text: '  <span class="key">"bain_id"</span>:       <span class="value">"RU-PFRS-20260915-0000142"</span>,', cls: '' },
+    { text: '  <span class="key">"bain_id"</span>:       <span class="value">"CA-PFRS-20260915-0000142"</span>,', cls: '' },
     { text: '  <span class="key">"asset_class"</span>:   <span class="value">"Permafrost Reserve"</span>,', cls: '' },
     { text: '  <span class="key">"state"</span>:         <span class="value">"Active"</span>,', cls: '' },
     { text: '  <span class="key">"confidence"</span>:    <span class="value">0.97</span>,', cls: '' },
@@ -1450,10 +1450,10 @@
     { text: '  <span class="key">"decay_deadline"</span>:<span class="value">"2028-03-11T14:22:00Z"</span>,', cls: '' },
     { text: '  <span class="key">"permission"</span>:    <span class="value">"GRANTED"</span>,', cls: '' },
     { text: '  <span class="key">"fee"</span>:           <span class="value">"0.012 USDC"</span>,', cls: '' },
-    { text: '  <span class="key">"buyback"</span>:       <span class="value">"0.004 USDC → $BQRY burn"</span>', cls: '' },
+    { text: '  <span class="key">"buyback"</span>:       <span class="value">"0.004 USDC → $BQRY → validators"</span>', cls: '' },
     { text: '}', cls: 'string' },
     { text: '', cls: '' },
-    { text: '> POST /asset/RU-PFRS-20260915-0000142/verify', cls: 'prompt' },
+    { text: '> POST /asset/CA-PFRS-20260915-0000142/verify', cls: 'prompt' },
     { text: '  <span class="key">oracle</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence</span>: <span class="value">SAR_sentinel_2B</span>', cls: '' },
     { text: '  <span class="key">status</span>: <span class="value">✓ Attestation accepted. State confirmed: Active.</span>', cls: '' },
   ];
