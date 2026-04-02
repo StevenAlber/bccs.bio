@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BCCS — The Biological Control Plane</title>
-<meta name="description" content="The First DePIN Control Plane for the Agentic Bioeconomy. Built on Base.">
-<meta property="og:title" content="BCCS — Biological Capital Control Standard">
-<meta property="og:description" content="The First DePIN Security Layer for the Agentic Bioeconomy. Proof-of-Physical-State consensus on Base L2.">
+<title>BCCS — The Verification Layer for Biological Capital</title>
+<meta name="description" content="BCCS is a decentralized protocol that makes biological assets computationally verifiable on-chain. Deployed on Base Layer 2.">
+<meta property="og:title" content="BCCS — The Verification Layer for Biological Capital">
+<meta property="og:description" content="A decentralized verification protocol for biological capital. Proof-of-Physical-State consensus on Base L2.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bccs.bio">
 <meta property="og:image" content="https://bccs.bio/og-image.png">
@@ -27,16 +27,11 @@
     --green-dim: #1B4D3E;
     --green-glow: rgba(62, 207, 142, 0.12);
     --bronze: #C4982A;
-    --bronze-dim: rgba(196, 152, 42, 0.15);
     --red: #EF4444;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-  }
+  html { scroll-behavior: smooth; font-size: 16px; }
 
   body {
     font-family: 'DM Sans', -apple-system, sans-serif;
@@ -47,7 +42,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── GRAIN OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -57,10 +51,8 @@
     z-index: 9999;
   }
 
-  /* ── GRID BACKGROUND ── */
   .grid-bg {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image:
       linear-gradient(var(--border) 1px, transparent 1px),
       linear-gradient(90deg, var(--border) 1px, transparent 1px);
@@ -73,880 +65,339 @@
 
   /* ── NAV ── */
   nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
+    position: fixed; top: 0; width: 100%; z-index: 100;
     padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     background: rgba(10, 12, 11, 0.8);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
-
   .nav-logo {
     font-family: 'DM Mono', monospace;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--green);
-    letter-spacing: 0.15em;
-    text-decoration: none;
+    font-size: 1.1rem; font-weight: 500;
+    color: var(--green); letter-spacing: 0.15em; text-decoration: none;
   }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
-
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
   .nav-links a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    transition: color 0.2s;
+    color: var(--text-dim); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.03em; transition: color 0.2s;
   }
-
   .nav-links a:hover { color: var(--text); }
-
   .nav-badge {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    padding: 0.35rem 0.7rem;
-    border: 1px solid var(--border-accent);
-    border-radius: 4px;
-    color: var(--green);
-    background: var(--green-glow);
+    font-size: 0.7rem; padding: 0.35rem 0.7rem;
+    border: 1px solid var(--border-accent); border-radius: 4px;
+    color: var(--green); background: var(--green-glow);
     letter-spacing: 0.05em;
   }
 
   /* ── HERO ── */
   .hero {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: relative; z-index: 1;
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
     padding: 8rem 2rem 4rem;
-    max-width: 1100px;
-    margin: 0 auto;
+    max-width: 1100px; margin: 0 auto;
   }
-
   .hero-tag {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--green);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    font-size: 0.75rem; color: var(--green);
+    letter-spacing: 0.2em; text-transform: uppercase;
     margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.2s;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
   }
-
   .hero-tag span {
-    display: inline-block;
-    padding: 0.3rem 0.6rem;
-    border: 1px solid var(--border-accent);
-    border-radius: 3px;
-    background: var(--green-glow);
-    margin-right: 0.5rem;
+    display: inline-block; padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border-accent); border-radius: 3px;
+    background: var(--green-glow); margin-right: 0.5rem;
   }
-
   .hero h1 {
     font-family: 'Instrument Serif', Georgia, serif;
     font-size: clamp(2.8rem, 6vw, 4.5rem);
-    font-weight: 400;
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 1.5rem;
-    max-width: 900px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.4s;
+    font-weight: 400; line-height: 1.1;
+    color: var(--text); margin-bottom: 1.5rem; max-width: 900px;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s;
   }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--green);
-  }
-
+  .hero h1 em { font-style: italic; color: var(--green); }
   .hero-sub {
-    font-size: 1.15rem;
-    color: var(--text-dim);
-    max-width: 640px;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.6s;
+    font-size: 1.15rem; color: var(--text-dim);
+    max-width: 640px; line-height: 1.7; margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s;
   }
-
   .hero-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.8s;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s;
   }
-
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.9rem 2rem;
-    background: var(--green);
-    color: #0A0C0B;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.03em;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
+    background: var(--green); color: #0A0C0B;
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em;
+    border: none; border-radius: 6px; cursor: pointer; text-decoration: none;
     transition: all 0.25s;
   }
-
   .btn-primary:hover {
     background: #4FE09F;
     box-shadow: 0 0 30px rgba(62, 207, 142, 0.3);
     transform: translateY(-1px);
   }
-
   .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.9rem 2rem;
-    background: transparent;
-    color: var(--text-dim);
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.03em;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.25s;
+    background: transparent; color: var(--text-dim);
+    font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em;
+    border: 1px solid var(--border); border-radius: 6px;
+    cursor: pointer; text-decoration: none; transition: all 0.25s;
   }
-
-  .btn-secondary:hover {
-    color: var(--text);
-    border-color: var(--text-muted);
-  }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
 
   /* ── STATS BAR ── */
   .stats-bar {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 2.5rem 2rem;
   }
-
   .stats-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
   }
-
-  .stat {
-    text-align: center;
-  }
-
+  .stat { text-align: center; }
   .stat-value {
     font-family: 'DM Mono', monospace;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--green);
-    margin-bottom: 0.3rem;
+    font-size: 1.5rem; font-weight: 500; color: var(--green); margin-bottom: 0.3rem;
   }
-
   .stat-label {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 0.78rem; color: var(--text-muted);
+    letter-spacing: 0.08em; text-transform: uppercase;
   }
 
   /* ── SECTIONS ── */
   section {
-    position: relative;
-    z-index: 1;
-    padding: 6rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;
   }
-
   .section-tag {
     font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
+    font-size: 0.7rem; color: var(--text-muted);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
   }
-
   .section-title {
     font-family: 'Instrument Serif', Georgia, serif;
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
+    font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem;
   }
-
   .section-desc {
-    color: var(--text-dim);
-    font-size: 1.05rem;
-    max-width: 680px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
+    color: var(--text-dim); font-size: 1.05rem;
+    max-width: 680px; line-height: 1.7; margin-bottom: 3rem;
   }
+  .section-divider { width: 100%; border: none; border-top: 1px solid var(--border); margin: 0; }
 
-  /* ── PROBLEM SECTION ── */
-  .problem-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .problem-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2rem;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-
-  .problem-card:hover {
-    border-color: var(--border-accent);
-    transform: translateY(-3px);
-  }
-
-  .problem-icon {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--red);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .problem-card h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin-bottom: 0.8rem;
-  }
-
-  .problem-card p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  /* ── SOLUTION SECTION ── */
+  /* ── PROTOCOL / SOLUTION STACK ── */
   .solution-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background: var(--border);
-    border-radius: 8px;
-    overflow: hidden;
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--border); border-radius: 8px; overflow: hidden;
   }
-
   .solution-row {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    background: var(--bg-card);
-    padding: 2rem;
-    gap: 2rem;
-    align-items: start;
-    transition: background 0.3s;
+    display: grid; grid-template-columns: 200px 1fr;
+    background: var(--bg-card); padding: 2rem; gap: 2rem;
+    align-items: start; transition: background 0.3s;
   }
-
-  .solution-row:hover {
-    background: var(--bg-elevated);
-  }
-
+  .solution-row:hover { background: var(--bg-elevated); }
   .solution-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--green);
-    letter-spacing: 0.1em;
-    padding-top: 0.15rem;
+    font-size: 0.75rem; color: var(--green);
+    letter-spacing: 0.1em; padding-top: 0.15rem;
   }
-
   .solution-row h3 {
     font-family: 'Instrument Serif', serif;
-    font-size: 1.15rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
+    font-size: 1.15rem; font-weight: 400; margin-bottom: 0.5rem;
   }
+  .solution-row p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
 
-  .solution-row p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  /* ── TOKENOMICS ── */
-  .token-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .token-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2rem;
-  }
-
-  .token-card.featured {
-    border-color: var(--green-dim);
-    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(27, 77, 62, 0.15) 100%);
-    grid-column: span 2;
-  }
-
-  .token-number {
-    font-family: 'DM Mono', monospace;
-    font-size: 2rem;
-    color: var(--green);
-    margin-bottom: 0.5rem;
-  }
-
-  .token-card h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.6rem;
-    letter-spacing: 0.02em;
-  }
-
-  .token-card p {
-    color: var(--text-dim);
-    font-size: 0.88rem;
-    line-height: 1.6;
-  }
-
-  /* ── DISTRIBUTION TABLE ── */
-  .dist-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 2rem;
-  }
-
-  .dist-table th {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: left;
-    padding: 0.8rem 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .dist-table td {
-    padding: 1rem;
-    font-size: 0.9rem;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-dim);
-  }
-
-  .dist-table td:first-child {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .dist-bar {
-    height: 4px;
-    background: var(--green-dim);
-    border-radius: 2px;
-    margin-top: 0.4rem;
-  }
-
-  .dist-bar-inner {
-    height: 100%;
-    background: var(--green);
-    border-radius: 2px;
-    transition: width 1s ease;
-  }
-
-  /* ── NODE SALE ── */
-  .tier-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background: var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .tier-row {
-    display: grid;
-    grid-template-columns: 120px 140px 1fr 140px;
-    background: var(--bg-card);
-    padding: 1.5rem 2rem;
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  .tier-row.tier-header {
-    background: var(--bg-elevated);
-  }
-
-  .tier-row.tier-header span {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .tier-name {
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .tier-name small {
-    display: block;
-    font-weight: 400;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    margin-top: 0.2rem;
-  }
-
-  .tier-price {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.1rem;
-    color: var(--green);
-  }
-
-  .tier-desc {
-    color: var(--text-dim);
-    font-size: 0.88rem;
-  }
-
-  .tier-cum {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--text-dim);
-    text-align: right;
-  }
-
-  /* ── ROADMAP ── */
-  .roadmap-list {
-    position: relative;
-    padding-left: 2rem;
-  }
-
-  .roadmap-list::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    bottom: 0.5rem;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--green), var(--border));
-  }
-
-  .roadmap-item {
-    position: relative;
-    margin-bottom: 2.5rem;
-    padding-left: 2rem;
-  }
-
-  .roadmap-item::before {
-    content: '';
-    position: absolute;
-    left: -2.35rem;
-    top: 0.5rem;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--green);
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 10px var(--green-glow);
-  }
-
-  .roadmap-phase {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--green);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-  }
-
-  .roadmap-item h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-  }
-
-  .roadmap-item p {
-    color: var(--text-dim);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  /* ── CTA SECTION ── */
-  .cta-section {
-    text-align: center;
-    padding: 6rem 2rem 8rem;
-    max-width: 700px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-section .section-title {
-    margin-bottom: 1rem;
-  }
-
-  .cta-section .section-desc {
-    max-width: 100%;
-    margin: 0 auto 2.5rem;
-  }
-
-  .waitlist-form {
-    display: flex;
-    gap: 0.75rem;
-    max-width: 480px;
-    margin: 0 auto 1rem;
-  }
-
-  .waitlist-form input {
-    flex: 1;
-    padding: 0.9rem 1.2rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-size: 0.9rem;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .waitlist-form input:focus {
-    border-color: var(--green-dim);
-  }
-
-  .waitlist-form input::placeholder {
-    color: var(--text-muted);
-  }
-
-  .cta-note {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    position: relative;
-    z-index: 1;
-    border-top: 1px solid var(--border);
-    padding: 3rem 2rem;
-  }
-
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-
-  .footer-brand {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  .footer-brand a {
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-brand a:hover { color: var(--text); }
-
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  .footer-links a {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--text-dim); }
-
-  /* ── DIVIDER ── */
-  .section-divider {
-    width: 100%;
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0;
-  }
-
-  /* ── DOCS GRID ── */
-  .docs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-  }
-
-  .doc-card {
-    display: block;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.8rem;
-    text-decoration: none;
-    transition: border-color 0.3s, transform 0.3s;
-    position: relative;
-  }
-
-  .doc-card:hover {
-    border-color: var(--border-accent);
-    transform: translateY(-3px);
-  }
-
-  .doc-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    padding: 0.2rem 0.5rem;
-    background: var(--green-glow);
-    border: 1px solid var(--border-accent);
-    border-radius: 3px;
-    color: var(--green);
-    letter-spacing: 0.05em;
-  }
-
-  .doc-icon {
-    font-size: 1.4rem;
-    color: var(--green);
-    margin-bottom: 0.8rem;
-  }
-
-  .doc-card h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-  }
-
-  .doc-card p {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.5;
-    margin-bottom: 0.8rem;
-  }
-
-  .doc-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-  }
-
-  /* ── API TERMINAL ── */
+  /* ── TERMINAL ── */
   .terminal-section {
-    position: relative;
-    z-index: 1;
-    padding: 4rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    padding: 4rem 2rem; max-width: 1100px; margin: 0 auto;
   }
-
   .terminal-window {
-    background: #0D0F0E;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
+    background: #0D0F0E; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
     font-family: 'DM Mono', monospace;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   }
-
   .terminal-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.2rem;
-    background: var(--bg-elevated);
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1.2rem; background: var(--bg-elevated);
     border-bottom: 1px solid var(--border);
   }
-
-  .terminal-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--text-muted);
-  }
-
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); }
   .terminal-dot.red { background: #EF4444; }
   .terminal-dot.yellow { background: #F59E0B; }
   .terminal-dot.green { background: #3ECF8E; }
-
   .terminal-title {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-left: 0.5rem;
-    letter-spacing: 0.05em;
+    font-size: 0.7rem; color: var(--text-muted);
+    margin-left: 0.5rem; letter-spacing: 0.05em;
   }
-
   .terminal-body {
-    padding: 1.5rem;
-    font-size: 0.82rem;
-    line-height: 1.8;
-    color: var(--text-dim);
-    min-height: 400px;
+    padding: 1.5rem; font-size: 0.82rem; line-height: 1.8;
+    color: var(--text-dim); min-height: 380px;
+  }
+  .terminal-body .prompt { color: var(--green); }
+  .terminal-body .comment { color: var(--text-muted); font-style: italic; }
+  .terminal-body .key { color: var(--bronze); }
+  .terminal-body .value { color: var(--green); }
+  .terminal-body .string { color: #E8EBE9; }
+  .terminal-line { opacity: 0; animation: termLine 0.3s ease forwards; }
+  @keyframes termLine { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* ── TIER STACK ── */
+  .tier-stack {
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--border); border-radius: 8px; overflow: hidden;
+  }
+  .tier-row {
+    display: grid; grid-template-columns: 120px 140px 1fr 140px;
+    background: var(--bg-card); padding: 1.5rem 2rem; gap: 1.5rem; align-items: center;
+  }
+  .tier-row.tier-header { background: var(--bg-elevated); }
+  .tier-row.tier-header span {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .tier-name { font-weight: 600; color: var(--text); }
+  .tier-name small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+  .tier-price { font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--green); }
+  .tier-desc { color: var(--text-dim); font-size: 0.88rem; }
+  .tier-cum { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--text-dim); text-align: right; }
+  .tier-note {
+    margin-top: 2rem; font-size: 0.82rem; color: var(--text-muted);
+    line-height: 1.7; padding: 1.5rem; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: 8px;
+    border-left: 3px solid var(--green-dim);
   }
 
-  .terminal-body .prompt {
-    color: var(--green);
+  /* ── CONTRACT STATUS ── */
+  .contract-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .contract-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 2rem;
   }
-
-  .terminal-body .comment {
-    color: var(--text-muted);
-    font-style: italic;
+  .contract-card-label {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    color: var(--green); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 0.8rem;
   }
-
-  .terminal-body .key {
-    color: var(--bronze);
+  .contract-card-name { font-size: 1.1rem; color: var(--text); font-weight: 600; margin-bottom: 1rem; }
+  .contract-detail {
+    font-family: 'DM Mono', monospace; font-size: 0.78rem;
+    color: var(--text-muted); margin-bottom: 0.5rem;
   }
-
-  .terminal-body .value {
-    color: var(--green);
+  .contract-detail span { color: var(--text-dim); }
+  .contract-link {
+    display: inline-block; margin-top: 1rem;
+    font-family: 'DM Mono', monospace; font-size: 0.78rem;
+    color: var(--green); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: border-color 0.2s;
   }
+  .contract-link:hover { border-bottom-color: var(--green); }
 
-  .terminal-body .string {
-    color: #E8EBE9;
+  /* ── ROADMAP ── */
+  .roadmap-list { position: relative; padding-left: 2rem; }
+  .roadmap-list::before {
+    content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem;
+    width: 1px; background: linear-gradient(to bottom, var(--green), var(--border));
   }
-
-  .terminal-line {
-    opacity: 0;
-    animation: termLine 0.3s ease forwards;
+  .roadmap-item { position: relative; margin-bottom: 2.5rem; padding-left: 2rem; }
+  .roadmap-item::before {
+    content: ''; position: absolute; left: -2.35rem; top: 0.5rem;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--green); border: 2px solid var(--bg);
+    box-shadow: 0 0 10px var(--green-glow);
   }
-
-  @keyframes termLine {
-    from { opacity: 0; transform: translateX(-5px); }
-    to { opacity: 1; transform: translateX(0); }
+  .roadmap-item.completed::before { background: var(--green); }
+  .roadmap-item.current::before { background: var(--green); box-shadow: 0 0 16px rgba(62,207,142,0.4); }
+  .roadmap-item.future::before { background: var(--text-muted); box-shadow: none; }
+  .roadmap-phase {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.5rem;
   }
-
-  /* ── FOUNDER ── */
-  .founder-section {
-    position: relative;
-    z-index: 1;
-    padding: 5rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .founder-card {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 2.5rem;
-  }
-
-  .founder-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--border-accent);
-    flex-shrink: 0;
-  }
-
-  .founder-info h3 {
+  .roadmap-item.future .roadmap-phase { color: var(--text-muted); }
+  .roadmap-item h3 {
     font-family: 'Instrument Serif', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 0.3rem;
+    font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem;
   }
+  .roadmap-item p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
 
-  .founder-role {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--green);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.8rem;
+  /* ── APPLICATION FORM ── */
+  .apply-section {
+    position: relative; z-index: 1;
+    padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;
   }
-
-  .founder-info p {
-    color: var(--text-dim);
-    font-size: 0.92rem;
-    line-height: 1.6;
+  .apply-form { max-width: 560px; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label {
+    display: block; font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;
   }
+  .form-group input, .form-group textarea {
+    width: 100%; padding: 0.9rem 1rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-family: 'DM Mono', monospace; font-size: 0.88rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--green-dim); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
+  .form-group textarea { resize: vertical; min-height: 100px; font-family: 'DM Sans', sans-serif; }
+  .form-disclaimer {
+    font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 1.5rem; padding: 1.2rem 1.5rem;
+    background: var(--bg-card); border-left: 3px solid var(--green-dim);
+    border-radius: 0 6px 6px 0;
+  }
+  .form-submit {
+    padding: 0.9rem 2.5rem; background: var(--green); color: #0A0C0B;
+    border: none; border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.03em;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .form-submit:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
+  #form-message { margin-top: 1rem; font-size: 0.85rem; display: none; }
 
-  /* ── FOOTER DISCLAIMER ── */
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border); padding: 3rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-brand {
+    font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted);
+  }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .footer-brand a:hover { color: var(--text); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text-dim); }
   .footer-disclaimer {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 2rem 0;
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
+    max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0;
+    border-top: 1px solid var(--border); margin-top: 2rem;
   }
-
-  .footer-disclaimer p {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .footer-legal-links {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .footer-legal-links a {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  .footer-disclaimer p { font-size: 0.7rem; color: var(--text-muted); line-height: 1.7; }
+  .footer-legal-links { display: flex; gap: 1.5rem; margin-top: 1rem; }
+  .footer-legal-links a { font-size: 0.72rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
   .footer-legal-links a:hover { color: var(--text-dim); }
 
   /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
@@ -955,20 +406,15 @@
     .nav-links a:not(.nav-badge) { display: none; }
     .hero { padding: 7rem 1.5rem 3rem; }
     .stats-inner { grid-template-columns: repeat(2, 1fr); }
-    section { padding: 4rem 1.5rem; }
-    .problem-grid { grid-template-columns: 1fr; }
+    section, .apply-section { padding: 4rem 1.5rem; }
     .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
-    .token-grid { grid-template-columns: 1fr; }
-    .token-card.featured { grid-column: span 1; }
-    .docs-grid { grid-template-columns: 1fr; }
     .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
     .tier-row.tier-header { display: none; }
     .tier-desc { grid-column: span 2; }
-    .waitlist-form { flex-direction: column; }
+    .contract-grid { grid-template-columns: 1fr; }
     .footer-inner { flex-direction: column; text-align: center; }
-    .founder-card { flex-direction: column; text-align: center; gap: 1.5rem; }
-    .terminal-body { font-size: 0.72rem; padding: 1rem; }
     .footer-legal-links { justify-content: center; }
+    .terminal-body { font-size: 0.72rem; padding: 1rem; }
   }
 </style>
 </head>
@@ -976,46 +422,45 @@
 
 <div class="grid-bg"></div>
 
-<!-- ── NAV ── -->
+<!-- ══════════════════════════════════════════ NAV ══════════════════════════════════════════ -->
 <nav>
   <a href="#" class="nav-logo">BCCS</a>
   <div class="nav-links">
-    <a href="#problem">Problem</a>
-    <a href="#solution">Protocol</a>
-    <a href="#tokenomics">Token</a>
-    <a href="#sale">Node Sale</a>
-    <a href="#docs">Docs</a>
+    <a href="#protocol">Protocol</a>
+    <a href="#access">Infrastructure Access</a>
+    <a href="#contracts">Contracts</a>
+    <a href="#apply">Apply</a>
     <span class="nav-badge">BASE L2</span>
   </div>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- ══════════════════════════════════════════ HERO ══════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-tag">
-    <span>DePIN</span> Biological Capital Control Standard
+    <span>DePIN</span> Biological Computing Control Standard
   </div>
-  <h1>The First <em>Control Plane</em> for the Agentic Bioeconomy</h1>
-  <p class="hero-sub">AI agents are trading millions daily. But they are blind to the physical world. BCCS is the cryptographic API that makes planetary biology programmable, verifiable, and composable on-chain.</p>
+  <h1>The <em>Verification Layer</em> for Biological Capital</h1>
+  <p class="hero-sub">BCCS is a decentralized protocol that makes biological assets &mdash; forests, soil, organisms, aquatic ecosystems &mdash; computationally verifiable on-chain. Multi-source consensus. Machine-readable biological state.</p>
   <div class="hero-actions">
-    <a href="#waitlist" class="btn-primary">Join Genesis Waitlist &rarr;</a>
-    <a href="BCCS_Tokenomics_Litepaper_v1.0.pdf" class="btn-secondary" target="_blank">Read the Litepaper &darr;</a>
+    <a href="#apply" class="btn-primary">Apply for Infrastructure Access &rarr;</a>
+    <a href="#protocol" class="btn-secondary">Read the Protocol &darr;</a>
   </div>
 </section>
 
-<!-- ── STATS ── -->
+<!-- ══════════════════════════════════════════ STATS ══════════════════════════════════════════ -->
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat">
-      <div class="stat-value">$0</div>
-      <div class="stat-label">Agent-Verified Bio-Assets</div>
+      <div class="stat-value">21-Char</div>
+      <div class="stat-label">BAIN ID Standard</div>
     </div>
     <div class="stat">
       <div class="stat-value">8-State</div>
-      <div class="stat-label">Lifecycle Engine</div>
+      <div class="stat-label">Verification Lifecycle</div>
     </div>
     <div class="stat">
-      <div class="stat-value">1B</div>
-      <div class="stat-label">Fixed Supply</div>
+      <div class="stat-value">3-Tier</div>
+      <div class="stat-label">Oracle Consensus</div>
     </div>
     <div class="stat">
       <div class="stat-value">Base L2</div>
@@ -1024,79 +469,52 @@
   </div>
 </div>
 
-<!-- ── API TERMINAL ── -->
+<!-- ══════════════════════════════════════════ TERMINAL ══════════════════════════════════════════ -->
 <div class="terminal-section fade-in">
   <div class="terminal-window">
     <div class="terminal-header">
       <div class="terminal-dot red"></div>
       <div class="terminal-dot yellow"></div>
       <div class="terminal-dot green"></div>
-      <span class="terminal-title">bccs-api &mdash; live query demo</span>
+      <span class="terminal-title">bccs-api &mdash; verification query</span>
     </div>
     <div class="terminal-body" id="terminal"></div>
   </div>
 </div>
 
-<!-- ── PROBLEM ── -->
-<section id="problem">
-  <div class="section-tag fade-in">01 — The Problem</div>
-  <h2 class="section-title fade-in">The Thermodynamic Oracle Problem</h2>
-  <p class="section-desc fade-in">Autonomous agents possess wallets and spending authority for digital assets. But biological capital is governed by entropy. Current infrastructure cannot bridge this gap.</p>
-
-  <div class="problem-grid">
-    <div class="problem-card fade-in">
-      <div class="problem-icon">Failure 01</div>
-      <h3>Agentic Finance Is Blind</h3>
-      <p>AI agents execute transactions at machine speed across digital assets. But they cannot natively verify or price the thermodynamic state of physical, biological systems.</p>
-    </div>
-    <div class="problem-card fade-in">
-      <div class="problem-icon">Failure 02</div>
-      <h3>Biology Is Entropic</h3>
-      <p>Forests burn. Soil degrades. Permafrost thaws. Earth&rsquo;s actual capital decays on timescales that static financial instruments cannot capture.</p>
-    </div>
-    <div class="problem-card fade-in">
-      <div class="problem-icon">Failure 03</div>
-      <h3>The PDF Oracle</h3>
-      <p>Current bio-markets rely on human-audited certificates that become factually obsolete the moment biological conditions shift. Autonomous code cannot trust a PDF.</p>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- ── SOLUTION ── -->
-<section id="solution">
-  <div class="section-tag fade-in">02 — The Protocol</div>
-  <h2 class="section-title fade-in">Making Reality Programmable</h2>
-  <p class="section-desc fade-in">BCCS replaces the PDF Oracle with a continuous, cryptographic control plane for biological capital. Three primitives power the system:</p>
+<!-- ══════════════════════════════════════════ PROTOCOL ══════════════════════════════════════════ -->
+<section id="protocol">
+  <div class="section-tag fade-in">01 &mdash; Protocol Architecture</div>
+  <h2 class="section-title fade-in">How biological state becomes verifiable</h2>
+  <p class="section-desc fade-in">Biological assets represent over $150 trillion in global natural capital, yet no computational infrastructure exists to verify their state. BCCS provides the missing verification layer.</p>
 
   <div class="solution-stack fade-in">
     <div class="solution-row">
       <div class="solution-label">BAIN ID</div>
       <div>
-        <h3>The ISIN for Nature</h3>
-        <p>A 21-character immutable identifier for every biological asset. Encodes asset type, jurisdiction, biome, and registration. Anchored on Base. Non-transferable. Designed to evolve from proprietary stewardship into a consortium-governed reference standard.</p>
+        <h3>Bio-Asset Identification Number</h3>
+        <p>A 21-character immutable identifier for every biological asset. Encodes region (ISO 3166-1), asset class, unique reference, and current verification state checksum. Anchored on Base. Eight possible states from Unverified through Verified-Stable to Decommissioned.</p>
       </div>
     </div>
     <div class="solution-row">
-      <div class="solution-label">8-STATE ENGINE</div>
+      <div class="solution-label">3-TIER ORACLE</div>
       <div>
-        <h3>Thermodynamic Lifecycle</h3>
-        <p>Every BAIN ID moves through 8 states: Registered, Active, Suspended, Migrating, Dormant, Degraded, Depleted, Archived. Real-time physical state tracking from verification to terminal entropy.</p>
+        <h3>Multi-Source Verification Consensus</h3>
+        <p>State transitions require consensus from at least two of three independent data tiers: Tier 1 &mdash; satellite remote sensing (Sentinel-2, Landsat, Planet Labs). Tier 2 &mdash; ground-based IoT sensors (soil moisture, air quality, biomass density). Tier 3 &mdash; physical inspection with timestamped GPS evidence. No single data source can trigger a state change.</p>
       </div>
     </div>
     <div class="solution-row">
       <div class="solution-label">PoPS</div>
       <div>
         <h3>Proof-of-Physical-State</h3>
-        <p>A novel DePIN consensus mechanism. Validator Nodes cross-reference Oracle claims against satellite imagery, thermal data, and independent research streams. Three-tier verification &mdash; remote sensing, ground sensor networks, and accredited physical inspection &mdash; combined through a confidence scoring model and dispute-resolution framework. Fraudulent claims are algorithmically slashed.</p>
+        <p>Validators operate verification nodes, submit evidence data, and confirm biological state transitions on-chain. False data submissions are penalized through economic slashing &mdash; slashed verification units are permanently burned. Active participation required.</p>
       </div>
     </div>
     <div class="solution-row">
-      <div class="solution-label">BIOCLEARING</div>
+      <div class="solution-label">API LAYER</div>
       <div>
-        <h3>Biological Settlement</h3>
-        <p>Protocol-native clearing mechanism. When a BAIN ID transitions state, the engine calculates net change in biological capital value and settles on-chain. Real-time, transparent, composable.</p>
+        <h3>Verification Queries</h3>
+        <p>AI agents, institutions, and smart contracts query biological state data via the BCCS API. Every verification query is priced in $BCCS, creating protocol-native demand proportional to verification consumption. RESTful and WebSocket interfaces for real-time state transition events.</p>
       </div>
     </div>
   </div>
@@ -1104,275 +522,182 @@
 
 <hr class="section-divider">
 
-<!-- ── TOKENOMICS ── -->
-<section id="tokenomics">
-  <div class="section-tag fade-in">03 — Tokenomics</div>
-  <h2 class="section-title fade-in">$BQRY: The Fuel of the Bioeconomy</h2>
-  <p class="section-desc fade-in">Not a fundraising mechanism. The mathematical foundation of the protocol&rsquo;s trust model. Three utility functions create structural demand:</p>
-
-  <div class="token-grid fade-in">
-    <div class="token-card">
-      <div class="token-number">3A</div>
-      <h3>Cryptographic Surety</h3>
-      <p>Oracles must stake $BQRY to submit state transitions. As bio-assets scale globally, massive supply is structurally locked out of circulation. No fiat fees &mdash; pure skin in the game.</p>
-    </div>
-    <div class="token-card">
-      <div class="token-number">3B</div>
-      <h3>Truth Enforcement</h3>
-      <p>Algorithmic slashing. Submit fraudulent thermodynamic data and your staked $BQRY is instantly burned or redistributed. Lying carries an immediate, irreversible financial penalty.</p>
-    </div>
-    <div class="token-card featured">
-      <div class="token-number">3C</div>
-      <h3>Query Settlement &mdash; Deflationary Engine</h3>
-      <p>AI agents pay USDC query fees via standard stablecoin rails &mdash; zero friction for autonomous systems already on Base. A programmatic portion of query revenue is routed to buy and distribute to active Validator Nodes $BQRY, creating persistent buy-side pressure that strengthens as network usage scales.</p>
-    </div>
-  </div>
-
-  <!-- Distribution -->
-  <table class="dist-table fade-in" style="margin-top: 3rem;">
-    <thead>
-      <tr>
-        <th>Allocation</th>
-        <th>Share</th>
-        <th>Vesting</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Validator Node Emissions</td>
-        <td>45%</td>
-        <td>6-year halving schedule. No cliff. Early operators earn exponentially more.</td>
-        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 100%"></div></div></td>
-      </tr>
-      <tr>
-        <td>Ecosystem & Oracle Grants</td>
-        <td>20%</td>
-        <td>10% at TGE. 90% milestone-locked for Founding Oracle onboarding.</td>
-        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 44%"></div></div></td>
-      </tr>
-      <tr>
-        <td>Core Team</td>
-        <td>15%</td>
-        <td>12-month cliff. 36-month linear daily vesting.</td>
-        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 33%"></div></div></td>
-      </tr>
-      <tr>
-        <td>Strategic Backers</td>
-        <td>12%</td>
-        <td>6-month cliff. 24-month linear vesting.</td>
-        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 27%"></div></div></td>
-      </tr>
-      <tr>
-        <td>Public Sale & Liquidity</td>
-        <td>8%</td>
-        <td>100% at TGE. Deep order books on Aerodrome/Base.</td>
-        <td><div class="dist-bar"><div class="dist-bar-inner" style="width: 18%"></div></div></td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<hr class="section-divider">
-
-<!-- ── NODE SALE ── -->
-<section id="sale">
-  <div class="section-tag fade-in">04 — Genesis Sale</div>
-  <h2 class="section-title fade-in">Validator Node Licenses</h2>
-  <p class="section-desc fade-in">Non-transferable ERC-721 software permits on Base. No ICO. No security offering. You buy the right to operate infrastructure and earn 45% of total $BQRY supply.</p>
+<!-- ══════════════════════════════════════════ ACCESS LICENSES ══════════════════════════════════════════ -->
+<section id="access">
+  <div class="section-tag fade-in">02 &mdash; Infrastructure Access</div>
+  <h2 class="section-title fade-in">Non-transferable credentials for node operation</h2>
+  <p class="section-desc fade-in">Each Infrastructure Access License is a soulbound ERC-721 credential on Base granting the right to operate a verification node. Acquired through application and whitelist approval. USDC payment only.</p>
 
   <div class="tier-stack fade-in">
     <div class="tier-row tier-header">
       <span>Tier</span>
       <span>Price (USDC)</span>
-      <span>Profile</span>
-      <span style="text-align:right">Cumulative</span>
+      <span>Description</span>
+      <span style="text-align:right">Licenses</span>
     </div>
     <div class="tier-row">
-      <div class="tier-name">Alpha<small>500 licenses</small></div>
+      <div class="tier-name">Alpha<small>Application open</small></div>
       <div class="tier-price">$1,000</div>
-      <div class="tier-desc">Whitelist: VC, Angels, KOLs</div>
-      <div class="tier-cum">$500K</div>
+      <div class="tier-desc">Whitelisted infrastructure operators</div>
+      <div class="tier-cum">500</div>
     </div>
     <div class="tier-row">
-      <div class="tier-name">Beta<small>1,000 licenses</small></div>
+      <div class="tier-name">Beta<small>Coming</small></div>
       <div class="tier-price">$1,500</div>
-      <div class="tier-desc">Waitlist: DePIN communities, syndicates</div>
-      <div class="tier-cum">$2.0M</div>
+      <div class="tier-desc">Expanded operator cohort</div>
+      <div class="tier-cum">1,000</div>
     </div>
     <div class="tier-row">
-      <div class="tier-name">Gamma<small>2,000 licenses</small></div>
+      <div class="tier-name">Gamma<small>Coming</small></div>
       <div class="tier-price">$2,200</div>
-      <div class="tier-desc">Public sale: DePIN operators</div>
-      <div class="tier-cum">$6.4M</div>
+      <div class="tier-desc">DePIN infrastructure participants</div>
+      <div class="tier-cum">2,000</div>
     </div>
     <div class="tier-row">
-      <div class="tier-name">Delta<small>3,000 licenses</small></div>
+      <div class="tier-name">Delta<small>Coming</small></div>
       <div class="tier-price">$3,000</div>
-      <div class="tier-desc">Public sale: global community</div>
-      <div class="tier-cum">$15.4M</div>
+      <div class="tier-desc">Global verification network expansion</div>
+      <div class="tier-cum">3,000</div>
     </div>
     <div class="tier-row">
-      <div class="tier-name">Epsilon<small>Dynamic</small></div>
-      <div class="tier-price">$3,500+</div>
-      <div class="tier-desc">Open market</div>
-      <div class="tier-cum">$20M+</div>
+      <div class="tier-name">Epsilon<small>Coming</small></div>
+      <div class="tier-price">$3,500</div>
+      <div class="tier-desc">Full network coverage</div>
+      <div class="tier-cum">5,000</div>
+    </div>
+  </div>
+
+  <div class="tier-note fade-in">
+    An Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. The BCCS verification unit ($BCCS) is earned exclusively through active validator operation when the mainnet verification network is operational. No representation is made regarding the future value of any digital asset associated with this protocol.
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════════════════════════════════ CONTRACTS ══════════════════════════════════════════ -->
+<section id="contracts">
+  <div class="section-tag fade-in">03 &mdash; On-Chain Verification</div>
+  <h2 class="section-title fade-in">Contract status</h2>
+  <p class="section-desc fade-in">All contracts are deployed on Base Layer 2 and source-verified on BaseScan.</p>
+
+  <div class="contract-grid fade-in">
+    <div class="contract-card">
+      <div class="contract-card-label">Verification Unit</div>
+      <div class="contract-card-name">$BCCS &mdash; ERC-20</div>
+      <div class="contract-detail">Standard: <span>ERC-20 (OpenZeppelin)</span></div>
+      <div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div>
+      <div class="contract-detail">Supply: <span>1,000,000,000 (hard cap, non-mintable)</span></div>
+      <div class="contract-detail">Decimals: <span>18</span></div>
+      <div class="contract-detail">Pausable: <span>Yes</span></div>
+      <div class="contract-detail">Owner: <span>Safe Multisig (2-of-3)</span></div>
+      <div class="contract-detail">Address: <span id="token-address">Deploying&hellip;</span></div>
+      <a href="#" class="contract-link" id="token-basescan">View on BaseScan &rarr;</a>
+    </div>
+    <div class="contract-card">
+      <div class="contract-card-label">Infrastructure Access License</div>
+      <div class="contract-card-name">Node License &mdash; ERC-721</div>
+      <div class="contract-detail">Standard: <span>ERC-721 + EIP-5192 (Soulbound)</span></div>
+      <div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div>
+      <div class="contract-detail">Transferable: <span>No &mdash; non-transferable credential</span></div>
+      <div class="contract-detail">Tiers: <span>5 (Alpha through Epsilon)</span></div>
+      <div class="contract-detail">Total: <span>11,500 licenses</span></div>
+      <div class="contract-detail">Payment: <span>Native USDC on Base</span></div>
+      <div class="contract-detail">Address: <span id="license-address">Deploying&hellip;</span></div>
+      <a href="#" class="contract-link" id="license-basescan">View on BaseScan &rarr;</a>
     </div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ── ROADMAP ── -->
+<!-- ══════════════════════════════════════════ ROADMAP ══════════════════════════════════════════ -->
 <section id="roadmap">
-  <div class="section-tag fade-in">05 — Roadmap</div>
-  <h2 class="section-title fade-in">The Path to Planetary Attestation</h2>
+  <div class="section-tag fade-in">04 &mdash; Protocol Phases</div>
+  <h2 class="section-title fade-in">Phase-gated development</h2>
+  <p class="section-desc fade-in">Each phase transitions when measurable criteria are met. No phase is triggered by time alone.</p>
 
   <div class="roadmap-list fade-in">
-    <div class="roadmap-item">
-      <div class="roadmap-phase">Q2 2026</div>
-      <h3>Foundation</h3>
-      <p>Protocol specification finalized. BAIN ID standard published. First Founding Oracle partnerships initiated via Ecosystem Grants. Base testnet. Validator whitelist opens.</p>
+    <div class="roadmap-item current">
+      <div class="roadmap-phase">PHASE 0 &mdash; FOUNDATION</div>
+      <h3>Development environment and legal preparation</h3>
+      <p>Testnet deployment, legal document drafting, multisig setup, language control finalization, landing page, waitlist form.</p>
     </div>
-    <div class="roadmap-item">
-      <div class="roadmap-phase">Q3 2026</div>
-      <h3>Genesis Sale</h3>
-      <p>Alpha and Beta tier license sale. First 100 BAIN IDs minted. AI verification agent v1 on testnet. Partnership framework live.</p>
+    <div class="roadmap-item future">
+      <div class="roadmap-phase">PHASE 1 &mdash; MAINNET DEPLOY</div>
+      <h3>Contracts deployed and verified on BaseScan</h3>
+      <p>ERC-20 and ERC-721 contracts deployed to Base mainnet. Source verified. Treasury mint to Safe multisig. Prerequisite: legal clearance.</p>
     </div>
-    <div class="roadmap-item">
-      <div class="roadmap-phase">Q4 2026</div>
-      <h3>Mainnet</h3>
-      <p>Token Generation Event on Base. Gamma and Delta tiers. PoPS consensus v1 on mainnet. Bioclearing engine deployed. First data licensing deals.</p>
+    <div class="roadmap-item future">
+      <div class="roadmap-phase">PHASE 2 &mdash; COMMUNITY BUILD</div>
+      <h3>Public channels and content pipeline</h3>
+      <p>Social presence established. Waitlist open. Protocol documentation published. Prerequisite: contracts live on BaseScan.</p>
     </div>
-    <div class="roadmap-item">
-      <div class="roadmap-phase">Q1 2027</div>
-      <h3>Scale</h3>
-      <p>Epsilon tier and open market. Ethereum bridge. On-chain governance. 1,000+ active BAIN IDs. First Oracle slashing validates trust model.</p>
+    <div class="roadmap-item future">
+      <div class="roadmap-phase">PHASE 3 &mdash; AUDIT</div>
+      <h3>Professional smart contract audit</h3>
+      <p>Contracts submitted to audit firm. Tier display active on bccs.bio. Prerequisite: contracts submitted to auditor.</p>
     </div>
-    <div class="roadmap-item">
-      <div class="roadmap-phase">2027 &mdash; 2028</div>
-      <h3>Network Scaling</h3>
-      <p>Full DePIN scaling across biomes. Institutional integration: sovereign wealth, reinsurance, ESG analytics. First insurance pilots on BCCS state transitions.</p>
+    <div class="roadmap-item future">
+      <div class="roadmap-phase">PHASE 4 &mdash; ALPHA ACTIVATION</div>
+      <h3>Infrastructure access for whitelisted applicants</h3>
+      <p>Alpha tier enabled for approved addresses. Prerequisite: clean audit, legal documents approved, waitlist threshold met.</p>
     </div>
-    <div class="roadmap-item">
-      <div class="roadmap-phase">2028</div>
-      <h3>Consortium Transition</h3>
-      <p>BAIN Standards Consortium (BSC) established as independent legal entity. Specification governance transfers from KRYONIS. Royalty-free open licensing activated.</p>
-    </div>
-    <div class="roadmap-item">
-      <div class="roadmap-phase">2029+</div>
-      <h3>Open Standard</h3>
-      <p>BSC operates independently. BAIN ID submitted for formal international recognition. KRYONIS continues as commercial infrastructure provider on the open standard.</p>
+    <div class="roadmap-item future">
+      <div class="roadmap-phase">PHASE 5+ &mdash; NETWORK EXPANSION</div>
+      <h3>Additional tiers, verification network, protocol governance</h3>
+      <p>Beta through Epsilon tiers activated sequentially. Testnet verification. Mainnet oracle network. Governance transition. Each gate requires measurable criteria.</p>
     </div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ── DOCUMENTS ── -->
-<section id="docs">
-  <div class="section-tag fade-in">06 — Documents</div>
-  <h2 class="section-title fade-in">Protocol Documentation</h2>
-  <p class="section-desc fade-in">Full technical specifications, economic model, governance framework, and strategic overview. Seven versioned documents maintained by KRYONIS.</p>
+<!-- ══════════════════════════════════════════ APPLICATION ══════════════════════════════════════════ -->
+<section class="apply-section" id="apply">
+  <div class="section-tag fade-in">Apply for Infrastructure Access</div>
+  <h2 class="section-title fade-in">Verification node operator application</h2>
+  <p class="section-desc fade-in">Infrastructure Access Licenses are distributed through an application process. Submit your Base wallet address and qualification to be reviewed for whitelist inclusion.</p>
 
-  <div class="docs-grid fade-in">
-    <a href="BCCS_Whitepaper_v1.2.pdf" target="_blank" class="doc-card">
-      <div class="doc-icon">&#9671;</div>
-      <h3>Whitepaper v1.2</h3>
-      <p>The Biological Control Plane &mdash; full protocol architecture, verification framework, and technical design.</p>
-      <span class="doc-meta">PDF &middot; 6 pages &middot; March 2026</span>
-    </a>
-    <a href="BCCS_Tokenomics_Litepaper_v1.0.pdf" target="_blank" class="doc-card">
-      <div class="doc-icon">&#9672;</div>
-      <h3>Tokenomics Litepaper v1.0</h3>
-      <p>$BQRY token utility, USDC settlement, buy-and-distribute mechanics, Genesis Validator License Sale.</p>
-      <span class="doc-meta">PDF &middot; 7 pages &middot; March 2026</span>
-    </a>
-    <a href="BCCS_BAIN_ID_Specification_v1.2.pdf" target="_blank" class="doc-card">
-      <div class="doc-badge">v1.2</div>
-      <div class="doc-icon">&#9670;</div>
-      <h3>BAIN ID Technical Specification</h3>
-      <p>Bio-Asset Identification Number format, 8-state lifecycle model, asset taxonomy, API schema, and validation rules.</p>
-      <span class="doc-meta">PDF &middot; 6 pages &middot; March 2026</span>
-    </a>
-    <a href="BCCS_Executive_Brief_v2.pdf" target="_blank" class="doc-card">
-      <div class="doc-icon">&#9673;</div>
-      <h3>Executive Brief v2</h3>
-      <p>Strategic overview for institutional decision-makers, funds, and strategic partners.</p>
-      <span class="doc-meta">PDF &middot; 4 pages &middot; March 2026</span>
-    </a>
-    <a href="BCCS_PoPS_Methodology_v1.0.pdf" target="_blank" class="doc-card">
-      <div class="doc-badge">NEW</div>
-      <div class="doc-icon">&#9674;</div>
-      <h3>PoPS Methodology v1.0</h3>
-      <p>Verification methodology, three-tier data architecture, confidence scoring model, error rates, and dispute resolution.</p>
-      <span class="doc-meta">PDF &middot; 6 pages &middot; March 2026</span>
-    </a>
-    <a href="BCCS_Token_Economic_Model_v1.0.pdf" target="_blank" class="doc-card">
-      <div class="doc-badge">NEW</div>
-      <div class="doc-icon">&#9672;</div>
-      <h3>Token Economic Model v1.0</h3>
-      <p>Parameterized $BQRY model: stake requirements, fee splits, emission schedule, stress tests, security budget analysis.</p>
-      <span class="doc-meta">PDF &middot; 5 pages &middot; March 2026</span>
-    </a>
-    <a href="BCCS_BAIN_Governance_v1.0.pdf" target="_blank" class="doc-card">
-      <div class="doc-badge">NEW</div>
-      <div class="doc-icon">&#9671;</div>
-      <h3>BAIN Governance &amp; Standardization</h3>
-      <p>IP framework, consortium migration roadmap, standards body structure, and open licensing path.</p>
-      <span class="doc-meta">PDF &middot; 5 pages &middot; March 2026</span>
-    </a>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- ── FOUNDER ── -->
-<div class="founder-section">
-  <div class="section-tag fade-in">07 &mdash; Architect</div>
-  <div class="founder-card fade-in">
-    <img src="steven-alber.jpeg" alt="Steven Alber" class="founder-photo" loading="lazy">
-    <div class="founder-info">
-      <h3>Steven Alber</h3>
-      <div class="founder-role">Founder &amp; Protocol Architect</div>
-      <p>Two decades in strategic systems design across Asia-Pacific. KRYONIS Sovereign Systems Limited, Hong Kong.</p>
+  <div class="apply-form fade-in">
+    <div class="form-group">
+      <label>Base Wallet Address</label>
+      <input type="text" placeholder="0x..." id="wallet-input">
     </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="you@example.com" id="email-input">
+    </div>
+    <div class="form-group">
+      <label>Qualification</label>
+      <textarea id="qual-input" placeholder="Describe your experience with DePIN infrastructure, biological systems, verification networks, or node operation."></textarea>
+    </div>
+
+    <div class="form-disclaimer">
+      A BCCS Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. Validator emissions begin only when the mainnet verification network is operational and you are actively running a verification node. No representation is made regarding the future value of any digital asset associated with this protocol.
+    </div>
+
+    <button class="form-submit" onclick="submitApplication()">Submit Application</button>
+    <div id="form-message"></div>
   </div>
-</div>
-
-<hr class="section-divider">
-
-<!-- ── CTA / WAITLIST ── -->
-<section class="cta-section" id="waitlist">
-  <div class="section-tag fade-in">Genesis Validator License Sale — Q3 2026</div>
-  <h2 class="section-title fade-in">Operate the Verification Layer of the<br>Agentic Bioeconomy</h2>
-  <p class="section-desc fade-in">The intersection of autonomous agents and planetary biology is empty. We are laying the concrete. Alpha tier opens exclusively to whitelisted partners.</p>
-
-  <div class="waitlist-form fade-in">
-    <input type="email" id="waitlist-email" placeholder="your@email.com" aria-label="Email address" onkeydown="if(event.key==='Enter')handleWaitlist()">
-    <button class="btn-primary" onclick="handleWaitlist()">Join Waitlist</button>
-  </div>
-  <p class="cta-note fade-in">We&rsquo;ll notify you when Alpha opens. No spam. Unsubscribe anytime.</p>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- ══════════════════════════════════════════ FOOTER ══════════════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="https://kryonis.global">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>
-      &copy; 2026. All rights reserved.
+      <a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>
+      &copy; 2026
     </div>
     <div class="footer-links">
-      <a href="https://x.com/BCCS_bio">X / Twitter</a>
-      <a href="https://bccs.bio">bccs.bio</a>
-      <a href="https://bioclearing.global">bioclearing.global</a>
-      <a href="https://kryonis.global">kryonis.global</a>
+      <a href="https://kryonislab.org" target="_blank">KRYONIS Lab</a>
+      <a href="https://bioclearing.global" target="_blank">bioclearing.global</a>
     </div>
   </div>
   <div class="footer-disclaimer">
-    <p>This website and all associated documents are provided for informational purposes only and do not constitute a prospectus, an offer document, or a solicitation of investment in any jurisdiction. Validator Node Licenses are designed as software licenses and are not intended to constitute securities or investment contracts. Regulatory treatment may vary by jurisdiction. The $BQRY token is designed as a cryptographic utility token to secure the PoPS consensus mechanism and facilitate protocol queries; it is not intended as a speculative investment vehicle. Nothing on this website should be construed as legal, financial, or tax advice. KRYONIS Sovereign Systems Limited operates under the laws of Hong Kong SAR. Prospective participants should consult qualified legal and financial counsel in their jurisdiction before engaging.</p>
+    <p>BCCS is not an investment product. The BCCS verification unit ($BCCS) is a protocol access mechanism, not a financial instrument. Node Licenses are non-transferable software permits granting operational rights within the BCCS verification network. License holders perform work and receive protocol emissions in exchange for that work. There is no guarantee of value, profit, or return. This website does not constitute financial, legal, or investment advice. KRYONIS Sovereign Systems Limited is incorporated in Hong Kong SAR.</p>
     <div class="footer-legal-links">
-      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="risk.html">Risk Disclosure</a>
       <a href="privacy.html">Privacy Policy</a>
     </div>
   </div>
@@ -1388,76 +713,31 @@
       }
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // ── Waitlist handler via Formspree ──
-  const FORMSPREE_ID = 'xojkwqbg';
-
-  async function handleWaitlist() {
-    const input = document.getElementById('waitlist-email');
-    const btn = document.querySelector('.waitlist-form .btn-primary');
-    const email = input.value.trim();
-
-    if (!email || !email.includes('@') || !email.includes('.')) {
-      input.style.borderColor = '#EF4444';
-      input.setAttribute('placeholder', 'Enter a valid email');
-      setTimeout(() => { input.style.borderColor = ''; input.setAttribute('placeholder', 'your@email.com'); }, 2000);
-      return;
-    }
-
-    // Loading state
-    btn.textContent = 'Submitting...';
-    btn.style.opacity = '0.7';
-    btn.style.pointerEvents = 'none';
-
-    try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, _subject: 'BCCS Genesis Waitlist', source: 'bccs.bio' })
-      });
-
-      if (res.ok) {
-        // Success — replace form with confirmation
-        const form = document.querySelector('.waitlist-form');
-        form.innerHTML = '<div style="text-align:center;padding:1rem 0;"><span style="color:#3ECF8E;font-size:1.4rem;margin-right:0.5rem;">&#10003;</span><span style="color:#E8EBE9;font-size:1rem;">You\'re on the list. We\'ll be in touch before Alpha opens.</span></div>';
-        document.querySelector('.cta-note').textContent = email;
-        document.querySelector('.cta-note').style.color = '#7A8580';
-      } else {
-        throw new Error('Submission failed');
-      }
-    } catch (err) {
-      btn.textContent = 'Join Waitlist';
-      btn.style.opacity = '1';
-      btn.style.pointerEvents = 'auto';
-      input.value = '';
-      input.setAttribute('placeholder', 'Something went wrong — try again');
-      input.style.borderColor = '#EF4444';
-      setTimeout(() => { input.style.borderColor = ''; input.setAttribute('placeholder', 'your@email.com'); }, 3000);
-    }
-  }
   // ── Terminal typing animation ──
   const terminalLines = [
-    { text: '# AI agent queries biological asset state via BCCS API', cls: 'comment' },
+    { text: '# Verification query — biological asset state via BCCS API', cls: 'comment' },
     { text: '', cls: '' },
-    { text: '> GET /asset/CA-PFRS-20260915-0000142/state', cls: 'prompt' },
+    { text: '> GET /bain/BRA-TF-7f3a9c2b1e4d-A1C7/state', cls: 'prompt' },
     { text: '', cls: '' },
     { text: '{', cls: 'string' },
-    { text: '  <span class="key">"bain_id"</span>:       <span class="value">"CA-PFRS-20260915-0000142"</span>,', cls: '' },
-    { text: '  <span class="key">"asset_class"</span>:   <span class="value">"Permafrost Reserve"</span>,', cls: '' },
-    { text: '  <span class="key">"state"</span>:         <span class="value">"Active"</span>,', cls: '' },
-    { text: '  <span class="key">"confidence"</span>:    <span class="value">0.97</span>,', cls: '' },
-    { text: '  <span class="key">"last_verified"</span>: <span class="value">"2026-03-11T14:22:00Z"</span>,', cls: '' },
-    { text: '  <span class="key">"decay_deadline"</span>:<span class="value">"2028-03-11T14:22:00Z"</span>,', cls: '' },
-    { text: '  <span class="key">"permission"</span>:    <span class="value">"GRANTED"</span>,', cls: '' },
-    { text: '  <span class="key">"fee"</span>:           <span class="value">"0.012 USDC"</span>,', cls: '' },
-    { text: '  <span class="key">"buyback"</span>:       <span class="value">"0.004 USDC → $BQRY → validators"</span>', cls: '' },
+    { text: '  <span class="key">"bain_id"</span>:        <span class="value">"BRA-TF-7f3a9c2b1e4d-A1C7"</span>,', cls: '' },
+    { text: '  <span class="key">"asset_class"</span>:    <span class="value">"Tropical Forest"</span>,', cls: '' },
+    { text: '  <span class="key">"region"</span>:         <span class="value">"BRA"</span>,', cls: '' },
+    { text: '  <span class="key">"state"</span>:          <span class="value">"Verified-Stable"</span>,', cls: '' },
+    { text: '  <span class="key">"confidence"</span>:     <span class="value">0.94</span>,', cls: '' },
+    { text: '  <span class="key">"last_verified"</span>:  <span class="value">"2026-04-01T09:14:00Z"</span>,', cls: '' },
+    { text: '  <span class="key">"tier_1"</span>:         <span class="value">"Sentinel-2 spectral confirmed"</span>,', cls: '' },
+    { text: '  <span class="key">"tier_2"</span>:         <span class="value">"IoT soil moisture nominal"</span>,', cls: '' },
+    { text: '  <span class="key">"tier_3"</span>:         <span class="value">"Physical inspection pending"</span>,', cls: '' },
+    { text: '  <span class="key">"consensus"</span>:      <span class="value">"2-of-3 tiers confirmed"</span>,', cls: '' },
+    { text: '  <span class="key">"query_fee"</span>:      <span class="value">"0.012 $BCCS"</span>', cls: '' },
     { text: '}', cls: 'string' },
     { text: '', cls: '' },
-    { text: '> POST /asset/CA-PFRS-20260915-0000142/verify', cls: 'prompt' },
-    { text: '  <span class="key">oracle</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence</span>: <span class="value">SAR_sentinel_2B</span>', cls: '' },
-    { text: '  <span class="key">status</span>: <span class="value">✓ Attestation accepted. State confirmed: Active.</span>', cls: '' },
+    { text: '> POST /bain/BRA-TF-7f3a9c2b1e4d-A1C7/verify', cls: 'prompt' },
+    { text: '  <span class="key">validator</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence</span>: <span class="value">sentinel_2B_spectral</span>', cls: '' },
+    { text: '  <span class="key">status</span>:    <span class="value">Attestation accepted. State confirmed: Verified-Stable.</span>', cls: '' },
   ];
 
   function runTerminal() {
@@ -1466,13 +746,10 @@
     el.innerHTML = '';
     let i = 0;
     function addLine() {
-      if (i >= terminalLines.length) {
-        return;
-      }
+      if (i >= terminalLines.length) return;
       const line = terminalLines[i];
       const div = document.createElement('div');
       div.className = 'terminal-line';
-      div.style.animationDelay = '0s';
       if (line.cls) div.classList.add(line.cls);
       div.innerHTML = line.text || '&nbsp;';
       el.appendChild(div);
@@ -1482,17 +759,77 @@
     addLine();
   }
 
-  // Start terminal when visible
   const termObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        runTerminal();
-        termObs.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) { runTerminal(); termObs.unobserve(entry.target); }
     });
   }, { threshold: 0.3 });
   const termEl = document.querySelector('.terminal-section');
   if (termEl) termObs.observe(termEl);
+
+  // ── Application form ──
+  async function submitApplication() {
+    const wallet = document.getElementById('wallet-input').value.trim();
+    const email = document.getElementById('email-input').value.trim();
+    const qual = document.getElementById('qual-input').value.trim();
+    const msg = document.getElementById('form-message');
+
+    if (!wallet || !wallet.startsWith('0x') || wallet.length !== 42) {
+      showMsg('Please enter a valid Base wallet address (0x..., 42 characters).', false);
+      return;
+    }
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      showMsg('Please enter a valid email address.', false);
+      return;
+    }
+    if (!qual || qual.length < 20) {
+      showMsg('Please describe your qualification (minimum 20 characters).', false);
+      return;
+    }
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Submitting...';
+    btn.style.opacity = '0.7';
+    btn.style.pointerEvents = 'none';
+
+    try {
+      // Production: replace with Supabase or Formspree endpoint
+      const FORMSPREE_ID = 'xojkwqbg';
+      const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          wallet: wallet,
+          email: email,
+          qualification: qual,
+          _subject: 'BCCS Infrastructure Access Application',
+          source: 'bccs.bio'
+        })
+      });
+
+      if (res.ok) {
+        showMsg('Application received. You will be notified if approved for whitelist inclusion.', true);
+        document.getElementById('wallet-input').value = '';
+        document.getElementById('email-input').value = '';
+        document.getElementById('qual-input').value = '';
+        btn.textContent = 'Submitted';
+      } else {
+        throw new Error('Failed');
+      }
+    } catch (err) {
+      showMsg('Submission failed. Please try again or contact us directly.', false);
+      btn.textContent = 'Submit Application';
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    }
+  }
+
+  function showMsg(text, success) {
+    const msg = document.getElementById('form-message');
+    msg.style.display = 'block';
+    msg.style.color = success ? '#3ECF8E' : '#EF4444';
+    msg.textContent = text;
+  }
 </script>
 
 </body>
