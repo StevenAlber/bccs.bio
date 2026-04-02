@@ -475,7 +475,6 @@
 
 <div class="grid-bg"></div>
 
-<!-- ══════════════════════════════════════════ NAV ══════════════════════════════════════════ -->
 <nav>
   <a href="#" class="nav-logo">BCCS</a>
   <div class="nav-links">
@@ -488,7 +487,6 @@
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════════ HERO ══════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-tag">
     <span>DePIN</span> Biological Computing Control Standard
@@ -501,29 +499,15 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════ STATS ══════════════════════════════════════════ -->
 <div class="stats-bar">
   <div class="stats-inner">
-    <div class="stat">
-      <div class="stat-value">21-Char</div>
-      <div class="stat-label">BAIN ID Standard</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">8-State</div>
-      <div class="stat-label">Verification Lifecycle</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">3-Tier</div>
-      <div class="stat-label">Oracle Consensus</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">Base L2</div>
-      <div class="stat-label">Coinbase Network</div>
-    </div>
+    <div class="stat"><div class="stat-value">21-Char</div><div class="stat-label">BAIN ID Standard</div></div>
+    <div class="stat"><div class="stat-value">8-State</div><div class="stat-label">Verification Lifecycle</div></div>
+    <div class="stat"><div class="stat-value">3-Tier</div><div class="stat-label">Oracle Consensus</div></div>
+    <div class="stat"><div class="stat-value">Base L2</div><div class="stat-label">Coinbase Network</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ TERMINAL ══════════════════════════════════════════ -->
 <div class="terminal-section fade-in">
   <div class="terminal-window">
     <div class="terminal-header">
@@ -536,104 +520,41 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ PROTOCOL ══════════════════════════════════════════ -->
 <section id="protocol">
   <div class="section-tag fade-in">01 &mdash; Protocol Architecture</div>
   <h2 class="section-title fade-in">How biological state becomes verifiable</h2>
   <p class="section-desc fade-in">Biological assets represent over $150 trillion in global natural capital, yet no computational infrastructure exists to verify their state. BCCS provides the missing verification layer.</p>
-
   <div class="solution-stack fade-in">
-    <div class="solution-row">
-      <div class="solution-label">BAIN ID</div>
-      <div>
-        <h3>Bio-Asset Identification Number</h3>
-        <p>A 21-character immutable identifier for every biological asset. Encodes region (ISO 3166-1), asset class, unique reference, and current verification state checksum. Anchored on Base. Eight possible states from Unverified through Verified-Stable to Decommissioned.</p>
-      </div>
-    </div>
-    <div class="solution-row">
-      <div class="solution-label">3-TIER ORACLE</div>
-      <div>
-        <h3>Multi-Source Verification Consensus</h3>
-        <p>State transitions require consensus from at least two of three independent data tiers: Tier 1 &mdash; satellite remote sensing (Sentinel-2, Landsat, Planet Labs). Tier 2 &mdash; ground-based IoT sensors (soil moisture, air quality, biomass density). Tier 3 &mdash; physical inspection with timestamped GPS evidence. No single data source can trigger a state change.</p>
-      </div>
-    </div>
-    <div class="solution-row">
-      <div class="solution-label">PoPS</div>
-      <div>
-        <h3>Proof-of-Physical-State</h3>
-        <p>Validators operate verification nodes, submit evidence data, and confirm biological state transitions on-chain. False data submissions are penalized through economic slashing &mdash; slashed verification units are permanently burned. Active participation required.</p>
-      </div>
-    </div>
-    <div class="solution-row">
-      <div class="solution-label">API LAYER</div>
-      <div>
-        <h3>Verification Queries</h3>
-        <p>AI agents, institutions, and smart contracts query biological state data via the BCCS API. Every verification query is priced in $BCCS, creating protocol-native demand proportional to verification consumption. RESTful and WebSocket interfaces for real-time state transition events.</p>
-      </div>
-    </div>
+    <div class="solution-row"><div class="solution-label">BAIN ID</div><div><h3>Bio-Asset Identification Number</h3><p>A 21-character immutable identifier for every biological asset. Encodes region (ISO 3166-1), asset class, unique reference, and current verification state checksum. Anchored on Base. Eight possible states from Unverified through Verified-Stable to Decommissioned.</p></div></div>
+    <div class="solution-row"><div class="solution-label">3-TIER ORACLE</div><div><h3>Multi-Source Verification Consensus</h3><p>State transitions require consensus from at least two of three independent data tiers: Tier 1 &mdash; satellite remote sensing (Sentinel-2, Landsat, Planet Labs). Tier 2 &mdash; ground-based IoT sensors (soil moisture, air quality, biomass density). Tier 3 &mdash; physical inspection with timestamped GPS evidence. No single data source can trigger a state change.</p></div></div>
+    <div class="solution-row"><div class="solution-label">PoPS</div><div><h3>Proof-of-Physical-State</h3><p>Validators operate verification nodes, submit evidence data, and confirm biological state transitions on-chain. False data submissions are penalized through economic slashing &mdash; slashed verification units are permanently burned. Active participation required.</p></div></div>
+    <div class="solution-row"><div class="solution-label">API LAYER</div><div><h3>Verification Queries</h3><p>AI agents, institutions, and smart contracts query biological state data via the BCCS API. Every verification query is priced in $BCCS, creating protocol-native demand proportional to verification consumption. RESTful and WebSocket interfaces for real-time state transition events.</p></div></div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ══════════════════════════════════════════ ACCESS LICENSES ══════════════════════════════════════════ -->
 <section id="access">
   <div class="section-tag fade-in">02 &mdash; Infrastructure Access</div>
   <h2 class="section-title fade-in">Non-transferable credentials for node operation</h2>
   <p class="section-desc fade-in">Each Infrastructure Access License is a soulbound ERC-721 credential on Base granting the right to operate a verification node. Acquired through application and whitelist approval. USDC payment only.</p>
-
   <div class="tier-stack fade-in">
-    <div class="tier-row tier-header">
-      <span>Tier</span>
-      <span>Price (USDC)</span>
-      <span>Description</span>
-      <span style="text-align:right">Licenses</span>
-    </div>
-    <div class="tier-row">
-      <div class="tier-name">Alpha<small>Application open</small></div>
-      <div class="tier-price">$1,000</div>
-      <div class="tier-desc">Whitelisted infrastructure operators</div>
-      <div class="tier-cum">500</div>
-    </div>
-    <div class="tier-row">
-      <div class="tier-name">Beta<small>Coming</small></div>
-      <div class="tier-price">$1,500</div>
-      <div class="tier-desc">Expanded operator cohort</div>
-      <div class="tier-cum">1,000</div>
-    </div>
-    <div class="tier-row">
-      <div class="tier-name">Gamma<small>Coming</small></div>
-      <div class="tier-price">$2,200</div>
-      <div class="tier-desc">DePIN infrastructure participants</div>
-      <div class="tier-cum">2,000</div>
-    </div>
-    <div class="tier-row">
-      <div class="tier-name">Delta<small>Coming</small></div>
-      <div class="tier-price">$3,000</div>
-      <div class="tier-desc">Global verification network expansion</div>
-      <div class="tier-cum">3,000</div>
-    </div>
-    <div class="tier-row">
-      <div class="tier-name">Epsilon<small>Coming</small></div>
-      <div class="tier-price">$3,500</div>
-      <div class="tier-desc">Full network coverage</div>
-      <div class="tier-cum">5,000</div>
-    </div>
+    <div class="tier-row tier-header"><span>Tier</span><span>Price (USDC)</span><span>Description</span><span style="text-align:right">Licenses</span></div>
+    <div class="tier-row"><div class="tier-name">Alpha<small>Application open</small></div><div class="tier-price">$1,000</div><div class="tier-desc">Whitelisted infrastructure operators</div><div class="tier-cum">500</div></div>
+    <div class="tier-row"><div class="tier-name">Beta<small>Coming</small></div><div class="tier-price">$1,500</div><div class="tier-desc">Expanded operator cohort</div><div class="tier-cum">1,000</div></div>
+    <div class="tier-row"><div class="tier-name">Gamma<small>Coming</small></div><div class="tier-price">$2,200</div><div class="tier-desc">DePIN infrastructure participants</div><div class="tier-cum">2,000</div></div>
+    <div class="tier-row"><div class="tier-name">Delta<small>Coming</small></div><div class="tier-price">$3,000</div><div class="tier-desc">Global verification network expansion</div><div class="tier-cum">3,000</div></div>
+    <div class="tier-row"><div class="tier-name">Epsilon<small>Coming</small></div><div class="tier-price">$3,500</div><div class="tier-desc">Full network coverage</div><div class="tier-cum">5,000</div></div>
   </div>
-
-  <div class="tier-note fade-in">
-    An Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. The BCCS verification unit ($BCCS) is earned exclusively through active validator operation when the mainnet verification network is operational. No representation is made regarding the future value of any digital asset associated with this protocol.
-  </div>
+  <div class="tier-note fade-in">An Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. The BCCS verification unit ($BCCS) is earned exclusively through active validator operation when the mainnet verification network is operational. No representation is made regarding the future value of any digital asset associated with this protocol.</div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ══════════════════════════════════════════ CONTRACTS ══════════════════════════════════════════ -->
 <section id="contracts">
   <div class="section-tag fade-in">03 &mdash; On-Chain Verification</div>
   <h2 class="section-title fade-in">Contract status</h2>
   <p class="section-desc fade-in">All contracts are deployed on Base Layer 2 and source-verified on BaseScan.</p>
-
   <div class="contract-grid fade-in">
     <div class="contract-card">
       <div class="contract-card-label">Verification Unit</div>
@@ -664,72 +585,31 @@
 
 <hr class="section-divider">
 
-<!-- ══════════════════════════════════════════ ROADMAP ══════════════════════════════════════════ -->
 <section id="roadmap">
   <div class="section-tag fade-in">04 &mdash; Protocol Phases</div>
   <h2 class="section-title fade-in">Phase-gated development</h2>
   <p class="section-desc fade-in">Each phase transitions when measurable criteria are met. No phase is triggered by time alone.</p>
-
   <div class="roadmap-list fade-in">
-    <div class="roadmap-item current">
-      <div class="roadmap-phase">PHASE 0 &mdash; FOUNDATION</div>
-      <h3>Development environment and legal preparation</h3>
-      <p>Testnet deployment, legal document drafting, multisig setup, language control finalization, landing page, waitlist form.</p>
-    </div>
-    <div class="roadmap-item future">
-      <div class="roadmap-phase">PHASE 1 &mdash; MAINNET DEPLOY</div>
-      <h3>Contracts deployed and verified on BaseScan</h3>
-      <p>ERC-20 and ERC-721 contracts deployed to Base mainnet. Source verified. Treasury mint to Safe multisig. Prerequisite: legal clearance.</p>
-    </div>
-    <div class="roadmap-item future">
-      <div class="roadmap-phase">PHASE 2 &mdash; COMMUNITY BUILD</div>
-      <h3>Public channels and content pipeline</h3>
-      <p>Social presence established. Waitlist open. Protocol documentation published. Prerequisite: contracts live on BaseScan.</p>
-    </div>
-    <div class="roadmap-item future">
-      <div class="roadmap-phase">PHASE 3 &mdash; AUDIT</div>
-      <h3>Professional smart contract audit</h3>
-      <p>Contracts submitted to audit firm. Tier display active on bccs.bio. Prerequisite: contracts submitted to auditor.</p>
-    </div>
-    <div class="roadmap-item future">
-      <div class="roadmap-phase">PHASE 4 &mdash; ALPHA ACTIVATION</div>
-      <h3>Infrastructure access for whitelisted applicants</h3>
-      <p>Alpha tier enabled for approved addresses. Prerequisite: clean audit, legal documents approved, waitlist threshold met.</p>
-    </div>
-    <div class="roadmap-item future">
-      <div class="roadmap-phase">PHASE 5+ &mdash; NETWORK EXPANSION</div>
-      <h3>Additional tiers, verification network, protocol governance</h3>
-      <p>Beta through Epsilon tiers activated sequentially. Testnet verification. Mainnet oracle network. Governance transition. Each gate requires measurable criteria.</p>
-    </div>
+    <div class="roadmap-item current"><div class="roadmap-phase">PHASE 0 &mdash; FOUNDATION</div><h3>Development environment and legal preparation</h3><p>Testnet deployment, legal document drafting, multisig setup, language control finalization, landing page, waitlist form.</p></div>
+    <div class="roadmap-item future"><div class="roadmap-phase">PHASE 1 &mdash; MAINNET DEPLOY</div><h3>Contracts deployed and verified on BaseScan</h3><p>ERC-20 and ERC-721 contracts deployed to Base mainnet. Source verified. Treasury mint to Safe multisig. Prerequisite: legal clearance.</p></div>
+    <div class="roadmap-item future"><div class="roadmap-phase">PHASE 2 &mdash; COMMUNITY BUILD</div><h3>Public channels and content pipeline</h3><p>Social presence established. Waitlist open. Protocol documentation published. Prerequisite: contracts live on BaseScan.</p></div>
+    <div class="roadmap-item future"><div class="roadmap-phase">PHASE 3 &mdash; AUDIT</div><h3>Professional smart contract audit</h3><p>Contracts submitted to audit firm. Tier display active on bccs.bio. Prerequisite: contracts submitted to auditor.</p></div>
+    <div class="roadmap-item future"><div class="roadmap-phase">PHASE 4 &mdash; ALPHA ACTIVATION</div><h3>Infrastructure access for whitelisted applicants</h3><p>Alpha tier enabled for approved addresses. Prerequisite: clean audit, legal documents approved, waitlist threshold met.</p></div>
+    <div class="roadmap-item future"><div class="roadmap-phase">PHASE 5+ &mdash; NETWORK EXPANSION</div><h3>Additional tiers, verification network, protocol governance</h3><p>Beta through Epsilon tiers activated sequentially. Testnet verification. Mainnet oracle network. Governance transition. Each gate requires measurable criteria.</p></div>
   </div>
 </section>
 
 <hr class="section-divider">
 
-<!-- ══════════════════════════════════════════ APPLICATION ══════════════════════════════════════════ -->
 <section class="apply-section" id="apply">
   <div class="section-tag fade-in">Apply for Infrastructure Access</div>
   <h2 class="section-title fade-in">Verification node operator application</h2>
   <p class="section-desc fade-in">Infrastructure Access Licenses are distributed through an application process. Submit your Base wallet address and qualification to be reviewed for whitelist inclusion.</p>
-
   <div class="apply-form fade-in">
-    <div class="form-group">
-      <label>Base Wallet Address</label>
-      <input type="text" placeholder="0x..." id="wallet-input">
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" placeholder="you@example.com" id="email-input">
-    </div>
-    <div class="form-group">
-      <label>Qualification</label>
-      <textarea id="qual-input" placeholder="Describe your experience with DePIN infrastructure, biological systems, verification networks, or node operation."></textarea>
-    </div>
-
-    <div class="form-disclaimer">
-      A BCCS Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. Validator emissions begin only when the mainnet verification network is operational and you are actively running a verification node. No representation is made regarding the future value of any digital asset associated with this protocol.
-    </div>
-
+    <div class="form-group"><label>Base Wallet Address</label><input type="text" placeholder="0x..." id="wallet-input"></div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="you@example.com" id="email-input"></div>
+    <div class="form-group"><label>Qualification</label><textarea id="qual-input" placeholder="Describe your experience with DePIN infrastructure, biological systems, verification networks, or node operation."></textarea></div>
+    <div class="form-disclaimer">A BCCS Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. Validator emissions begin only when the mainnet verification network is operational and you are actively running a verification node. No representation is made regarding the future value of any digital asset associated with this protocol.</div>
     <button class="form-submit" onclick="submitApplication()">Submit Application</button>
     <div id="form-message"></div>
   </div>
@@ -737,13 +617,17 @@
 
 <hr class="section-divider">
 
-<!-- ══════════════════════════════════════════ DOCUMENTS ══════════════════════════════════════════ -->
 <section id="docs">
   <div class="section-tag fade-in">05 &mdash; Protocol Documentation</div>
   <h2 class="section-title fade-in">Published specifications</h2>
-  <p class="section-desc fade-in">Technical specifications, economic model, governance framework, and verification methodology. All documents versioned and maintained by KRYONIS.</p>
-
+  <p class="section-desc fade-in">Protocol architecture, verification mechanics, economic model, and governance framework. All documents versioned and maintained by KRYONIS.</p>
   <div class="docs-grid fade-in">
+    <a href="BCCS_Whitepaper_v1.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v1.0</div>
+      <h3>Whitepaper</h3>
+      <p>Complete protocol specification, tokenomics, oracle design, and governance model. 15 sections.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
     <a href="BCCS_Executive_Brief_v3.pdf" target="_blank" class="doc-card">
       <div class="doc-badge">v3</div>
       <h3>Executive Brief</h3>
@@ -785,7 +669,6 @@
 
 <hr class="section-divider">
 
-<!-- ══════════════════════════════════════════ FOUNDER ══════════════════════════════════════════ -->
 <div class="founder-section">
   <div class="section-tag fade-in">06 &mdash; Architect</div>
   <div class="founder-card fade-in">
@@ -798,13 +681,9 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ FOOTER ══════════════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">
-      <a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>
-      &copy; 2026
-    </div>
+    <div class="footer-brand"><a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>&copy; 2026</div>
     <div class="footer-links">
       <a href="https://kryonislab.org" target="_blank">KRYONIS Lab</a>
       <a href="https://bioclearing.global" target="_blank">bioclearing.global</a>
@@ -821,18 +700,11 @@
 </footer>
 
 <script>
-  // ── Scroll animations ──
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // ── Terminal typing animation ──
   const terminalLines = [
     { text: '# Verification query — biological asset state via BCCS API', cls: 'comment' },
     { text: '', cls: '' },
@@ -858,95 +730,44 @@
   ];
 
   function runTerminal() {
-    const el = document.getElementById('terminal');
-    if (!el) return;
-    el.innerHTML = '';
+    const el = document.getElementById('terminal'); if (!el) return; el.innerHTML = '';
     let i = 0;
     function addLine() {
       if (i >= terminalLines.length) return;
-      const line = terminalLines[i];
-      const div = document.createElement('div');
-      div.className = 'terminal-line';
-      if (line.cls) div.classList.add(line.cls);
-      div.innerHTML = line.text || '&nbsp;';
-      el.appendChild(div);
-      i++;
+      const line = terminalLines[i]; const div = document.createElement('div');
+      div.className = 'terminal-line'; if (line.cls) div.classList.add(line.cls);
+      div.innerHTML = line.text || '&nbsp;'; el.appendChild(div); i++;
       setTimeout(addLine, line.text ? 120 : 60);
     }
     addLine();
   }
 
   const termObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { runTerminal(); termObs.unobserve(entry.target); }
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) { runTerminal(); termObs.unobserve(entry.target); } });
   }, { threshold: 0.3 });
   const termEl = document.querySelector('.terminal-section');
   if (termEl) termObs.observe(termEl);
 
-  // ── Application form ──
   async function submitApplication() {
     const wallet = document.getElementById('wallet-input').value.trim();
     const email = document.getElementById('email-input').value.trim();
     const qual = document.getElementById('qual-input').value.trim();
-    const msg = document.getElementById('form-message');
-
-    if (!wallet || !wallet.startsWith('0x') || wallet.length !== 42) {
-      showMsg('Please enter a valid Base wallet address (0x..., 42 characters).', false);
-      return;
-    }
-    if (!email || !email.includes('@') || !email.includes('.')) {
-      showMsg('Please enter a valid email address.', false);
-      return;
-    }
-    if (!qual || qual.length < 20) {
-      showMsg('Please describe your qualification (minimum 20 characters).', false);
-      return;
-    }
-
-    const btn = document.querySelector('.form-submit');
-    btn.textContent = 'Submitting...';
-    btn.style.opacity = '0.7';
-    btn.style.pointerEvents = 'none';
-
+    if (!wallet || !wallet.startsWith('0x') || wallet.length !== 42) { showMsg('Please enter a valid Base wallet address (0x..., 42 characters).', false); return; }
+    if (!email || !email.includes('@') || !email.includes('.')) { showMsg('Please enter a valid email address.', false); return; }
+    if (!qual || qual.length < 20) { showMsg('Please describe your qualification (minimum 20 characters).', false); return; }
+    const btn = document.querySelector('.form-submit'); btn.textContent = 'Submitting...'; btn.style.opacity = '0.7'; btn.style.pointerEvents = 'none';
     try {
-      // Production: replace with Supabase or Formspree endpoint
       const FORMSPREE_ID = 'xojkwqbg';
       const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          wallet: wallet,
-          email: email,
-          qualification: qual,
-          _subject: 'BCCS Infrastructure Access Application',
-          source: 'bccs.bio'
-        })
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ wallet, email, qualification: qual, _subject: 'BCCS Infrastructure Access Application', source: 'bccs.bio' })
       });
-
-      if (res.ok) {
-        showMsg('Application received. You will be notified if approved for whitelist inclusion.', true);
-        document.getElementById('wallet-input').value = '';
-        document.getElementById('email-input').value = '';
-        document.getElementById('qual-input').value = '';
-        btn.textContent = 'Submitted';
-      } else {
-        throw new Error('Failed');
-      }
-    } catch (err) {
-      showMsg('Submission failed. Please try again or contact us directly.', false);
-      btn.textContent = 'Submit Application';
-      btn.style.opacity = '1';
-      btn.style.pointerEvents = 'auto';
-    }
+      if (res.ok) { showMsg('Application received. You will be notified if approved for whitelist inclusion.', true); document.getElementById('wallet-input').value = ''; document.getElementById('email-input').value = ''; document.getElementById('qual-input').value = ''; btn.textContent = 'Submitted'; }
+      else { throw new Error('Failed'); }
+    } catch (err) { showMsg('Submission failed. Please try again or contact us directly.', false); btn.textContent = 'Submit Application'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
   }
 
-  function showMsg(text, success) {
-    const msg = document.getElementById('form-message');
-    msg.style.display = 'block';
-    msg.style.color = success ? '#3ECF8E' : '#EF4444';
-    msg.textContent = text;
-  }
+  function showMsg(text, success) { const msg = document.getElementById('form-message'); msg.style.display = 'block'; msg.style.color = success ? '#3ECF8E' : '#EF4444'; msg.textContent = text; }
 </script>
 
 </body>
