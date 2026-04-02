@@ -394,6 +394,59 @@
   .footer-legal-links a { font-size: 0.72rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
   .footer-legal-links a:hover { color: var(--text-dim); }
 
+  /* ── DOCS GRID ── */
+  .docs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+  .doc-card {
+    display: block; background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.6rem; text-decoration: none;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .doc-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
+  .doc-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+  .doc-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.6rem; }
+  .doc-meta {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    color: var(--text-muted); letter-spacing: 0.05em;
+  }
+  .doc-badge {
+    display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem;
+    padding: 0.15rem 0.4rem; background: var(--green-glow);
+    border: 1px solid var(--border-accent); border-radius: 3px;
+    color: var(--green); letter-spacing: 0.05em; margin-bottom: 0.6rem;
+  }
+
+  /* ── FOUNDER ── */
+  .founder-section {
+    position: relative; z-index: 1;
+    padding: 5rem 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .founder-card {
+    display: flex; align-items: center; gap: 2rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 2.5rem;
+  }
+  .founder-photo {
+    width: 100px; height: 100px; border-radius: 50%;
+    object-fit: cover; border: 2px solid var(--border-accent); flex-shrink: 0;
+  }
+  .founder-info h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem; font-weight: 400; margin-bottom: 0.2rem;
+  }
+  .founder-role {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.6rem;
+  }
+  .founder-info p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+
+  @media (max-width: 768px) {
+    .docs-grid { grid-template-columns: 1fr; }
+    .founder-card { flex-direction: column; text-align: center; gap: 1.2rem; }
+  }
+
   /* ── ANIMATIONS ── */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -429,6 +482,7 @@
     <a href="#protocol">Protocol</a>
     <a href="#access">Infrastructure Access</a>
     <a href="#contracts">Contracts</a>
+    <a href="#docs">Docs</a>
     <a href="#apply">Apply</a>
     <span class="nav-badge">BASE L2</span>
   </div>
@@ -680,6 +734,69 @@
     <div id="form-message"></div>
   </div>
 </section>
+
+<hr class="section-divider">
+
+<!-- ══════════════════════════════════════════ DOCUMENTS ══════════════════════════════════════════ -->
+<section id="docs">
+  <div class="section-tag fade-in">05 &mdash; Protocol Documentation</div>
+  <h2 class="section-title fade-in">Published specifications</h2>
+  <p class="section-desc fade-in">Technical specifications, economic model, governance framework, and verification methodology. All documents versioned and maintained by KRYONIS.</p>
+
+  <div class="docs-grid fade-in">
+    <a href="BCCS_Executive_Brief_v3.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v3</div>
+      <h3>Executive Brief</h3>
+      <p>Strategic overview for institutional partners and infrastructure operators.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
+    <a href="BCCS_Tokenomics_Litepaper_v2.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v2.0</div>
+      <h3>Tokenomics Litepaper</h3>
+      <p>Verification unit economy, infrastructure access, and protocol mechanics.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
+    <a href="BCCS_BAIN_ID_Specification_v2.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v2.0</div>
+      <h3>BAIN ID Specification</h3>
+      <p>21-character identifier format, 8-state lifecycle, asset taxonomy, API schema.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
+    <a href="BCCS_PoPS_Methodology_v2.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v2.0</div>
+      <h3>PoPS Methodology</h3>
+      <p>Three-tier verification, confidence scoring, slashing, and dispute resolution.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
+    <a href="BCCS_Token_Economic_Model_v2.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v2.0</div>
+      <h3>Token Economic Model</h3>
+      <p>Emission schedule, fee mechanics, staking, stress tests, security budget.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
+    <a href="BCCS_BAIN_Governance_v2.0.pdf" target="_blank" class="doc-card">
+      <div class="doc-badge">v2.0</div>
+      <h3>BAIN Governance</h3>
+      <p>IP framework, consortium migration, standards body, open licensing path.</p>
+      <span class="doc-meta">PDF &middot; April 2026</span>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ══════════════════════════════════════════ FOUNDER ══════════════════════════════════════════ -->
+<div class="founder-section">
+  <div class="section-tag fade-in">06 &mdash; Architect</div>
+  <div class="founder-card fade-in">
+    <img src="steven-alber.jpeg" alt="Steven Alber" class="founder-photo" loading="lazy">
+    <div class="founder-info">
+      <h3>Steven Alber</h3>
+      <div class="founder-role">Founder &amp; Protocol Architect</div>
+      <p>Two decades in strategic systems design across Asia-Pacific. KRYONIS Sovereign Systems Limited, Hong Kong.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════ FOOTER ══════════════════════════════════════════ -->
 <footer>
