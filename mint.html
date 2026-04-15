@@ -108,12 +108,12 @@
       <div class="step-body">
         <p>You need a crypto wallet. If you don't have one, download one of these:</p>
         <div class="wallet-options">
-          <a href="https://www.coinbase.com/wallet" target="_blank" class="wallet-opt">
+          <a href="https://www.coinbase.com/wallet" target="_blank" rel="noopener noreferrer" class="wallet-opt">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#0052FF"/><path d="M20 8C13.37 8 8 13.37 8 20s5.37 12 12 12 12-5.37 12-12S26.63 8 20 8zm-2.5 16.5h5c.83 0 1.5-.67 1.5-1.5v-6c0-.83-.67-1.5-1.5-1.5h-5c-.83 0-1.5.67-1.5 1.5v6c0 .83.67 1.5 1.5 1.5z" fill="white"/></svg>
             <span>Coinbase Wallet</span>
             <small>Easiest for beginners</small>
           </a>
-          <a href="https://metamask.io/download/" target="_blank" class="wallet-opt">
+          <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer" class="wallet-opt">
             <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#F6851B"/><text x="20" y="26" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="sans-serif">M</text></svg>
             <span>MetaMask</span>
             <small>Most popular</small>
@@ -132,7 +132,7 @@
         <p>You need <strong>$1,000 USDC</strong> on the <strong>Base</strong> network, plus a tiny amount of ETH (under $0.10) for fees.</p>
         <p><strong>In Coinbase Wallet:</strong> tap "Buy" → select USDC → choose Base → pay with card.</p>
         <p><strong>From Coinbase exchange:</strong> send USDC to your wallet → select <strong>Base</strong> as network.</p>
-        <p><strong>From Ethereum:</strong> bridge via <a href="https://bridge.base.org" target="_blank">bridge.base.org</a></p>
+        <p><strong>From Ethereum:</strong> bridge via <a href="https://bridge.base.org" target="_blank" rel="noopener noreferrer">bridge.base.org</a></p>
       </div>
     </div>
 
@@ -200,7 +200,7 @@ const NODE_LICENSE = '0x44B46f9D170ae8122cce71332884252934b66FBd';
 const USDC = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 const BASE_CHAIN = '0x2105';
 const USDC_DEC = 6;
-const SEL = { approve:'0x095ea7b3', balance:'0x70a08231', mint:'0xa3a40ea5' };
+const SEL = { approve:'0x095ea7b3', balance:'0x70a08231', mint:'0xe6c190f9' };
 const pad = v => BigInt(v).toString(16).padStart(64,'0');
 const padA = a => a.toLowerCase().replace('0x','').padStart(64,'0');
 
@@ -242,7 +242,7 @@ if (hasWallet) {
     <div style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center;margin-top:1rem;">
       <button class="btn" id="connectBtn" onclick="doConnect()">Connect Wallet</button>
       <button class="btn" id="approveBtn" onclick="doApprove()" disabled>Approve USDC</button>
-      <button class="btn" id="mintBtn" onclick="doMint()" disabled>Mint License</button>
+      <button class="btn" id="mintBtn" onclick="doMint()" disabled>Acquire License</button>
     </div>`;
 } else if (isMobile) {
   // Mobile without wallet — show deeplinks
@@ -265,7 +265,7 @@ if (hasWallet) {
   // Desktop without wallet extension
   actionArea.innerHTML = `
     <div class="info-box" style="margin-top:1rem;">
-      <p><strong>No wallet detected.</strong> Install the <a href="https://www.coinbase.com/wallet" target="_blank">Coinbase Wallet</a> or <a href="https://metamask.io" target="_blank">MetaMask</a> browser extension, then refresh this page.</p>
+      <p><strong>No wallet detected.</strong> Install the <a href="https://www.coinbase.com/wallet" target="_blank" rel="noopener noreferrer">Coinbase Wallet</a> or <a href="https://metamask.io" target="_blank" rel="noopener noreferrer">MetaMask</a> browser extension, then refresh this page.</p>
     </div>`;
 }
 
@@ -311,7 +311,7 @@ async function doApprove() {
     const amt = BigInt(selPrice) * BigInt(10**USDC_DEC);
     const data = SEL.approve + padA(NODE_LICENSE) + pad(amt);
     const tx = await window.ethereum.request({ method:'eth_sendTransaction', params:[{ from:userAddr, to:USDC, data }] });
-    showTx('Approval: <a href="https://basescan.org/tx/'+tx+'" target="_blank">'+tx.slice(0,10)+'...'+tx.slice(-6)+'</a>');
+    showTx('Approval: <a href="https://basescan.org/tx/'+tx+'" target="_blank" rel="noopener noreferrer">'+tx.slice(0,10)+'...'+tx.slice(-6)+'</a>');
     btn.textContent = 'Approved ✓';
     document.getElementById('mintBtn').disabled = false;
   } catch(e) {
@@ -324,18 +324,18 @@ async function doApprove() {
 async function doMint() {
   const btn = document.getElementById('mintBtn');
   try {
-    btn.textContent = 'Minting...'; btn.disabled = true;
+    btn.textContent = 'Acquiring...'; btn.disabled = true;
     const data = SEL.mint + pad(selTier);
     const tx = await window.ethereum.request({ method:'eth_sendTransaction', params:[{ from:userAddr, to:NODE_LICENSE, data }] });
-    showTx('Mint: <a href="https://basescan.org/tx/'+tx+'" target="_blank">'+tx.slice(0,10)+'...'+tx.slice(-6)+'</a> — License created!');
-    btn.textContent = 'Minted ✓';
-    showS('Node License minted! Check your wallet.','connected');
+    showTx('Acquire: <a href="https://basescan.org/tx/'+tx+'" target="_blank" rel="noopener noreferrer">'+tx.slice(0,10)+'...'+tx.slice(-6)+'</a> — License created!');
+    btn.textContent = 'Acquired ✓';
+    showS('Node License acquired! Check your wallet.','connected');
     document.querySelectorAll('.step').forEach((s,i) => {
       if(i<3){s.classList.remove('active');s.classList.add('done')} if(i===3)s.classList.add('active');
     });
   } catch(e) {
-    showS('Mint failed: '+(e.message||'not whitelisted'),'error');
-    btn.textContent = 'Mint License'; btn.disabled = false;
+    showS('Acquire failed: '+(e.message||'not whitelisted'),'error');
+    btn.textContent = 'Acquire License'; btn.disabled = false;
   }
 }
 
