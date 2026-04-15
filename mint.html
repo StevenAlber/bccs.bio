@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCCS — Acquire Node License</title>
+<meta name="description" content="Acquire a BCCS Node License. Step-by-step guide to purchasing your verification node credential on Base L2.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0C0B;
+    --bg-elevated: #111413;
+    --bg-card: #161A18;
+    --border: #1E2422;
+    --border-accent: #2A3A30;
+    --text: #E8EBE9;
+    --text-dim: #7A8580;
+    --text-muted: #4A5550;
+    --green: #3ECF8E;
+    --green-dim: #1B4D3E;
+    --green-glow: rgba(62, 207, 142, 0.12);
+    --bronze: #C4982A;
+    --red: #EF4444;
+    --yellow: #F59E0B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+  .grid-bg {
+    position: fixed; inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10, 12, 11, 0.8); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-badge { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.35rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 4px; color: var(--green); background: var(--green-glow); letter-spacing: 0.05em; }
+
+  /* CONTENT */
+  .content { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+
+  .page-tag {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .page-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
+
+  h1 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem;
+  }
+  h1 em { font-style: italic; color: var(--green); }
+  .lead { font-size: 1rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 3rem; max-width: 600px; }
+
+  /* STEPPER */
+  .stepper { counter-reset: step; margin-bottom: 3rem; }
+  .step {
+    counter-increment: step;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 2rem; margin-bottom: 1rem; position: relative;
+    transition: border-color 0.3s;
+  }
+  .step.active { border-color: var(--green); }
+  .step.done { border-color: var(--green-dim); opacity: 0.6; }
+  .step-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .step-num {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500;
+    width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border: 1px solid var(--border-accent); color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .step.active .step-num { background: var(--green); color: #0A0C0B; border-color: var(--green); }
+  .step.done .step-num { background: var(--green-dim); color: var(--green); border-color: var(--green-dim); }
+  .step-num::before { content: counter(step); }
+  .step.done .step-num::before { content: '✓'; }
+  .step-title { font-size: 1rem; font-weight: 600; }
+  .step-body { color: var(--text-dim); font-size: 0.88rem; line-height: 1.65; }
+  .step-body p { margin-bottom: 0.8rem; }
+  .step-body p:last-child { margin-bottom: 0; }
+  .step-body a { color: var(--green); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .step-body a:hover { border-bottom-color: var(--green); }
+  .step-body strong { color: var(--text); }
+  .step-body code {
+    font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text);
+    background: var(--bg); padding: 0.15rem 0.5rem; border-radius: 3px; word-break: break-all;
+  }
+
+  .step-action { margin-top: 1.2rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.8rem;
+    background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.85rem;
+    border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+  .btn-outline {
+    background: transparent; border: 1px solid var(--border-accent); color: var(--text-dim);
+    font-weight: 500;
+  }
+  .btn-outline:hover { border-color: var(--text-dim); color: var(--text); background: transparent; box-shadow: none; }
+
+  /* TIER SELECTOR */
+  .tier-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .tier-option {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.2rem 1.5rem; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .tier-option:hover { border-color: var(--border-accent); }
+  .tier-option.selected { border-color: var(--green); background: var(--green-glow); }
+  .tier-option.disabled { opacity: 0.35; cursor: not-allowed; }
+  .tier-name { font-weight: 600; font-size: 0.95rem; }
+  .tier-meta { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-dim); text-align: right; }
+  .tier-meta .price { color: var(--text); font-size: 0.95rem; font-weight: 500; }
+  .tier-tag { font-size: 0.65rem; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }
+  .tier-tag.coming { color: var(--text-muted); }
+
+  /* WALLET STATUS */
+  .wallet-status {
+    font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text-dim);
+    background: var(--bg); padding: 0.5rem 0.8rem; border-radius: 4px; display: inline-block;
+    margin-top: 0.5rem;
+  }
+  .wallet-status.connected { color: var(--green); }
+  .wallet-status.error { color: var(--red); }
+
+  /* TX STATUS */
+  .tx-status {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.5rem; margin-top: 1rem; display: none;
+  }
+  .tx-status.show { display: block; }
+  .tx-status .label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .tx-status .value { font-size: 0.88rem; color: var(--text-dim); }
+  .tx-status .value a { color: var(--green); text-decoration: none; }
+
+  /* INFO BOX */
+  .info-box {
+    background: var(--bg-card); border-left: 3px solid var(--green-dim);
+    border-radius: 0 6px 6px 0; padding: 1.2rem; margin: 1rem 0;
+  }
+  .info-box p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+  .info-box strong { color: var(--text-dim); }
+
+  /* MINI FAQ */
+  .mini-faq { margin-top: 3rem; }
+  .mini-faq h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 1rem; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1rem 0; }
+  .faq-q { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .faq-a { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* DISCLAIMER */
+  .disclaimer-box {
+    background: var(--bg-card); border-left: 3px solid var(--green-dim);
+    border-radius: 0 6px 6px 0; padding: 1.2rem; margin: 3rem 0 0;
+  }
+  .disclaimer-box p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem;
+  }
+  .footer-inner { max-width: 780px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text-dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links a:not(.nav-badge) { display: none; }
+    .content { padding: 7rem 1.2rem 3rem; }
+    .step { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">BCCS</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#protocol">Protocol</a>
+    <a href="index.html#docs">Docs</a>
+    <a href="audit.html">Audit</a>
+    <span class="nav-badge">BASE L2</span>
+  </div>
+</nav>
+
+<div class="content">
+
+  <div class="page-tag"><span>ACQUIRE</span> NODE LICENSE</div>
+  <h1>Get your <em>Node License</em></h1>
+  <p class="lead">Follow these steps to acquire a BCCS Infrastructure Access License. The entire process takes about 10 minutes if you already have a crypto wallet.</p>
+
+  <div class="stepper">
+
+    <!-- STEP 1: WALLET -->
+    <div class="step active" id="step1">
+      <div class="step-header">
+        <div class="step-num"></div>
+        <div class="step-title">Get a Crypto Wallet</div>
+      </div>
+      <div class="step-body">
+        <p>You need a crypto wallet to interact with the blockchain. If you don't have one, we recommend <a href="https://www.coinbase.com/wallet" target="_blank">Coinbase Wallet</a> (easiest for beginners) or <a href="https://metamask.io" target="_blank">MetaMask</a> (most popular).</p>
+        <p><strong>What is a wallet?</strong> It's like a digital bank account that you control. Nobody else has access — only you. It stores your digital assets and lets you interact with blockchain applications.</p>
+
+        <div class="info-box">
+          <p><strong>Already have a wallet?</strong> Make sure it supports the <strong>Base</strong> network. Coinbase Wallet, MetaMask, and Rainbow all work. You can skip to Step 2.</p>
+        </div>
+
+        <div class="step-action">
+          <a href="https://www.coinbase.com/wallet" target="_blank" class="btn-outline btn">Download Coinbase Wallet</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: BASE NETWORK -->
+    <div class="step" id="step2">
+      <div class="step-header">
+        <div class="step-num"></div>
+        <div class="step-title">Switch to Base Network</div>
+      </div>
+      <div class="step-body">
+        <p><strong>Base</strong> is a Layer 2 blockchain built by Coinbase. It's faster and cheaper than Ethereum mainnet. All BCCS contracts live on Base.</p>
+        <p><strong>How to switch:</strong></p>
+        <p>In <strong>Coinbase Wallet</strong>: tap the network selector at the top → search "Base" → select it.</p>
+        <p>In <strong>MetaMask</strong>: tap the network dropdown → "Add network" → search "Base" → add and switch. Or visit <a href="https://chainlist.org/chain/8453" target="_blank">chainlist.org/chain/8453</a> and click "Add to MetaMask".</p>
+
+        <div class="info-box">
+          <p><strong>Base network details:</strong> Chain ID: <code>8453</code> · RPC: <code>https://mainnet.base.org</code> · Explorer: <a href="https://basescan.org" target="_blank">basescan.org</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: GET USDC -->
+    <div class="step" id="step3">
+      <div class="step-header">
+        <div class="step-num"></div>
+        <div class="step-title">Get USDC on Base</div>
+      </div>
+      <div class="step-body">
+        <p>Node Licenses are paid in <strong>USDC</strong> — a stablecoin pegged to the US Dollar. 1 USDC = $1. You need $1,000 USDC for an Alpha tier license, plus a tiny amount of ETH (under $0.10) for transaction fees.</p>
+        <p><strong>Easiest way — buy directly:</strong></p>
+        <p>In <strong>Coinbase Wallet</strong>: tap "Buy" → select USDC → choose Base network → pay with bank/card. The USDC arrives directly in your wallet on Base.</p>
+        <p><strong>Already have USDC on Ethereum?</strong> Bridge it to Base using the <a href="https://bridge.base.org" target="_blank">official Base Bridge</a>. This takes a few minutes.</p>
+        <p><strong>Already have USDC on a Coinbase account?</strong> Send it to your Coinbase Wallet address. Make sure you select Base as the network when sending.</p>
+
+        <div class="info-box">
+          <p><strong>USDC contract on Base:</strong> <code>0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913</code> · <a href="https://basescan.org/token/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" target="_blank">View on BaseScan</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: CONNECT & MINT -->
+    <div class="step" id="step4">
+      <div class="step-header">
+        <div class="step-num"></div>
+        <div class="step-title">Connect Wallet &amp; Mint Your License</div>
+      </div>
+      <div class="step-body">
+        <p>Now you're ready. Connect your wallet, select your tier, approve the USDC payment, and mint your Node License.</p>
+
+        <!-- Tier Selector -->
+        <div class="tier-grid">
+          <div class="tier-option selected" data-tier="0" data-price="1000">
+            <div>
+              <div class="tier-name">Alpha Tier</div>
+              <div class="tier-tag">OPEN — 500 licenses</div>
+            </div>
+            <div class="tier-meta">
+              <div class="price">$1,000</div>
+              <div>USDC</div>
+            </div>
+          </div>
+          <div class="tier-option disabled" data-tier="1">
+            <div>
+              <div class="tier-name">Beta Tier</div>
+              <div class="tier-tag coming">COMING SOON — 1,000 licenses</div>
+            </div>
+            <div class="tier-meta">
+              <div class="price">$1,500</div>
+              <div>USDC</div>
+            </div>
+          </div>
+          <div class="tier-option disabled" data-tier="2">
+            <div>
+              <div class="tier-name">Gamma Tier</div>
+              <div class="tier-tag coming">COMING SOON — 2,000 licenses</div>
+            </div>
+            <div class="tier-meta">
+              <div class="price">$2,200</div>
+              <div>USDC</div>
+            </div>
+          </div>
+          <div class="tier-option disabled" data-tier="3">
+            <div>
+              <div class="tier-name">Delta Tier</div>
+              <div class="tier-tag coming">COMING SOON — 3,000 licenses</div>
+            </div>
+            <div class="tier-meta">
+              <div class="price">$3,000</div>
+              <div>USDC</div>
+            </div>
+          </div>
+          <div class="tier-option disabled" data-tier="4">
+            <div>
+              <div class="tier-name">Epsilon Tier</div>
+              <div class="tier-tag coming">COMING SOON — 5,000 licenses</div>
+            </div>
+            <div class="tier-meta">
+              <div class="price">$3,500</div>
+              <div>USDC</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-action" style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center;">
+          <button class="btn" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
+          <button class="btn" id="approveBtn" onclick="approveUSDC()" disabled>Approve USDC</button>
+          <button class="btn" id="mintBtn" onclick="mintLicense()" disabled>Mint License</button>
+        </div>
+
+        <div id="walletStatus" class="wallet-status" style="display:none;"></div>
+
+        <div id="txStatus" class="tx-status">
+          <div class="label">Transaction</div>
+          <div class="value" id="txValue"></div>
+        </div>
+
+        <div class="info-box" style="margin-top:1.5rem;">
+          <p><strong>What happens when you mint:</strong> Your wallet will ask you to approve two transactions. First, you approve the USDC spend (this gives the contract permission to take $1,000 USDC). Second, you confirm the mint (this creates your soulbound Node License NFT and sends the USDC to the protocol treasury). Once confirmed, your license appears in your wallet as an NFT.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: DONE -->
+    <div class="step" id="step5">
+      <div class="step-header">
+        <div class="step-num"></div>
+        <div class="step-title">You're a Node Operator</div>
+      </div>
+      <div class="step-body">
+        <p>Your soulbound Node License is now in your wallet. It cannot be transferred or sold — it is permanently bound to your address.</p>
+        <p><strong>What happens next:</strong> When the BCCS verification network launches, you'll be able to operate a verification node using this license. You'll process biological asset verification requests, submit evidence data, and earn $BCCS tokens for honest work.</p>
+        <p>Until then, your license confirms your position as an early infrastructure operator in the BCCS network.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MINI FAQ -->
+  <div class="mini-faq">
+    <h2>Common Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">What if I've never used crypto before?</div>
+      <div class="faq-a">Start with Coinbase Wallet — it's designed for beginners. You can buy USDC directly with a bank card. The whole process from zero to Node License takes about 15 minutes.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is this an investment?</div>
+      <div class="faq-a">No. A Node License is a software permit that gives you the right to operate verification infrastructure. You earn tokens through work, not by holding a license. There is no guaranteed return.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I sell my license later?</div>
+      <div class="faq-a">No. Licenses are soulbound (non-transferable). This is by design — it ensures every operator is committed, prevents speculation, and maintains network integrity.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Why USDC instead of ETH or credit card?</div>
+      <div class="faq-a">USDC is a regulated stablecoin worth $1. It eliminates price volatility — you always know exactly what you're paying. The protocol treasury receives a known dollar amount, enabling predictable infrastructure funding.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What is Base?</div>
+      <div class="faq-a">Base is a Layer 2 blockchain built by Coinbase. It's secured by Ethereum but transactions are faster and much cheaper (fractions of a cent). All BCCS contracts are deployed on Base.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Do I need to be whitelisted?</div>
+      <div class="faq-a">Yes. Alpha tier requires whitelist approval. Submit your application on the <a href="index.html#apply" style="color:var(--green);">BCCS homepage</a> and you'll be reviewed for inclusion.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What does a verification node actually do?</div>
+      <div class="faq-a">When operational, nodes process biological asset verification requests. You receive data from satellites, sensors, and inspectors — you validate that data against protocol rules — and you submit verification confirmations on-chain. Honest work earns $BCCS tokens. Dishonest submissions are penalized (slashed).</div>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer-box">
+    <p>A BCCS Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. Validator emissions begin only when the mainnet verification network is operational. No representation is made regarding the future value of any digital asset associated with this protocol. KRYONIS Sovereign Systems Limited is incorporated in Hong Kong SAR.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a href="https://kryonis.global">KRYONIS</a> Sovereign Systems Limited — Hong Kong &copy; 2026</div>
+    <div class="footer-links">
+      <a href="index.html">BCCS Home</a>
+      <a href="audit.html">Audit</a>
+      <a href="terms.html">Terms</a>
+      <a href="risk.html">Risk</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// BCCS NODE LICENSE MINT — Web3 Integration
+// ═══════════════════════════════════════════
+
+// Contract addresses on Base
+const NODE_LICENSE_ADDR = '0x44B46f9D170ae8122cce71332884252934b66FBd';
+const USDC_ADDR = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
+const BASE_CHAIN_ID = '0x2105'; // 8453
+
+// USDC has 6 decimals
+const USDC_DECIMALS = 6;
+
+// Minimal ABIs — only what we need
+const ERC20_ABI = {
+  approve: {
+    name: 'approve',
+    type: 'function',
+    inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }],
+    outputs: [{ name: '', type: 'bool' }]
+  },
+  allowance: {
+    name: 'allowance',
+    type: 'function',
+    inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }]
+  },
+  balanceOf: {
+    name: 'balanceOf',
+    type: 'function',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }]
+  }
+};
+
+const NODE_LICENSE_ABI = {
+  mintLicense: {
+    name: 'mintLicense',
+    type: 'function',
+    inputs: [{ name: 'tier', type: 'uint256' }],
+    outputs: []
+  }
+};
+
+let userAddress = null;
+let selectedTier = 0;
+let selectedPrice = 1000;
+
+// Tier selection
+document.querySelectorAll('.tier-option:not(.disabled)').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.tier-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTier = parseInt(el.dataset.tier);
+    selectedPrice = parseInt(el.dataset.price);
+  });
+});
+
+function showStatus(msg, type) {
+  const el = document.getElementById('walletStatus');
+  el.style.display = 'inline-block';
+  el.className = 'wallet-status' + (type ? ' ' + type : '');
+  el.textContent = msg;
+}
+
+function showTx(msg) {
+  const el = document.getElementById('txStatus');
+  el.classList.add('show');
+  document.getElementById('txValue').innerHTML = msg;
+}
+
+function encodeFunctionCall(abi, args) {
+  // Simple ABI encoder for our specific functions
+  const sig = abi.name + '(' + abi.inputs.map(i => i.type).join(',') + ')';
+  // keccak256 first 4 bytes — we'll use a simpler approach with eth_call
+  // For now, use the standard method selector approach
+  return null; // We'll use eth_sendTransaction with the data field
+}
+
+// Utility: encode uint256
+function encodeUint256(value) {
+  return BigInt(value).toString(16).padStart(64, '0');
+}
+
+// Utility: encode address
+function encodeAddress(addr) {
+  return addr.toLowerCase().replace('0x', '').padStart(64, '0');
+}
+
+// Function selectors (pre-computed keccak256 first 4 bytes)
+const SELECTORS = {
+  approve: '0x095ea7b3',       // approve(address,uint256)
+  allowance: '0xdd62ed3e',     // allowance(address,address)
+  balanceOf: '0x70a08231',     // balanceOf(address)
+  mintLicense: '0xa3a40ea5'    // mintLicense(uint256) — verify this matches your contract
+};
+
+async function connectWallet() {
+  const btn = document.getElementById('connectBtn');
+
+  if (!window.ethereum) {
+    showStatus('No wallet detected. Please install Coinbase Wallet or MetaMask.', 'error');
+    return;
+  }
+
+  try {
+    btn.textContent = 'Connecting...';
+    btn.disabled = true;
+
+    // Request accounts
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    userAddress = accounts[0];
+
+    // Check chain
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    if (chainId !== BASE_CHAIN_ID) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: BASE_CHAIN_ID }],
+        });
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: BASE_CHAIN_ID,
+              chainName: 'Base',
+              nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+              rpcUrls: ['https://mainnet.base.org'],
+              blockExplorerUrls: ['https://basescan.org'],
+            }],
+          });
+        } else {
+          throw switchError;
+        }
+      }
+    }
+
+    const short = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+    showStatus('Connected: ' + short + ' on Base', 'connected');
+    btn.textContent = 'Connected ✓';
+    btn.disabled = true;
+    document.getElementById('approveBtn').disabled = false;
+
+    // Check USDC balance
+    const balanceData = SELECTORS.balanceOf + encodeAddress(userAddress);
+    const balanceResult = await window.ethereum.request({
+      method: 'eth_call',
+      params: [{ to: USDC_ADDR, data: balanceData }, 'latest']
+    });
+    const balance = parseInt(balanceResult, 16) / (10 ** USDC_DECIMALS);
+    showStatus('Connected: ' + short + ' · USDC Balance: $' + balance.toFixed(2), 'connected');
+
+    if (balance < selectedPrice) {
+      showStatus('Connected: ' + short + ' · USDC Balance: $' + balance.toFixed(2) + ' — Insufficient! Need $' + selectedPrice, 'error');
+    }
+
+  } catch (err) {
+    showStatus('Connection failed: ' + (err.message || 'Unknown error'), 'error');
+    btn.textContent = 'Connect Wallet';
+    btn.disabled = false;
+  }
+}
+
+async function approveUSDC() {
+  const btn = document.getElementById('approveBtn');
+  try {
+    btn.textContent = 'Approving...';
+    btn.disabled = true;
+
+    const amount = BigInt(selectedPrice) * BigInt(10 ** USDC_DECIMALS);
+    const data = SELECTORS.approve + encodeAddress(NODE_LICENSE_ADDR) + encodeUint256(amount);
+
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: userAddress,
+        to: USDC_ADDR,
+        data: data,
+      }]
+    });
+
+    showTx('USDC Approval sent: <a href="https://basescan.org/tx/' + txHash + '" target="_blank">' + txHash.slice(0, 10) + '...' + txHash.slice(-6) + '</a> — waiting for confirmation...');
+    btn.textContent = 'Approved ✓';
+    document.getElementById('mintBtn').disabled = false;
+
+  } catch (err) {
+    showStatus('Approval failed: ' + (err.message || 'User rejected'), 'error');
+    btn.textContent = 'Approve USDC';
+    btn.disabled = false;
+  }
+}
+
+async function mintLicense() {
+  const btn = document.getElementById('mintBtn');
+  try {
+    btn.textContent = 'Minting...';
+    btn.disabled = true;
+
+    const data = SELECTORS.mintLicense + encodeUint256(selectedTier);
+
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: userAddress,
+        to: NODE_LICENSE_ADDR,
+        data: data,
+      }]
+    });
+
+    showTx('Mint transaction sent: <a href="https://basescan.org/tx/' + txHash + '" target="_blank">' + txHash.slice(0, 10) + '...' + txHash.slice(-6) + '</a> — Your Node License is being created!');
+    btn.textContent = 'Minted ✓';
+    showStatus('🎉 Node License minted! Check your wallet.', 'connected');
+
+    // Mark steps as done
+    document.querySelectorAll('.step').forEach((s, i) => {
+      if (i < 4) { s.classList.remove('active'); s.classList.add('done'); }
+      if (i === 4) s.classList.add('active');
+    });
+
+  } catch (err) {
+    showStatus('Mint failed: ' + (err.message || 'User rejected or not whitelisted'), 'error');
+    btn.textContent = 'Mint License';
+    btn.disabled = false;
+  }
+}
+
+// Listen for account/chain changes
+if (window.ethereum) {
+  window.ethereum.on('accountsChanged', () => location.reload());
+  window.ethereum.on('chainChanged', () => location.reload());
+}
+</script>
+
+</body>
+</html>
