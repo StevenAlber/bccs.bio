@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCCS is Not a Carbon Project — Category &amp; Positioning</title>
+<meta name="description" content="BCCS is verification and clearing infrastructure for territorial bio-capital. It is not a carbon credit project, not a nature token, not a climate marketplace. A clear statement of what BCCS is and what it is not.">
+<meta property="og:title" content="BCCS is Not a Carbon Project">
+<meta property="og:description" content="Infrastructure, not instrument. Standard, not commodity. Registry, not market.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bccs.bio/not-carbon.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0C0B;
+    --bg-elevated: #111413;
+    --bg-card: #161A18;
+    --bg-deep: #0D0F0E;
+    --border: #1E2422;
+    --border-accent: #2A3A30;
+    --border-bright: #3A5A48;
+    --text: #E8EBE9;
+    --text-dim: #7A8580;
+    --text-muted: #4A5550;
+    --green: #3ECF8E;
+    --green-lt: #6FE0A8;
+    --green-dim: #1B4D3E;
+    --green-glow: rgba(62, 207, 142, 0.12);
+    --bronze: #C4982A;
+    --red: #EF4444;
+    --red-dim: #5C2828;
+    --amber: #F59E0B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; font-size: 16px; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.25; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 0%, transparent 100%); }
+  a { color: var(--green); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--green-lt); }
+
+  /* NAV */
+  nav.main-nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+  .nav-right { display: flex; gap: 1rem; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--green); }
+  .nav-badge { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.35rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 4px; color: var(--green); background: var(--green-glow); letter-spacing: 0.05em; }
+  .nav-mint { display: inline-flex; align-items: center; padding: 0.45rem 1rem; background: var(--green); color: var(--bg) !important; font-weight: 700 !important; font-size: 0.8rem !important; border-radius: 5px; letter-spacing: 0.03em; transition: all 0.25s; }
+  .nav-mint:hover { background: var(--green-lt); box-shadow: 0 0 20px rgba(62, 207, 142, 0.25); }
+  .nav-hamburger { display: none; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 8px; }
+  .nav-hamburger svg { display: block; }
+  .mob-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 12, 11, 0.97); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .mob-menu.open { display: flex; }
+  .mob-menu a { font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); text-decoration: none; }
+  .mob-menu a:hover { color: var(--text); }
+  .mob-menu .mob-mint { display: inline-flex; padding: 0.7rem 2rem; background: var(--green); color: var(--bg); font-weight: 700; border-radius: 5px; margin-top: 1rem; }
+  .mob-x { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 24px; font-family: 'DM Mono', monospace; }
+  @media (max-width: 1000px) {
+    nav.main-nav { padding: 0.8rem 1.2rem; }
+    .nav-links { display: none !important; }
+    .nav-badge { display: none !important; }
+    .nav-hamburger { display: block !important; }
+  }
+
+  /* HERO */
+  .hero { position: relative; z-index: 1; padding: 9rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .hero-crumb { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 2rem; }
+  .hero-crumb a { color: var(--green); }
+  .hero-crumb span { margin: 0 0.8rem; color: var(--text-muted); }
+
+  .hero-negation { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--red); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: inline-block; padding: 0.4rem 0.9rem; border: 1px solid var(--red-dim); background: rgba(239, 68, 68, 0.06); border-radius: 3px; }
+
+  .hero h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 400; line-height: 1.05; color: var(--text); margin-bottom: 1.6rem; max-width: 20ch; }
+  .hero h1 em { font-style: italic; color: var(--green); }
+  .hero h1 .strike { color: var(--text-muted); text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; font-style: normal; }
+
+  .hero-sub { font-size: 1.18rem; color: var(--text-dim); max-width: 62ch; line-height: 1.75; margin-bottom: 1rem; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+
+  .hero-triplet { margin: 2.5rem 0 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 760px; }
+  @media (max-width: 700px) { .hero-triplet { grid-template-columns: 1fr; } }
+  .trip { background: var(--bg-card); padding: 1.4rem 1.3rem; }
+  .trip-k { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .trip-v { font-family: 'Instrument Serif', serif; font-size: 1.15rem; color: var(--green); font-style: italic; line-height: 1.3; }
+  .trip-v .neg { color: var(--text-muted); text-decoration: line-through; text-decoration-color: var(--red-dim); font-style: normal; margin-right: 0.3rem; }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+  .section-title { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 400; line-height: 1.2; margin-bottom: 1.4rem; color: var(--text); max-width: 30ch; }
+  .section-title em { font-style: italic; color: var(--green); }
+  .section-prose { color: var(--text-dim); font-size: 1rem; max-width: 68ch; line-height: 1.8; margin-bottom: 1.2rem; }
+  .section-prose strong { color: var(--text); font-weight: 600; }
+  .section-prose em { color: var(--green); font-style: italic; }
+  .section-divider { width: 100%; border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* COMPARISON TABLE */
+  .compare-table { margin: 2.5rem 0 1rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-card); }
+  .ct-head { display: grid; grid-template-columns: 1.1fr 1fr 1fr; background: var(--bg-elevated); padding: 1.4rem 1.6rem; gap: 1.5rem; border-bottom: 1px solid var(--border-bright); align-items: end; }
+  .ct-head-dim { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; }
+  .ct-head-carbon { font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: var(--text-dim); font-style: italic; }
+  .ct-head-bccs { font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: var(--green); font-style: italic; }
+  .ct-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr; padding: 1.15rem 1.6rem; gap: 1.5rem; border-bottom: 1px solid var(--border); align-items: start; }
+  .ct-row:last-child { border-bottom: none; }
+  .ct-row:nth-child(even) { background: rgba(0,0,0,0.15); }
+  .ct-dim { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--text-muted); letter-spacing: 0.05em; padding-top: 0.1rem; }
+  .ct-carbon { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; }
+  .ct-bccs { font-size: 0.92rem; color: var(--text); line-height: 1.6; }
+  .ct-bccs strong { color: var(--green); font-weight: 600; }
+  @media (max-width: 820px) {
+    .ct-head { grid-template-columns: 1fr; gap: 0.5rem; }
+    .ct-head-carbon::before { content: "Carbon Project: "; color: var(--text-muted); font-style: normal; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+    .ct-head-bccs::before { content: "BCCS: "; color: var(--text-muted); font-style: normal; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+    .ct-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.2rem; }
+    .ct-dim { color: var(--green); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem; }
+    .ct-carbon { padding-left: 1rem; border-left: 2px solid var(--red-dim); }
+    .ct-bccs { padding-left: 1rem; border-left: 2px solid var(--green); }
+    .ct-carbon::before { content: "Carbon project — "; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+    .ct-bccs::before { content: "BCCS — "; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+  }
+
+  /* IDENTITY STATEMENTS */
+  .identity-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 2.5rem 0 1rem; }
+  @media (max-width: 800px) { .identity-trio { grid-template-columns: 1fr; } }
+  .id-cell { background: var(--bg-card); padding: 2.2rem 1.8rem; }
+  .id-num { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--green); letter-spacing: 0.25em; margin-bottom: 1rem; }
+  .id-statement { font-family: 'Instrument Serif', serif; font-size: 1.4rem; font-style: italic; color: var(--text); line-height: 1.35; margin-bottom: 0.8rem; }
+  .id-statement .em { color: var(--green); }
+  .id-sub { color: var(--text-dim); font-size: 0.9rem; line-height: 1.65; }
+
+  /* DUE DILIGENCE */
+  .dd-list { margin: 2rem 0 1rem; }
+  .dd-item { display: grid; grid-template-columns: 50px 1fr; gap: 1.5rem; padding: 1.6rem 0; border-top: 1px solid var(--border); align-items: start; }
+  .dd-item:last-child { border-bottom: 1px solid var(--border); }
+  .dd-n { font-family: 'DM Mono', monospace; font-size: 1.3rem; color: var(--green); font-weight: 500; padding-top: 0.1rem; }
+  .dd-body h4 { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.35; }
+  .dd-body p { color: var(--text-dim); font-size: 0.92rem; line-height: 1.7; margin-bottom: 0.5rem; }
+  .dd-body p strong { color: var(--text); }
+  .dd-body p em { color: var(--green); font-style: italic; }
+  .dd-comp { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+  .dd-comp-wrong, .dd-comp-right { font-family: 'DM Mono', monospace; font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 3px; letter-spacing: 0.04em; }
+  .dd-comp-wrong { color: var(--text-muted); background: rgba(239,68,68,0.05); border: 1px solid var(--red-dim); text-decoration: line-through; text-decoration-color: rgba(239,68,68,0.4); }
+  .dd-comp-right { color: var(--green); background: var(--green-glow); border: 1px solid var(--border-accent); }
+  @media (max-width: 700px) { .dd-item { grid-template-columns: 1fr; gap: 0.5rem; } }
+
+  /* FINAL STATEMENT */
+  .final-state { margin: 3rem 0 1rem; padding: 2.5rem 2.2rem; background: var(--bg-deep); border-left: 3px solid var(--green); border-radius: 4px; }
+  .final-state p { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.35rem; color: var(--text); line-height: 1.55; margin-bottom: 0.8rem; }
+  .final-state p:last-child { margin-bottom: 0; }
+  .final-state em { color: var(--green); }
+  .final-state strong { color: var(--text); font-weight: 600; font-style: normal; }
+
+  /* CTA */
+  .page-cta { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; text-align: center; border-top: 1px solid var(--border); }
+  .pc-tag { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1rem; }
+  .pc-h { font-family: 'Instrument Serif', serif; font-size: clamp(1.7rem, 3vw, 2.3rem); color: var(--text); margin-bottom: 1rem; line-height: 1.25; }
+  .pc-h em { font-style: italic; color: var(--green); }
+  .pc-p { font-size: 1rem; color: var(--text-dim); max-width: 54ch; margin: 0 auto 2rem; line-height: 1.7; }
+  .pc-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.9rem; background: var(--green); color: var(--bg); font-weight: 700; font-size: 0.88rem; letter-spacing: 0.03em; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--green-lt); box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); color: var(--bg); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.9rem; background: transparent; color: var(--text-dim); font-weight: 600; font-size: 0.88rem; letter-spacing: 0.03em; border: 1px solid var(--border-accent); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
+
+  /* FOOTER */
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--bg); }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .footer-brand a:hover { color: var(--text); }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text-dim); }
+
+  @media (max-width: 768px) {
+    .hero { padding: 6rem 1.5rem 3rem; }
+    section { padding: 3rem 1.5rem; }
+    .page-cta { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <a href="index.html" class="nav-logo">BCCS</a>
+  <div class="nav-links">
+    <a href="index.html#why">Why BCCS</a>
+    <a href="index.html#protocol">Protocol</a>
+    <a href="index.html#access">Access</a>
+    <a href="not-carbon.html" class="active">Not Carbon</a>
+    <a href="bioclearing.html">BioClearing</a>
+    <a href="implementation.html">Implementation</a>
+    <a href="audit.html">Audit</a>
+    <a href="index.html#docs">Docs</a>
+  </div>
+  <div class="nav-right">
+    <a href="mint.html" class="nav-mint">Buy License</a>
+    <span class="nav-badge">BASE L2</span>
+    <button class="nav-hamburger" onclick="document.getElementById('mob-menu').classList.add('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-x" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="index.html" onclick="this.parentElement.classList.remove('open')">Home</a>
+  <a href="index.html#why" onclick="this.parentElement.classList.remove('open')">Why BCCS</a>
+  <a href="index.html#protocol" onclick="this.parentElement.classList.remove('open')">Protocol</a>
+  <a href="index.html#access" onclick="this.parentElement.classList.remove('open')">Access</a>
+  <a href="not-carbon.html" onclick="this.parentElement.classList.remove('open')">Not Carbon</a>
+  <a href="bioclearing.html" onclick="this.parentElement.classList.remove('open')">BioClearing</a>
+  <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
+  <a href="audit.html" onclick="this.parentElement.classList.remove('open')">Audit</a>
+  <a href="index.html#docs" onclick="this.parentElement.classList.remove('open')">Docs</a>
+  <a href="mint.html" class="mob-mint" onclick="this.parentElement.classList.remove('open')">Buy License</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-crumb">
+    <a href="index.html">BCCS</a><span>/</span>Category &amp; Positioning<span>/</span>Not Carbon
+  </div>
+  <div class="hero-negation">Category Correction</div>
+  <h1>BCCS is <span class="strike">not</span> a carbon project.<br>It is <em>the infrastructure one layer below</em> carbon projects.</h1>
+  <p class="hero-sub">BCCS is verification and clearing infrastructure for territorial bio-capital. It does not issue credits. It does not operate a marketplace. It does not tokenise claims. <strong>It records the verified state of biological assets, and it records when clearing obligations reach finality.</strong> Carbon credit projects, if they are serious, will eventually depend on infrastructure like this.</p>
+
+  <div class="hero-triplet">
+    <div class="trip"><div class="trip-k">We are</div><div class="trip-v">Infrastructure</div></div>
+    <div class="trip"><div class="trip-k">Not</div><div class="trip-v"><span class="neg">Instrument</span></div></div>
+    <div class="trip"><div class="trip-k">Comparable to</div><div class="trip-v">SWIFT &middot; DTCC</div></div>
+  </div>
+
+  <p class="hero-sub">This page exists because the category is confusing at first glance. A protocol that deals with biological assets on a blockchain, using the words &ldquo;carbon&rdquo; and &ldquo;biomass&rdquo; in its documentation, is easy to file under &ldquo;another carbon token project.&rdquo; That filing is wrong, and every investor, sovereign counterparty, and serious partner should understand <em>why</em> it is wrong before continuing.</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- THE CATEGORY ERROR -->
+<section>
+  <div class="section-tag">01 &mdash; The Category Error</div>
+  <h2 class="section-title">Why the confusion <em>happens</em>, and why it matters</h2>
+  <p class="section-prose">The carbon credit market produced a decade of tokenised climate projects &mdash; Toucan, KlimaDAO, Flowcarbon, Regen Network, dozens of smaller issuers. Those projects answered a specific question: <strong>how do we bring existing carbon credits onto a blockchain and create a market for them?</strong> Many of those projects are doing real work. None of them are BCCS.</p>
+  <p class="section-prose">BCCS answers a different question entirely: <em>how is the verified biological state of a territorial asset recorded, across jurisdictions, with finality, in a way that sovereign-grade capital can trust?</em> That question sits one architectural layer below the question carbon projects ask. Clearing infrastructure is not a market. It is what markets depend on to exist.</p>
+  <p class="section-prose">SWIFT is not a bank. DTCC is not an exchange. The Torrens system is not a real estate firm. Each of these is infrastructure that sits beneath the asset class, records what happens, and does not trade. <strong>That is the category BCCS belongs to.</strong> The comparables are Chainlink (oracle infrastructure), SWIFT (settlement messaging), DTCC (securities clearing) &mdash; not Toucan or Regen.</p>
+  <p class="section-prose">Why this matters practically: the valuation multiples, the regulatory posture, the moat structure, and the revenue model are all different. <em>An investor who evaluates BCCS on carbon-project comparables will misprice the opportunity by an order of magnitude in either direction</em> &mdash; and that is bad for everyone.</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- COMPARISON TABLE -->
+<section>
+  <div class="section-tag">02 &mdash; Side by Side</div>
+  <h2 class="section-title">Carbon Project vs <em>BCCS Protocol</em></h2>
+  <p class="section-prose">Ten dimensions. Look at them together. The differences are not cosmetic.</p>
+
+  <div class="compare-table">
+    <div class="ct-head">
+      <div class="ct-head-dim">Dimension</div>
+      <div class="ct-head-carbon">A Carbon Credit Project</div>
+      <div class="ct-head-bccs">BCCS Protocol</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">The Asset</div>
+      <div class="ct-carbon">A tokenised credit representing a claim on emissions reductions or removals</div>
+      <div class="ct-bccs">A <strong>record of verified state</strong> for a territorial bio-asset, identified by BAIN ID</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">What It Sells</div>
+      <div class="ct-carbon">Credits for offsetting, trading, retirement</div>
+      <div class="ct-bccs">Nothing. <strong>Access to the verification network</strong> (node licenses, protocol fees for queries)</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Primary Customer</div>
+      <div class="ct-carbon">Companies buying offsets, retail speculators, climate-aligned funds</div>
+      <div class="ct-bccs">Sovereigns, multilateral insurers, institutional allocators, <strong>other protocols needing verified bio-state data</strong></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Revenue Model</div>
+      <div class="ct-carbon">Issuance fees, trading spreads, token price appreciation</div>
+      <div class="ct-bccs">Protocol fees on verification queries, node license access, <strong>no commission on any traded instrument</strong></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Regulatory Posture</div>
+      <div class="ct-carbon">Regulated (or soon to be regulated) as a financial instrument in many jurisdictions</div>
+      <div class="ct-bccs"><strong>Infrastructure, not instrument.</strong> BCCS records data; it does not sell a claim. Different regulatory category entirely.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Moat</div>
+      <div class="ct-carbon">Volume, liquidity, brand recognition in climate markets</div>
+      <div class="ct-bccs"><strong>Standard adoption.</strong> Once BAIN ID is the common identifier used by sovereigns and institutions, switching costs are architectural, not commercial.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">What Happens If Price Crashes</div>
+      <div class="ct-carbon">Core business impairment; credits lose value; market participation shrinks</div>
+      <div class="ct-bccs"><strong>Infrastructure keeps operating.</strong> Protocol fees are denominated in usage, not speculation. Registry function is independent of token price.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Closest Analogues</div>
+      <div class="ct-carbon">Toucan, KlimaDAO, Flowcarbon, Regen Network</div>
+      <div class="ct-bccs">Chainlink (oracle infra), SWIFT (settlement messaging), DTCC (securities clearing), <strong>Torrens (title registry)</strong></div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Jurisdictional Model</div>
+      <div class="ct-carbon">Single-operator or DAO-governed, typically one jurisdiction</div>
+      <div class="ct-bccs"><strong>Tri-jurisdiction hosting</strong> (HK &middot; UAE &middot; SG). Sovereign nodes. Neutral by architecture.</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-dim">Relationship to Carbon Markets</div>
+      <div class="ct-carbon">Is the carbon market</div>
+      <div class="ct-bccs"><strong>Is the verification layer that serious carbon markets will eventually need to trust.</strong> BCCS is upstream.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- WHAT BCCS IS -->
+<section>
+  <div class="section-tag">03 &mdash; What BCCS Is</div>
+  <h2 class="section-title">Three statements. <em>Memorise these.</em></h2>
+  <p class="section-prose">If you take one thing from this page, take these three lines. They fit on a business card. They are the entire positioning.</p>
+
+  <div class="identity-trio">
+    <div class="id-cell">
+      <div class="id-num">01</div>
+      <p class="id-statement"><span class="em">Infrastructure</span>, not instrument.</p>
+      <p class="id-sub">BCCS does not issue a claim you can trade. It records the verified state of an asset. The distinction is the same as SWIFT (infrastructure) vs a bank bond (instrument).</p>
+    </div>
+    <div class="id-cell">
+      <div class="id-num">02</div>
+      <p class="id-statement"><span class="em">Standard</span>, not commodity.</p>
+      <p class="id-sub">The value is in BAIN ID adoption as the universal identifier for territorial bio-assets. A standard compounds through use. A commodity degrades through oversupply.</p>
+    </div>
+    <div class="id-cell">
+      <div class="id-num">03</div>
+      <p class="id-statement"><span class="em">Registry</span>, not market.</p>
+      <p class="id-sub">The BCCS Global Registry records clearing states. It does not match buyers and sellers. Markets can be built on top of the registry; the registry is not itself a market.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- DUE DILIGENCE -->
+<section>
+  <div class="section-tag">04 &mdash; For Investor Due Diligence</div>
+  <h2 class="section-title">If you are evaluating BCCS, <em>these are the right comparables</em></h2>
+  <p class="section-prose">If your analyst comes back with a valuation based on Toucan or KlimaDAO comparables, the analysis is wrong. Here is how to do it correctly.</p>
+
+  <div class="dd-list">
+    <div class="dd-item">
+      <div class="dd-n">01</div>
+      <div class="dd-body">
+        <h4>Use infrastructure comparables, not market-participant comparables</h4>
+        <p>BCCS is a verification and clearing layer. Evaluate it against oracle infrastructure, settlement networks, and standards bodies &mdash; not against carbon credit issuers or climate marketplaces. The revenue model, moat, and regulatory exposure are structurally different.</p>
+        <div class="dd-comp">
+          <span class="dd-comp-wrong">Toucan</span>
+          <span class="dd-comp-wrong">KlimaDAO</span>
+          <span class="dd-comp-wrong">Flowcarbon</span>
+          <span class="dd-comp-wrong">Regen Network</span>
+          <span class="dd-comp-right">Chainlink</span>
+          <span class="dd-comp-right">Pyth</span>
+          <span class="dd-comp-right">Hyperlane</span>
+          <span class="dd-comp-right">Axelar</span>
+        </div>
+      </div>
+    </div>
+    <div class="dd-item">
+      <div class="dd-n">02</div>
+      <div class="dd-body">
+        <h4>Model revenue as protocol fees on queries, not credit issuance</h4>
+        <p>BCCS revenue scales with verification query volume and TBAR registration, not with credit volume or traded credit value. This is more like evaluating a query-priced API business than a commodity-token business. <strong>Long-term: usage-priced institutional infrastructure.</strong></p>
+        <div class="dd-comp">
+          <span class="dd-comp-wrong">Credit issuance volume</span>
+          <span class="dd-comp-wrong">Market trading spreads</span>
+          <span class="dd-comp-right">Query-priced API revenue</span>
+          <span class="dd-comp-right">Node license access fees</span>
+          <span class="dd-comp-right">Protocol fees on state transitions</span>
+        </div>
+      </div>
+    </div>
+    <div class="dd-item">
+      <div class="dd-n">03</div>
+      <div class="dd-body">
+        <h4>Assess moat as standard-adoption, not brand-recognition</h4>
+        <p>The defensible position is BAIN ID becoming the de facto identifier used by sovereigns and institutions for territorial bio-assets. Once the standard is adopted at sovereign level, switching to a competitor requires every counterparty to coordinate. <em>That is the SWIFT moat, not the Toucan moat.</em></p>
+        <div class="dd-comp">
+          <span class="dd-comp-wrong">Climate-alignment brand</span>
+          <span class="dd-comp-wrong">Retail community size</span>
+          <span class="dd-comp-right">BAIN ID adoption by sovereigns</span>
+          <span class="dd-comp-right">Integration depth with institutional workflows</span>
+          <span class="dd-comp-right">Regulatory recognition as infrastructure</span>
+        </div>
+      </div>
+    </div>
+    <div class="dd-item">
+      <div class="dd-n">04</div>
+      <div class="dd-body">
+        <h4>Price regulatory posture as asset, not liability</h4>
+        <p>Tokenised carbon credit projects carry rising regulatory risk in major jurisdictions. BCCS is architected as neutral data infrastructure &mdash; <strong>it records state, does not sell claims</strong>. The distinction maps cleanly to different regulatory categories. Evaluate the regulatory posture as part of the moat, not part of the risk.</p>
+        <div class="dd-comp">
+          <span class="dd-comp-wrong">MiCA-style financial-instrument risk</span>
+          <span class="dd-comp-right">Infrastructure-category regulatory treatment</span>
+          <span class="dd-comp-right">Tri-jurisdiction neutrality (HK &middot; UAE &middot; SG)</span>
+        </div>
+      </div>
+    </div>
+    <div class="dd-item">
+      <div class="dd-n">05</div>
+      <div class="dd-body">
+        <h4>Consider the sovereign pilot trajectory, not retail adoption curves</h4>
+        <p>This is not a consumer or retail project. Adoption is driven by sovereign nodes deploying under the BCCS standard, one jurisdiction at a time. <em>The first signed sovereign pilot is the inflection point</em> &mdash; not a social-media follower count or a TVL metric. Model accordingly.</p>
+        <div class="dd-comp">
+          <span class="dd-comp-wrong">TVL</span>
+          <span class="dd-comp-wrong">Discord members</span>
+          <span class="dd-comp-wrong">Retail wallet count</span>
+          <span class="dd-comp-right">Sovereign pilots signed</span>
+          <span class="dd-comp-right">First TBAR registered at State 5</span>
+          <span class="dd-comp-right">Node license deployments</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FINAL STATEMENT -->
+<section>
+  <div class="section-tag">05 &mdash; Final Statement</div>
+  <h2 class="section-title">Read this <em>once.</em> Then continue with the protocol documentation.</h2>
+
+  <div class="final-state">
+    <p>BCCS is not competing with Toucan. <strong>BCCS is building the layer that a serious Toucan would need.</strong></p>
+    <p>BCCS is not a climate project. <strong>It is the verification and clearing infrastructure for territorial bio-capital as an institutional asset class.</strong></p>
+    <p>BCCS is not asking sovereigns to tokenise their biosphere. <strong>It is offering sovereigns the missing record layer &mdash; neutral, jurisdictionally robust, queryable &mdash; that makes their biosphere addressable by institutional capital without giving up sovereignty.</strong></p>
+    <p>If any of the above still reads as &ldquo;carbon project&rdquo; <em>&mdash; read it once more, slowly.</em> The architecture is deliberately different. The category is deliberately different. The trajectory is deliberately different.</p>
+  </div>
+
+  <p class="section-prose" style="margin-top: 2rem"><strong>What to do next.</strong> If you are an investor, request the protocol documentation and the tokenomics litepaper &mdash; evaluate against the comparables listed above. If you are a sovereign counterparty, explore the BioClearing Global Registry at bioclearing.global. If you are a researcher or institutional allocator, read the KRYONIS Lab doctrinal deep-dive. All three entry points describe the same system from a different angle. <em>None of them describe a carbon project.</em></p>
+</section>
+
+<!-- CTA -->
+<section class="page-cta">
+  <div class="pc-tag">Continue</div>
+  <h2 class="pc-h">Now <em>read the actual architecture</em></h2>
+  <p class="pc-p">The protocol documentation, the verification layer, the clearing registry, and the doctrinal framework &mdash; each describes the same system from a different angle.</p>
+  <div class="pc-actions">
+    <a href="index.html" class="btn-primary">BCCS Protocol &rarr;</a>
+    <a href="bioclearing.html" class="btn-secondary">BioClearing Architecture</a>
+    <a href="https://bioclearing.global" class="btn-secondary" target="_blank" rel="noopener noreferrer">Global Registry</a>
+    <a href="https://kryonislab.org/bioclearing.html" class="btn-secondary" target="_blank" rel="noopener noreferrer">KRYONIS Lab Doctrine</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>&copy; 2026</div>
+    <div class="footer-links">
+      <a href="index.html">BCCS Protocol</a>
+      <a href="bioclearing.html">BioClearing</a>
+      <a href="implementation.html">Implementation</a>
+      <a href="audit.html">Audit</a>
+      <a href="https://kryonislab.org" target="_blank" rel="noopener noreferrer">KRYONIS Lab</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
