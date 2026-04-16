@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioClearing — The Clearing Layer Above BCCS Verification</title>
+<meta name="description" content="How the BCCS protocol extends from on-chain verification to sovereign clearing infrastructure. BAIN ID as the global standard. TBAR as the record object. Seven-state irreversible ratchet. Tri-jurisdiction deployment.">
+<meta property="og:title" content="BioClearing — The Clearing Layer Above BCCS Verification">
+<meta property="og:description" content="The technical architecture of the BCCS Global Registry. From verification to settlement for territorial bio-capital.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bccs.bio/bioclearing.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0C0B;
+    --bg-elevated: #111413;
+    --bg-card: #161A18;
+    --bg-deep: #0D0F0E;
+    --border: #1E2422;
+    --border-accent: #2A3A30;
+    --border-bright: #3A5A48;
+    --text: #E8EBE9;
+    --text-dim: #7A8580;
+    --text-muted: #4A5550;
+    --green: #3ECF8E;
+    --green-lt: #6FE0A8;
+    --green-dim: #1B4D3E;
+    --green-glow: rgba(62, 207, 142, 0.12);
+    --bronze: #C4982A;
+    --bronze-dim: #8B6914;
+    --red: #EF4444;
+    --amber: #F59E0B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; font-size: 16px; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.25; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 0%, transparent 100%); }
+  a { color: var(--green); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--green-lt); }
+
+  /* NAV */
+  nav.main-nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-right { display: flex; gap: 1rem; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--green); }
+  .nav-badge { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.35rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 4px; color: var(--green); background: var(--green-glow); letter-spacing: 0.05em; }
+  .nav-mint { display: inline-flex; align-items: center; padding: 0.45rem 1rem; background: var(--green); color: var(--bg) !important; font-weight: 700 !important; font-size: 0.8rem !important; border-radius: 5px; letter-spacing: 0.03em; transition: all 0.25s; }
+  .nav-mint:hover { background: var(--green-lt); box-shadow: 0 0 20px rgba(62, 207, 142, 0.25); }
+  .nav-hamburger { display: none; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 8px; }
+  .nav-hamburger svg { display: block; }
+  .mob-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 12, 11, 0.97); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .mob-menu.open { display: flex; }
+  .mob-menu a { font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); text-decoration: none; }
+  .mob-menu a:hover { color: var(--text); }
+  .mob-menu .mob-mint { display: inline-flex; padding: 0.7rem 2rem; background: var(--green); color: var(--bg); font-weight: 700; border-radius: 5px; margin-top: 1rem; }
+  .mob-x { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 24px; font-family: 'DM Mono', monospace; }
+  @media (max-width: 900px) {
+    nav.main-nav { padding: 0.8rem 1.2rem; }
+    .nav-links { display: none !important; }
+    .nav-badge { display: none !important; }
+    .nav-hamburger { display: block !important; }
+  }
+
+  /* LAYOUT */
+  section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .narrow { max-width: 880px; }
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem; }
+  .section-title { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem; color: var(--text); }
+  .section-title em { font-style: italic; color: var(--green); }
+  .section-desc { color: var(--text-dim); font-size: 1.05rem; max-width: 68ch; line-height: 1.75; margin-bottom: 3rem; }
+  .section-desc strong { color: var(--text); font-weight: 600; }
+  .section-desc em { color: var(--green); font-style: italic; }
+  .section-prose { color: var(--text-dim); font-size: 1rem; max-width: 70ch; line-height: 1.8; margin-bottom: 1.5rem; }
+  .section-prose strong { color: var(--text); font-weight: 600; }
+  .section-prose em { color: var(--green); font-style: italic; }
+  .section-divider { width: 100%; border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* HERO */
+  .hero { position: relative; z-index: 1; padding: 9rem 2rem 5rem; max-width: 1100px; margin: 0 auto; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+  .hero-crumb { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 2rem; }
+  .hero-crumb a { color: var(--green); }
+  .hero-crumb span { margin: 0 0.8rem; color: var(--text-muted); }
+  .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-tag span { display: inline-block; padding: 0.3rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
+  .hero h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.8rem, 6.5vw, 5rem); font-weight: 400; line-height: 1.05; color: var(--text); margin-bottom: 1.8rem; max-width: 16ch; }
+  .hero h1 em { font-style: italic; color: var(--green); }
+  .hero-sub { font-size: 1.2rem; color: var(--text-dim); max-width: 60ch; line-height: 1.75; margin-bottom: 1.5rem; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-pull { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.3rem; color: var(--green); max-width: 56ch; border-left: 2px solid var(--green); padding: 1rem 0 1rem 1.6rem; margin: 2rem 0 2.5rem; line-height: 1.55; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: var(--green); color: var(--bg); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--green-lt); box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); transform: translateY(-1px); color: var(--bg); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: transparent; color: var(--text-dim); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em; border: 1px solid var(--border-accent); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
+
+  /* PROTOCOL STACK */
+  .stack-layers { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 3rem 0; }
+  .stack-layer { display: grid; grid-template-columns: 160px 1fr 180px; background: var(--bg-card); padding: 2rem 2.2rem; gap: 2rem; align-items: start; transition: background 0.25s; }
+  .stack-layer:hover { background: var(--bg-elevated); }
+  .stack-layer.active { background: rgba(62, 207, 142, 0.04); border-left: 3px solid var(--green); }
+  .layer-num { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.2em; padding-top: 0.3rem; text-transform: uppercase; }
+  .layer-body h3 { font-family: 'Instrument Serif', serif; font-size: 1.35rem; font-weight: 400; margin-bottom: 0.6rem; color: var(--text); }
+  .layer-body p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; }
+  .layer-body p strong { color: var(--text); }
+  .layer-status { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); text-align: right; padding-top: 0.3rem; letter-spacing: 0.05em; }
+  .layer-status .lv { display: block; color: var(--green); margin-bottom: 0.2rem; }
+  @media (max-width: 760px) {
+    .stack-layer { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.6rem; }
+    .layer-status { text-align: left; }
+  }
+
+  /* BAIN ID BREAKDOWN */
+  .bain-breakdown { background: var(--bg-deep); border: 1px solid var(--border); border-radius: 10px; padding: 2.5rem; margin: 3rem 0; font-family: 'DM Mono', monospace; }
+  .bain-example { font-size: 2rem; color: var(--green); letter-spacing: 0.15em; margin-bottom: 0.8rem; font-weight: 500; text-align: center; }
+  .bain-caption { text-align: center; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 2rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .bain-parts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; margin-top: 2rem; }
+  .bain-part { padding: 1rem 0.8rem; background: var(--bg-card); border: 1px solid var(--border-accent); text-align: center; }
+  .bp-code { font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--green); margin-bottom: 0.5rem; font-weight: 500; }
+  .bp-label { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .bp-desc { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-dim); line-height: 1.45; }
+  @media (max-width: 720px) {
+    .bain-parts { grid-template-columns: 1fr 1fr; }
+    .bain-example { font-size: 1.4rem; }
+  }
+
+  /* TBAR TECHNICAL */
+  .tbar-tech { background: var(--bg-deep); border: 1px solid var(--border-bright); border-radius: 10px; padding: 2.8rem; margin: 3rem 0; position: relative; }
+  .tbar-tech::before { content: "TBAR SCHEMA"; position: absolute; top: -10px; left: 28px; background: var(--bg); padding: 0 12px; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.25em; }
+  .tbar-field-row { display: grid; grid-template-columns: 200px 100px 1fr; gap: 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .tbar-field-row:last-child { border-bottom: none; }
+  .tbar-fn { font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--green); }
+  .tbar-ft { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--bronze); letter-spacing: 0.05em; padding-top: 0.15rem; }
+  .tbar-fd { color: var(--text-dim); font-size: 0.88rem; line-height: 1.65; }
+  .tbar-fd em { color: var(--green); font-style: italic; }
+  @media (max-width: 720px) {
+    .tbar-tech { padding: 1.8rem 1.5rem; }
+    .tbar-field-row { grid-template-columns: 1fr; gap: 0.3rem; }
+  }
+
+  /* STATE MACHINE */
+  .state-machine { margin: 3rem 0; }
+  .sm-row { display: grid; grid-template-columns: 60px 1fr 140px; gap: 1.5rem; padding: 1.8rem 0; border-top: 1px solid var(--border); align-items: start; }
+  .sm-row:last-of-type { border-bottom: 1px solid var(--border); }
+  .sm-num { font-family: 'DM Mono', monospace; font-size: 1.6rem; color: var(--green); padding-top: 0.2rem; font-weight: 500; }
+  .sm-row.reversed .sm-num { color: var(--red); }
+  .sm-body h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; font-weight: 400; color: var(--text); margin-bottom: 0.4rem; }
+  .sm-row.reversed .sm-body h3 { color: var(--amber); }
+  .sm-body p { color: var(--text-dim); font-size: 0.92rem; line-height: 1.7; }
+  .sm-body p strong { color: var(--text); }
+  .sm-body p code { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--bronze); background: rgba(196, 152, 42, 0.08); padding: 0.1rem 0.35rem; border-radius: 3px; }
+  .sm-trigger { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-align: right; padding-top: 0.4rem; }
+  .sm-trigger .st-label { display: block; color: var(--text-muted); margin-bottom: 0.2rem; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; }
+  .sm-trigger .st-val { color: var(--green); }
+  @media (max-width: 760px) {
+    .sm-row { grid-template-columns: 50px 1fr; gap: 1rem; }
+    .sm-trigger { grid-column: 1 / -1; text-align: left; padding-top: 0.5rem; font-size: 0.8rem; }
+  }
+  .ratchet-callout { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.2rem; color: var(--green); max-width: 60ch; border-left: 2px solid var(--green); padding: 1.2rem 0 1.2rem 1.8rem; margin: 2.5rem 0 1rem; line-height: 1.6; }
+
+  /* PIPELINE */
+  .pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 3rem 0; }
+  @media (max-width: 900px) { .pipeline { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .pipeline { grid-template-columns: 1fr; } }
+  .pipe { padding: 2rem 1.6rem; background: var(--bg-card); position: relative; }
+  .pipe-step { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--green); letter-spacing: 0.2em; margin-bottom: 1rem; text-transform: uppercase; }
+  .pipe-h { font-family: 'Instrument Serif', serif; font-size: 1.15rem; color: var(--text); margin-bottom: 0.6rem; line-height: 1.3; }
+  .pipe-d { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 0.8rem; }
+  .pipe-io { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--bronze); padding-top: 0.8rem; border-top: 1px solid var(--border); }
+  .pipe-io span { color: var(--text-muted); }
+
+  /* JURISDICTION */
+  .juris-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 3rem 0; }
+  @media (max-width: 860px) { .juris-grid { grid-template-columns: 1fr; } }
+  .juris { padding: 2.2rem; background: var(--bg-card); }
+  .juris-role { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .juris-name { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: var(--green); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+  .juris-sub { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--bronze); letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+  .juris-d { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1rem; }
+  .juris-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .juris-tag { font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 0.25rem 0.6rem; background: rgba(62, 207, 142, 0.08); border: 1px solid var(--border-accent); color: var(--green); border-radius: 3px; letter-spacing: 0.05em; }
+
+  /* TERMINAL */
+  .terminal-wrap { margin: 3rem 0; }
+  .terminal-box { background: var(--bg-deep); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-family: 'DM Mono', monospace; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+  .terminal-head { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.2rem; background: var(--bg-elevated); border-bottom: 1px solid var(--border); }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); }
+  .t-dot.r { background: var(--red); } .t-dot.y { background: var(--amber); } .t-dot.g { background: var(--green); }
+  .t-title { font-size: 0.7rem; color: var(--text-muted); margin-left: 0.5rem; letter-spacing: 0.05em; }
+  .terminal-body { padding: 1.5rem; font-size: 0.82rem; line-height: 1.85; color: var(--text-dim); }
+  .terminal-body .cmt { color: var(--text-muted); font-style: italic; }
+  .terminal-body .pr { color: var(--green); }
+  .terminal-body .k { color: var(--bronze); }
+  .terminal-body .v { color: var(--green); }
+  .terminal-body .s { color: var(--text); }
+  .terminal-body .rev { color: var(--red); }
+  @media (max-width: 700px) { .terminal-body { font-size: 0.72rem; padding: 1rem; } }
+
+  /* SOVEREIGN DEPLOY */
+  .deploy-list { margin: 3rem 0; }
+  .deploy-step { display: grid; grid-template-columns: 100px 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--border); align-items: start; }
+  .deploy-step:last-of-type { border-bottom: 1px solid var(--border); }
+  .ds-num { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; padding-top: 0.3rem; }
+  .ds-body h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.3; }
+  .ds-body p { color: var(--text-dim); font-size: 0.92rem; line-height: 1.75; margin-bottom: 0.6rem; }
+  .ds-body p strong { color: var(--text); }
+  .ds-body ul { list-style: none; margin-top: 0.6rem; }
+  .ds-body li { color: var(--text-dim); font-size: 0.88rem; line-height: 1.7; padding-left: 1.2rem; position: relative; margin-bottom: 0.35rem; }
+  .ds-body li::before { content: "\2192"; position: absolute; left: 0; color: var(--green); }
+  .ds-body code { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--bronze); background: rgba(196, 152, 42, 0.08); padding: 0.1rem 0.35rem; border-radius: 3px; }
+  @media (max-width: 720px) {
+    .deploy-step { grid-template-columns: 1fr; gap: 0.6rem; }
+  }
+
+  /* STATS */
+  .big-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 3rem 0; }
+  @media (max-width: 860px) { .big-stats { grid-template-columns: 1fr 1fr; } }
+  .bs-cell { background: var(--bg-card); padding: 2rem 1.4rem; text-align: center; }
+  .bs-val { font-family: 'DM Mono', monospace; font-size: 2rem; color: var(--green); margin-bottom: 0.5rem; font-weight: 500; line-height: 1; }
+  .bs-lbl { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.5; }
+
+  /* FINAL CTA */
+  .final-cta { padding: 7rem 2rem; background: linear-gradient(170deg, var(--bg) 0%, rgba(62, 207, 142, 0.02) 40%, var(--bg-deep) 100%); border-top: 1px solid var(--border-bright); margin-top: 0; text-align: center; }
+  .fc-inner { max-width: 760px; margin: 0 auto; }
+  .fc-lbl { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .fc-h { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--text); line-height: 1.2; margin-bottom: 1.5rem; }
+  .fc-h em { font-style: italic; color: var(--green); }
+  .fc-p { font-size: 1.1rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 2.5rem; max-width: 55ch; margin-left: auto; margin-right: auto; }
+  .fc-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .fc-meta { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
+
+  /* FOOTER */
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; background: var(--bg); }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .footer-brand a:hover { color: var(--text); }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text-dim); }
+  .footer-disclaimer { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; }
+  .footer-disclaimer p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.7; }
+
+  @media (max-width: 768px) {
+    .hero { padding: 6rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .final-cta { padding: 5rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <a href="index.html" class="nav-logo">BCCS</a>
+  <div class="nav-links">
+    <a href="index.html#why">Why BCCS</a>
+    <a href="index.html#protocol">Protocol</a>
+    <a href="index.html#access">Access</a>
+    <a href="index.html#contracts">Contracts</a>
+    <a href="implementation.html">Implementation</a>
+    <a href="bioclearing.html" class="active">BioClearing</a>
+    <a href="audit.html">Audit</a>
+    <a href="index.html#docs">Docs</a>
+  </div>
+  <div class="nav-right">
+    <a href="mint.html" class="nav-mint">Buy License</a>
+    <span class="nav-badge">BASE L2</span>
+    <button class="nav-hamburger" onclick="document.getElementById('mob-menu').classList.add('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-x" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="index.html" onclick="this.parentElement.classList.remove('open')">Home</a>
+  <a href="index.html#why" onclick="this.parentElement.classList.remove('open')">Why BCCS</a>
+  <a href="index.html#protocol" onclick="this.parentElement.classList.remove('open')">Protocol</a>
+  <a href="index.html#access" onclick="this.parentElement.classList.remove('open')">Access</a>
+  <a href="index.html#contracts" onclick="this.parentElement.classList.remove('open')">Contracts</a>
+  <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
+  <a href="bioclearing.html" onclick="this.parentElement.classList.remove('open')">BioClearing</a>
+  <a href="audit.html" onclick="this.parentElement.classList.remove('open')">Audit</a>
+  <a href="index.html#docs" onclick="this.parentElement.classList.remove('open')">Docs</a>
+  <a href="mint.html" class="mob-mint" onclick="this.parentElement.classList.remove('open')">Buy License</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-crumb">
+    <a href="index.html">BCCS</a><span>/</span>Protocol Extension<span>/</span>BioClearing
+  </div>
+  <div class="hero-tag"><span>REGISTRY LAYER</span> BCCS Global Registry &mdash; Technical Architecture</div>
+  <h1>The clearing layer above <em>BCCS verification</em>.</h1>
+  <p class="hero-sub">BCCS answers a point-in-time question: <strong>what is the verified state of this biological asset?</strong> The BCCS Global Registry answers a different question: <strong>has the clearing obligation on this territorial asset reached finality?</strong></p>
+  <p class="hero-sub">One protocol. Two layers. One records truth. The other records settlement. Together they form the complete data stack for territorial bio-capital &mdash; from individual verification queries on Base L2 to sovereign-grade clearing infrastructure across 175 jurisdictions.</p>
+  <div class="hero-pull">
+    The BAIN ID is the bridge. What begins as a 21-character verification identifier on BCCS becomes the atomic unit of a global clearing registry.
+  </div>
+  <div class="hero-actions">
+    <a href="https://bioclearing.global" class="btn-primary" target="_blank" rel="noopener noreferrer">Open Registry &rarr;</a>
+    <a href="#stack" class="btn-secondary">Read the Architecture &darr;</a>
+  </div>
+</section>
+
+<!-- 01 PROTOCOL STACK -->
+<section id="stack">
+  <div class="section-tag">01 &mdash; Protocol Stack</div>
+  <h2 class="section-title">Three layers. <em>One continuous architecture.</em></h2>
+  <p class="section-desc">The BCCS protocol is not a single system. It is a vertical stack where each layer produces data consumed by the next. Verification produces state. Registry records the state progression. Clearing marks the progression as final. <strong>Each layer is independently operable, collectively indispensable.</strong></p>
+
+  <div class="stack-layers">
+    <div class="stack-layer active">
+      <div class="layer-num">Layer III</div>
+      <div class="layer-body">
+        <h3>Clearing &mdash; BCCS Global Registry</h3>
+        <p>Records clearing-state progression of every registered Territorial Bio-Asset Record. Seven-state irreversible ratchet. Tri-jurisdiction hosting (HK &middot; UAE &middot; SG). Institutional-grade tamper evidence via Merkle trees. <strong>The settlement layer.</strong></p>
+      </div>
+      <div class="layer-status">
+        <span class="lv">OPERATIONAL</span>
+        bioclearing.global
+      </div>
+    </div>
+    <div class="stack-layer">
+      <div class="layer-num">Layer II</div>
+      <div class="layer-body">
+        <h3>Registry &mdash; TBAR Object Store</h3>
+        <p>The Territorial Bio-Asset Record object: GeoJSON boundary, measurement dataset, verification records, legal vehicle, exclusions, capital_eligibility flag. BAIN ID as primary key across all layers. Append-only, Merkle-anchored.</p>
+      </div>
+      <div class="layer-status">
+        <span class="lv">OPERATIONAL</span>
+        Tri-jurisdiction sync
+      </div>
+    </div>
+    <div class="stack-layer">
+      <div class="layer-num">Layer I</div>
+      <div class="layer-body">
+        <h3>Verification &mdash; BCCS Protocol on Base L2</h3>
+        <p>ERC-20 verification unit ($BCCS), soulbound ERC-721 Node Licenses, three-tier oracle consensus (satellite, IoT, inspection), Proof-of-Physical-State attestations, on-chain query API. The trust-machine for biological state.</p>
+      </div>
+      <div class="layer-status">
+        <span class="lv">LIVE ON BASE</span>
+        bccs.bio
+      </div>
+    </div>
+  </div>
+
+  <p class="section-prose">A verification query on BCCS returns <em>the current verified state</em> of a biological asset at a moment in time. A registry query on BioClearing returns <em>the clearing history</em> of that asset across all time. The difference is not semantic. <strong>It is the difference between knowing a fact and having a record of the fact.</strong></p>
+</section>
+
+<hr class="section-divider">
+
+<!-- 02 BAIN ID AS GLOBAL STANDARD -->
+<section>
+  <div class="section-tag">02 &mdash; The Global Standard</div>
+  <h2 class="section-title">BAIN ID &mdash; the atomic unit of <em>every layer</em></h2>
+  <p class="section-desc">The 21-character Bio-Asset Identification Number is the primary key of the entire protocol. It is issued on BCCS at initial observation, persists through all verification states, extends seamlessly into the clearing registry, and survives every transition &mdash; including reversal and re-entry. <strong>One identifier. Every layer. Forever.</strong></p>
+
+  <div class="bain-breakdown">
+    <div class="bain-example">RU-KAR-PEG-001-7</div>
+    <div class="bain-caption">Example: Russia &middot; Karelia &middot; Pegozer boreal &middot; Sequence 001</div>
+    <div class="bain-parts">
+      <div class="bain-part">
+        <div class="bp-code">RU</div>
+        <div class="bp-label">Country</div>
+        <div class="bp-desc">ISO 3166-1 alpha-2. 175 sovereign territories addressable.</div>
+      </div>
+      <div class="bain-part">
+        <div class="bp-code">KAR</div>
+        <div class="bp-label">Region</div>
+        <div class="bp-desc">Three-character sub-national region code assigned by sovereign node.</div>
+      </div>
+      <div class="bain-part">
+        <div class="bp-code">PEG</div>
+        <div class="bp-label">Territory</div>
+        <div class="bp-desc">Three-character identifier for the specific bio-asset territory.</div>
+      </div>
+      <div class="bain-part">
+        <div class="bp-code">001</div>
+        <div class="bp-label">Sequence</div>
+        <div class="bp-desc">Three-digit sequential number within territory. Up to 999 TBARs per territory.</div>
+      </div>
+      <div class="bain-part">
+        <div class="bp-code">7</div>
+        <div class="bp-label">Check</div>
+        <div class="bp-desc">Single-digit integrity check, catches transcription errors.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-prose"><strong>Why this matters architecturally.</strong> When a node operator on BCCS submits a verification attestation, the BAIN ID in their payload is identical to the BAIN ID in the BioClearing registry. There is no translation layer, no lookup table, no identifier mapping. An auditor querying <code style="font-family:'DM Mono',monospace;color:var(--bronze);background:rgba(196,152,42,0.08);padding:0.1rem 0.4rem;border-radius:3px;font-size:0.88rem">RU-KAR-PEG-001-7</code> on BCCS and the same string on BioClearing is querying <em>the same asset</em> through two different lenses &mdash; verification state and clearing state.</p>
+
+  <p class="section-prose">This is how institutional data infrastructure compounds. Every layer of the protocol stack addresses the same asset by the same name. <strong>The BAIN ID is the CUSIP of territorial bio-capital.</strong></p>
+</section>
+
+<hr class="section-divider">
+
+<!-- 03 TBAR TECHNICAL -->
+<section>
+  <div class="section-tag">03 &mdash; Registry Object Schema</div>
+  <h2 class="section-title">TBAR &mdash; the record <em>object itself</em></h2>
+  <p class="section-desc">Every entry in the BCCS Global Registry conforms to the Territorial Bio-Asset Record schema. Nine canonical fields. Each field is either queryable by auditor, consumable by smart contract, or both. The schema is append-only &mdash; once written, a field&rsquo;s value enters the state history but is never overwritten.</p>
+
+  <div class="tbar-tech">
+    <div class="tbar-field-row">
+      <div class="tbar-fn">bain_id</div>
+      <div class="tbar-ft">string(21)</div>
+      <div class="tbar-fd">Primary key. Globally unique 21-character identifier. <em>Immutable from the moment of assignment.</em></div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">coordinates</div>
+      <div class="tbar-ft">GeoJSON</div>
+      <div class="tbar-fd">Polygon boundary at 10-metre precision. The territorial footprint, machine-readable and unambiguous.</div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">clearing_state</div>
+      <div class="tbar-ft">enum</div>
+      <div class="tbar-fd">Current state: <code>1</code> Observed &middot; <code>2</code> Measured &middot; <code>3</code> Verified &middot; <code>4</code> Registered &middot; <code>5</code> Final &middot; <code>R</code> Reversed.</div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">state_history</div>
+      <div class="tbar-ft">append-only</div>
+      <div class="tbar-fd">Timestamped log of every transition with Merkle-tree anchoring. Auditors trace full provenance without gaps.</div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">asset_layers</div>
+      <div class="tbar-ft">JSON map</div>
+      <div class="tbar-fd">Structured data per bio-stock: <code>carbon</code>, <code>biomass</code>, <code>freshwater</code>, <code>biodiversity</code>. Each independently measured and verified.</div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">verification_records</div>
+      <div class="tbar-ft">array</div>
+      <div class="tbar-fd">Three-plus independent verifier IDs, methodology references, convergence scores. <em>Single-verifier records are never sufficient.</em></div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">legal_vehicle</div>
+      <div class="tbar-ft">reference</div>
+      <div class="tbar-fd">Special Purpose Company or sovereign entity encapsulating the territory. Jurisdiction-specific. Registry records, does not create.</div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">exclusions</div>
+      <div class="tbar-ft">array</div>
+      <div class="tbar-fd">Explicitly declared out-of-scope elements: heritage sites, speculative mineral claims, political claims. Transparency requirement.</div>
+    </div>
+    <div class="tbar-field-row">
+      <div class="tbar-fn">capital_eligibility</div>
+      <div class="tbar-ft">boolean</div>
+      <div class="tbar-fd">True only when <code>clearing_state = 5</code> and no reversal conditions are active. The flag institutional capital queries.</div>
+    </div>
+  </div>
+
+  <p class="section-prose">The TBAR schema deliberately excludes fields that would capture it. <strong>There is no price field.</strong> No market-maker reference. No tokenisation URI. No regulatory classification. The registry is infrastructure, not commentary. Market participants query TBAR fields and construct their own instruments. <em>The registry records. It does not opine.</em></p>
+</section>
+
+<hr class="section-divider">
+
+<!-- 04 STATE MACHINE -->
+<section class="narrow" style="max-width:960px;">
+  <div class="section-tag">04 &mdash; State Machine Mechanics</div>
+  <h2 class="section-title">Seven states. <em>Atomic transitions.</em> No rollback.</h2>
+  <p class="section-desc">The BCCS Global Registry implements a strict finite state machine. Transitions are atomic &mdash; either all conditions are met and the state advances, or nothing changes. <strong>Partial transitions do not exist.</strong> Forward motion is irreversible; the only path backward runs through State R.</p>
+
+  <div class="state-machine">
+    <div class="sm-row">
+      <div class="sm-num">1</div>
+      <div class="sm-body">
+        <h3>Observed</h3>
+        <p>Territorial footprint declared. BAIN ID assigned. GeoJSON polygon submitted and validated for geometric correctness. <strong>No measurement claims yet, no verification, no legal vehicle.</strong> An observed TBAR is a reserved address &mdash; a slot in the registry awaiting content.</p>
+      </div>
+      <div class="sm-trigger"><span class="st-label">Trigger</span><span class="st-val">Registration Tx</span></div>
+    </div>
+    <div class="sm-row">
+      <div class="sm-num">2</div>
+      <div class="sm-body">
+        <h3>Measured</h3>
+        <p>All declared asset layers measured using protocol-compliant instrumentation. Measurement dataset cryptographically hashed and submitted to registry. Hash anchored in <code>state_history</code>. <strong>Raw data remains with the measurement operator</strong>; only the hash and methodology reference are registry-public.</p>
+      </div>
+      <div class="sm-trigger"><span class="st-label">Trigger</span><span class="st-val">Data Submission</span></div>
+    </div>
+    <div class="sm-row">
+      <div class="sm-num">3</div>
+      <div class="sm-body">
+        <h3>Verified</h3>
+        <p>Three or more accredited verifiers independently review the measurement dataset using published BCCS methodologies. Their convergence scores must fall within protocol tolerance. <strong>Convergence, not consensus</strong> &mdash; honest verifiers cannot collude on their errors. The <code>verification_records</code> array is populated.</p>
+      </div>
+      <div class="sm-trigger"><span class="st-label">Trigger</span><span class="st-val">3+ Convergence</span></div>
+    </div>
+    <div class="sm-row">
+      <div class="sm-num">4</div>
+      <div class="sm-body">
+        <h3>Registered</h3>
+        <p>Legal vehicle operational under its jurisdiction&rsquo;s law. Exclusions declared. All TBAR fields populated and frozen against further edits (new values enter as new <code>state_history</code> entries). <strong>The registry record is structurally complete.</strong></p>
+      </div>
+      <div class="sm-trigger"><span class="st-label">Trigger</span><span class="st-val">Legal Vehicle Live</span></div>
+    </div>
+    <div class="sm-row">
+      <div class="sm-num">5</div>
+      <div class="sm-body">
+        <h3>Final</h3>
+        <p>Continuous monitoring layer reports no degradation. All preceding states hold uncontested. <code>capital_eligibility</code> flag set to true. <strong>Institutional capital can now interact with the TBAR</strong> &mdash; through investment vehicles, insurance contracts, or sovereign balance-sheet integration &mdash; with clearing status as a settled fact.</p>
+      </div>
+      <div class="sm-trigger"><span class="st-label">Trigger</span><span class="st-val">Monitoring + Hold</span></div>
+    </div>
+    <div class="sm-row reversed">
+      <div class="sm-num">R</div>
+      <div class="sm-body">
+        <h3>Reversed</h3>
+        <p>Triggered by measurement failure, verifier disagreement surfaced post-registration, legal vehicle collapse, or physical degradation detected by continuous monitoring. <strong>Reversal is transparent and permanent in <code>state_history</code>.</strong> A reversed TBAR can re-enter the sequence only by restarting from State 1 &mdash; same BAIN ID, fresh progression.</p>
+      </div>
+      <div class="sm-trigger"><span class="st-label">Trigger</span><span class="st-val">Integrity Failure</span></div>
+    </div>
+  </div>
+
+  <p class="ratchet-callout">The ratchet is not a design preference. It is the architectural enforcement of institutional trust. Forward-only motion with transparent reversal is the minimum condition under which sovereign-grade capital can rely on the record.</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- 05 PIPELINE -->
+<section>
+  <div class="section-tag">05 &mdash; Oracle-to-Registry Pipeline</div>
+  <h2 class="section-title">How BCCS verification <em>becomes clearing state</em></h2>
+  <p class="section-desc">The bridge from on-chain verification (Base L2) to clearing registry (tri-jurisdiction) is a deterministic pipeline. No human judgement at transition points. The pipeline consumes oracle attestations and produces state transitions.</p>
+
+  <div class="pipeline">
+    <div class="pipe">
+      <div class="pipe-step">STEP 01</div>
+      <h3 class="pipe-h">Oracle Attestation</h3>
+      <p class="pipe-d">Node operator on BCCS submits Proof-of-Physical-State attestation for a specific BAIN ID with measurement evidence hash.</p>
+      <div class="pipe-io"><span>IN:</span> evidence hash<br><span>OUT:</span> on-chain attest</div>
+    </div>
+    <div class="pipe">
+      <div class="pipe-step">STEP 02</div>
+      <h3 class="pipe-h">Consensus Check</h3>
+      <p class="pipe-d">Registry waits for three-tier convergence from satellite, IoT, and inspection oracles. If achieved within protocol tolerance, proceeds.</p>
+      <div class="pipe-io"><span>IN:</span> 3 oracle feeds<br><span>OUT:</span> convergence score</div>
+    </div>
+    <div class="pipe">
+      <div class="pipe-step">STEP 03</div>
+      <h3 class="pipe-h">State Transition</h3>
+      <p class="pipe-d">Registry executes atomic state advance on the TBAR. New <code>state_history</code> entry with timestamp, oracle references, and Merkle-tree root.</p>
+      <div class="pipe-io"><span>IN:</span> convergence pass<br><span>OUT:</span> state++ event</div>
+    </div>
+    <div class="pipe">
+      <div class="pipe-step">STEP 04</div>
+      <h3 class="pipe-h">Sync Propagation</h3>
+      <p class="pipe-d">Transition replicated synchronously to UAE and Singapore mirrors. Cross-jurisdiction finality achieved within seconds. Merkle root available for audit.</p>
+      <div class="pipe-io"><span>IN:</span> state++ event<br><span>OUT:</span> global finality</div>
+    </div>
+  </div>
+
+  <div class="terminal-wrap">
+    <div class="terminal-box">
+      <div class="terminal-head">
+        <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+        <span class="t-title">bccs-registry &mdash; example state transition</span>
+      </div>
+      <div class="terminal-body">
+<div class="cmt"># Oracle attestation triggers State 2 &rarr; State 3 transition</div>
+<div>&nbsp;</div>
+<div><span class="pr">&gt; POST</span> /registry/tbar/RU-KAR-PEG-001-7/attest</div>
+<div>&nbsp;&nbsp;<span class="k">oracle</span>: <span class="v">0x7a3f...9c12</span></div>
+<div>&nbsp;&nbsp;<span class="k">tier</span>: <span class="v">satellite_sentinel2</span></div>
+<div>&nbsp;&nbsp;<span class="k">evidence_hash</span>: <span class="v">0xb86174c4...eeba17a7</span></div>
+<div>&nbsp;</div>
+<div><span class="pr">&gt; CONSENSUS_CHECK</span></div>
+<div>&nbsp;&nbsp;<span class="k">tier_1_satellite</span>: &nbsp;<span class="v">PASS &middot; confidence 0.94</span></div>
+<div>&nbsp;&nbsp;<span class="k">tier_2_iot_ground</span>: <span class="v">PASS &middot; confidence 0.91</span></div>
+<div>&nbsp;&nbsp;<span class="k">tier_3_inspection</span>: <span class="v">PASS &middot; confidence 0.96</span></div>
+<div>&nbsp;&nbsp;<span class="k">convergence</span>: &nbsp;&nbsp;&nbsp;&nbsp;<span class="v">0.94 (&gt; 0.85 threshold)</span></div>
+<div>&nbsp;</div>
+<div><span class="pr">&gt; STATE_TRANSITION</span></div>
+<div>&nbsp;&nbsp;<span class="k">bain_id</span>: <span class="v">"RU-KAR-PEG-001-7"</span></div>
+<div>&nbsp;&nbsp;<span class="k">from</span>: &nbsp;&nbsp;&nbsp;<span class="v">2 (Measured)</span></div>
+<div>&nbsp;&nbsp;<span class="k">to</span>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="v">3 (Verified)</span></div>
+<div>&nbsp;&nbsp;<span class="k">timestamp</span>: <span class="v">"2026-04-16T09:14:00Z"</span></div>
+<div>&nbsp;&nbsp;<span class="k">merkle_root</span>: <span class="v">"0x44B46f9D...4b66FBd"</span></div>
+<div>&nbsp;</div>
+<div><span class="pr">&gt; SYNC_STATUS</span></div>
+<div>&nbsp;&nbsp;<span class="k">hk_primary</span>: &nbsp;<span class="v">COMMITTED</span></div>
+<div>&nbsp;&nbsp;<span class="k">uae_mirror</span>: &nbsp;<span class="v">COMMITTED (+0.8s)</span></div>
+<div>&nbsp;&nbsp;<span class="k">sg_mirror</span>: &nbsp;&nbsp;<span class="v">COMMITTED (+1.2s)</span></div>
+<div>&nbsp;&nbsp;<span class="k">finality</span>: &nbsp;&nbsp;&nbsp;<span class="v">GLOBAL</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 06 TRI-JURISDICTION -->
+<section>
+  <div class="section-tag">06 &mdash; Deployment Architecture</div>
+  <h2 class="section-title">Tri-jurisdiction hosting. <em>Sovereign-neutral by design.</em></h2>
+  <p class="section-desc">The registry operates from three independent jurisdictions with synchronous replication. No single government can compel unilateral data modification. Each jurisdiction is accessible to BRICS+ and Western institutional capital alike. <strong>Neutrality is not a policy &mdash; it is a physical property of the architecture.</strong></p>
+
+  <div class="juris-grid">
+    <div class="juris">
+      <div class="juris-role">Primary</div>
+      <div class="juris-name">Hong Kong SAR</div>
+      <div class="juris-sub">KRYONIS Sovereign Systems Ltd</div>
+      <div class="juris-d">Primary registry node. Registered entity. Common-law commercial jurisdiction with settled precedent on data infrastructure operators. Gateway for Greater China and Asia-Pacific capital flows.</div>
+      <div class="juris-tags">
+        <span class="juris-tag">Primary Node</span>
+        <span class="juris-tag">Common Law</span>
+        <span class="juris-tag">Asia-Pac</span>
+      </div>
+    </div>
+    <div class="juris">
+      <div class="juris-role">Mirror</div>
+      <div class="juris-name">United Arab Emirates</div>
+      <div class="juris-sub">Synchronous replica</div>
+      <div class="juris-d">Full synchronous mirror with sub-second replication latency. Strategic access for MENA sovereign wealth, Gulf institutional capital, and African bio-capital deployment. DIFC-compatible operating posture.</div>
+      <div class="juris-tags">
+        <span class="juris-tag">Sync Mirror</span>
+        <span class="juris-tag">DIFC-ready</span>
+        <span class="juris-tag">MENA Gateway</span>
+      </div>
+    </div>
+    <div class="juris">
+      <div class="juris-role">Mirror</div>
+      <div class="juris-name">Singapore</div>
+      <div class="juris-sub">Synchronous replica</div>
+      <div class="juris-d">Full synchronous mirror. Institutional access point for ASEAN bio-capital, multilateral treaty-compliant data operations, and Western allocator due-diligence workflows. MAS-aware infrastructure posture.</div>
+      <div class="juris-tags">
+        <span class="juris-tag">Sync Mirror</span>
+        <span class="juris-tag">ASEAN Gateway</span>
+        <span class="juris-tag">MAS-aware</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-prose">Each node is functionally identical. A query to <code>hk.registry.bioclearing.global</code> returns the same TBAR state as <code>sg.registry.bioclearing.global</code>. Institutional clients route to whichever jurisdiction aligns with their compliance posture. <strong>The data is the same everywhere; the legal wrapper around querying it varies by preference.</strong></p>
+
+  <div class="big-stats">
+    <div class="bs-cell">
+      <div class="bs-val">175</div>
+      <div class="bs-lbl">Sovereign Territories Addressable</div>
+    </div>
+    <div class="bs-cell">
+      <div class="bs-val">3</div>
+      <div class="bs-lbl">Hosting Jurisdictions</div>
+    </div>
+    <div class="bs-cell">
+      <div class="bs-val">&lt; 2s</div>
+      <div class="bs-lbl">Cross-Jurisdiction Finality</div>
+    </div>
+    <div class="bs-cell">
+      <div class="bs-val">21</div>
+      <div class="bs-lbl">Character BAIN ID Standard</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 07 SOVEREIGN DEPLOYMENT -->
+<section>
+  <div class="section-tag">07 &mdash; Sovereign Deployment Model</div>
+  <h2 class="section-title">Every state operates <em>its own node</em></h2>
+  <p class="section-desc">The BCCS Global Registry is not an extraterritorial database. Every sovereign operates its own node within its own jurisdiction, registering only its own TBARs. <strong>The protocol connects nodes &mdash; it does not centralise data.</strong> This is the same architecture as the Internet: every autonomous system operates its own infrastructure, and the protocol is what makes interoperation possible.</p>
+
+  <div class="deploy-list">
+    <div class="deploy-step">
+      <div class="ds-num">STEP 01</div>
+      <div class="ds-body">
+        <h3>Sovereign Onboarding</h3>
+        <p>The state (via its environment ministry, sovereign wealth fund, or designated statutory body) signs the <strong>Sovereign Operator Agreement</strong> with KRYONIS Registry Services. The SOA defines: node operating responsibilities, data-residency commitments, dispute resolution mechanism, and protocol compliance obligations.</p>
+        <ul>
+          <li>Output: operational sovereign node identity</li>
+          <li>Output: reserved country code block in BAIN ID namespace</li>
+          <li>Output: access credentials to tri-jurisdiction sync layer</li>
+        </ul>
+      </div>
+    </div>
+    <div class="deploy-step">
+      <div class="ds-num">STEP 02</div>
+      <div class="ds-body">
+        <h3>Measurement Infrastructure Deployment</h3>
+        <p>The sovereign deploys the six-layer measurement stack on its own territory under its own jurisdiction. Satellite subscriptions, LiDAR flight schedules, IoT sensor networks, AI analytics compute, ground-truth verifier accreditation, continuous monitoring infrastructure. <strong>The sensors belong to the state. The standards belong to the protocol.</strong></p>
+        <ul>
+          <li>Satellite data partnerships (Sentinel, Landsat, Planet, national agencies)</li>
+          <li>IoT deployment plan with local telecoms and ground operators</li>
+          <li>Accreditation pathway for national verifier cohort</li>
+        </ul>
+      </div>
+    </div>
+    <div class="deploy-step">
+      <div class="ds-num">STEP 03</div>
+      <div class="ds-body">
+        <h3>First TBAR Registration</h3>
+        <p>The sovereign selects a pilot territory. GeoJSON polygon submitted to the registry. BAIN ID assigned (e.g. <code>RU-KAR-PEG-001-7</code>). Clearing state initialised at <code>1 (Observed)</code>. <strong>First pilot typically: one territory, one bio-stock, twelve months from Observed to Final.</strong></p>
+        <ul>
+          <li>Pilot scope: single territory, single primary asset layer</li>
+          <li>Timeline: 3 months to State 2, 6 to State 3, 9 to State 4, 12 to State 5</li>
+          <li>Deliverable: first fully-cleared TBAR on sovereign node</li>
+        </ul>
+      </div>
+    </div>
+    <div class="deploy-step">
+      <div class="ds-num">STEP 04</div>
+      <div class="ds-body">
+        <h3>Capital Integration</h3>
+        <p>With one or more TBARs at State 5, the sovereign can expose clearing states to institutional capital. Investment vehicles, insurance contracts, balance-sheet integration, sovereign-to-sovereign clearing flows. <strong>The registry does not execute these &mdash; it provides the queryable record that makes them possible.</strong></p>
+        <ul>
+          <li>Sovereign wealth fund due-diligence via TBAR queries</li>
+          <li>Multilateral insurer risk pricing from <code>state_history</code></li>
+          <li>Cross-sovereign bio-asset instruments via BAIN ID references</li>
+        </ul>
+      </div>
+    </div>
+    <div class="deploy-step">
+      <div class="ds-num">STEP 05</div>
+      <div class="ds-body">
+        <h3>Network Expansion</h3>
+        <p>First TBAR becomes second, then tenth, then hundredth. The sovereign node stabilises into normal operation. <strong>At network scale, territorial bio-capital becomes a queryable asset class</strong> &mdash; not because any single state drove the adoption, but because each operated its own node under the same standard.</p>
+        <ul>
+          <li>Participation in protocol governance via Advisory Council seat</li>
+          <li>Contribution to methodology evolution and verifier standards</li>
+          <li>Position within the growing sovereign bio-capital market</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-prose"><strong>What the protocol requires of the sovereign:</strong> operate the node honestly, follow the measurement standards, accept the ratchet, tolerate reversal when integrity fails. <strong>What the protocol does not require:</strong> surrender data to any foreign entity, adopt any currency regime, integrate with any specific trading venue, or accept any geopolitical alignment. The registry is genuinely neutral &mdash; <em>it records what is, not what anyone wishes to be true.</em></p>
+</section>
+
+<hr class="section-divider">
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="fc-inner">
+    <div class="fc-lbl">Enter the Registry</div>
+    <h2 class="fc-h">From BCCS verification to <em>global clearing infrastructure</em></h2>
+    <p class="fc-p">175 sovereign territories addressable. Every latitude, every jurisdiction, every biome. Explore the global registry, view the BAIN ID for your territory, and initiate sovereign deployment inquiry.</p>
+    <div class="fc-actions">
+      <a href="https://bioclearing.global" class="btn-primary" target="_blank" rel="noopener noreferrer">bioclearing.global &rarr;</a>
+      <a href="index.html" class="btn-secondary">BCCS Protocol</a>
+      <a href="https://kryonislab.org/bioclearing.html" class="btn-secondary" target="_blank" rel="noopener noreferrer">KRYONIS Lab Doctrine</a>
+    </div>
+    <div class="fc-meta">Operated by KRYONIS Sovereign Systems Limited &middot; Hong Kong SAR</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>&copy; 2026</div>
+    <div class="footer-links">
+      <a href="index.html">BCCS Protocol</a>
+      <a href="implementation.html">Implementation</a>
+      <a href="audit.html">Security Review</a>
+      <a href="https://kryonislab.org" target="_blank" rel="noopener noreferrer">KRYONIS Lab</a>
+      <a href="https://bioclearing.global" target="_blank" rel="noopener noreferrer">bioclearing.global</a>
+    </div>
+  </div>
+  <div class="footer-disclaimer">
+    <p>The BCCS Global Registry is sovereign-grade clearing infrastructure, not an investment product. TBAR records are institutional data objects, not financial instruments. The registry records clearing-state progression. It does not trade, advise, or recommend. Operated by KRYONIS Sovereign Systems Limited, incorporated in Hong Kong SAR. Tri-jurisdiction hosting in Hong Kong, United Arab Emirates, and Singapore.</p>
+  </div>
+</footer>
+
+</body>
+</html>

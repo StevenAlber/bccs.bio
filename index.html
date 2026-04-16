@@ -155,6 +155,7 @@
     .contract-grid { grid-template-columns: 1fr; } .footer-inner { flex-direction: column; text-align: center; } .footer-legal-links { justify-content: center; }
     .terminal-body { font-size: 0.72rem; padding: 1rem; } .docs-grid { grid-template-columns: 1fr; }
     .founder-card { flex-direction: column; text-align: center; gap: 1.2rem; }
+    .bc-sim-grid { grid-template-columns: 1fr !important; }
   }
   .s00 { position: relative; z-index: 1; padding: 5rem 2rem 4rem; border-bottom: 1px solid var(--border); }
   .s00-inner { max-width: 900px; margin: 0 auto; }
@@ -203,6 +204,13 @@
   .mob-menu .mob-mint { display: inline-flex; padding: 0.7rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; border-radius: 5px; margin-top: 1rem; }
   .mob-x { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 24px; font-family: 'DM Mono', monospace; }
 
+  /* ── BioClearing Simulator Section ── */
+  .bc-sim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 2rem; }
+  .bc-sim-card { background: var(--bg-card); padding: 2rem; }
+  .bc-sim-metric { font-family: 'DM Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--green); margin-bottom: 0.5rem; }
+  .bc-sim-card h4 { font-family: 'Instrument Serif', serif; font-size: 1.05rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
+  .bc-sim-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
 </style>
 </head>
 <body>
@@ -218,6 +226,7 @@
     <a href="implementation.html">Implementation</a>
     <a href="audit.html">Audit</a>
     <a href="#docs">Docs</a>
+    <a href="bioclearing.html">BioClearing</a>
   </div>
   <div class="nav-right">
     <a href="mint.html" class="nav-mint">Buy License</a>
@@ -234,6 +243,7 @@
   <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
   <a href="audit.html" onclick="this.parentElement.classList.remove('open')">Audit</a>
   <a href="#docs" onclick="this.parentElement.classList.remove('open')">Docs</a>
+  <a href="bioclearing.html" onclick="this.parentElement.classList.remove('open')">BioClearing</a>
   <a href="#apply" onclick="this.parentElement.classList.remove('open')">Apply</a>
   <a href="mint.html" class="mob-mint" onclick="this.parentElement.classList.remove('open')">Buy License</a>
 </div>
@@ -380,8 +390,27 @@
 
 <hr class="section-divider">
 
+<!-- BioClearing Teaser — links to dedicated deep-dive page -->
+<section id="bioclearing">
+  <div class="section-tag fade-in">06 &mdash; Clearing Layer</div>
+  <h2 class="section-title fade-in">BioClearing &mdash; <em style="color:var(--green);font-style:italic">the registry layer</em> above BCCS</h2>
+  <p class="section-desc fade-in">BCCS verifies biological state. The BCCS Global Registry records the clearing-state progression that turns verification into settlement. Same BAIN ID. Same protocol discipline. Extended into sovereign-grade infrastructure across 175 jurisdictions.</p>
+  <div class="bc-sim-grid fade-in">
+    <div class="bc-sim-card"><div class="bc-sim-metric">175</div><h4>Sovereign Territories</h4><p>Every sovereign operates its own node. Same BAIN ID standard across every jurisdiction. Protocol connects nodes, does not centralise data.</p></div>
+    <div class="bc-sim-card"><div class="bc-sim-metric">7-State</div><h4>Irreversible Ratchet</h4><p>Observed &rarr; Measured &rarr; Verified &rarr; Registered &rarr; Final (+ R). Atomic transitions. Forward-only motion. Transparent reversal. No rollback.</p></div>
+    <div class="bc-sim-card"><div class="bc-sim-metric">HK&middot;UAE&middot;SG</div><h4>Tri-Jurisdiction</h4><p>Primary Hong Kong, synchronous mirrors UAE and Singapore. Sub-second cross-jurisdiction finality. No single government can compel data modification.</p></div>
+  </div>
+  <p class="section-desc fade-in" style="margin-bottom:1.5rem">The BAIN ID is the bridge. What begins as a 21-character verification identifier on BCCS becomes the atomic unit of a global clearing registry for territorial bio-capital. <strong style="color:var(--text)">One identifier. Every layer. Forever.</strong></p>
+  <div class="fade-in" style="display:flex;gap:1rem;flex-wrap:wrap">
+    <a href="bioclearing.html" class="btn-primary">Read the Architecture &rarr;</a>
+    <a href="https://bioclearing.global" target="_blank" rel="noopener noreferrer" class="btn-secondary">Open Registry &rarr;</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
 <div class="founder-section">
-  <div class="section-tag fade-in">06 &mdash; Architect</div>
+  <div class="section-tag fade-in">07 &mdash; Architect</div>
   <div class="founder-card fade-in">
     <img src="steven-alber.jpeg" alt="Steven Alber" class="founder-photo" loading="lazy">
     <div class="founder-info">
