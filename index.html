@@ -29,567 +29,173 @@
     --bronze: #C4982A;
     --red: #EF4444;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; font-size: 16px; }
-
-  body {
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  .grid-bg {
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 80px 80px;
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: 0;
-    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%);
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    padding: 1rem 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(10, 12, 11, 0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.1rem; font-weight: 500;
-    color: var(--green); letter-spacing: 0.15em; text-decoration: none;
-  }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%); }
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; align-items: center; }
-  .nav-links a {
-    color: var(--text-dim); text-decoration: none;
-    font-size: 0.85rem; font-weight: 500;
-    letter-spacing: 0.03em; transition: color 0.2s;
-  }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
-  .nav-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; padding: 0.35rem 0.7rem;
-    border: 1px solid var(--border-accent); border-radius: 4px;
-    color: var(--green); background: var(--green-glow);
-    letter-spacing: 0.05em;
-  }
-  .nav-mint {
-    display: inline-flex; align-items: center; padding: 0.45rem 1rem;
-    background: var(--green); color: #0A0C0B !important;
-    font-weight: 700 !important; font-size: 0.8rem !important;
-    border-radius: 5px; letter-spacing: 0.03em;
-    transition: all 0.25s;
-  }
+  .nav-badge { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.35rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 4px; color: var(--green); background: var(--green-glow); letter-spacing: 0.05em; }
+  .nav-mint { display: inline-flex; align-items: center; padding: 0.45rem 1rem; background: var(--green); color: #0A0C0B !important; font-weight: 700 !important; font-size: 0.8rem !important; border-radius: 5px; letter-spacing: 0.03em; transition: all 0.25s; }
   .nav-mint:hover { background: #4FE09F; box-shadow: 0 0 20px rgba(62, 207, 142, 0.25); }
-
-
-  /* ── HERO ── */
-  .hero {
-    position: relative; z-index: 1;
-    min-height: auto; display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem 2rem 4rem;
-    max-width: 1100px; margin: 0 auto;
-  }
-  .hero-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem; color: var(--green);
-    letter-spacing: 0.2em; text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
-  }
-  .hero-tag span {
-    display: inline-block; padding: 0.3rem 0.6rem;
-    border: 1px solid var(--border-accent); border-radius: 3px;
-    background: var(--green-glow); margin-right: 0.5rem;
-  }
-  .hero h1 {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-    font-weight: 400; line-height: 1.1;
-    color: var(--text); margin-bottom: 1.5rem; max-width: 900px;
-    opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s;
-  }
+  .hero { position: relative; z-index: 1; min-height: auto; display: flex; flex-direction: column; justify-content: center; padding: 5rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
+  .hero-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
+  .hero h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 1.5rem; max-width: 900px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
   .hero h1 em { font-style: italic; color: var(--green); }
-  .hero-sub {
-    font-size: 1.15rem; color: var(--text-dim);
-    max-width: 640px; line-height: 1.7; margin-bottom: 2.5rem;
-    opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s;
-  }
-  .hero-actions {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-    opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s;
-  }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    background: var(--green); color: #0A0C0B;
-    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em;
-    border: none; border-radius: 6px; cursor: pointer; text-decoration: none;
-    transition: all 0.25s;
-  }
-  .btn-primary:hover {
-    background: #4FE09F;
-    box-shadow: 0 0 30px rgba(62, 207, 142, 0.3);
-    transform: translateY(-1px);
-  }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    background: transparent; color: var(--text-dim);
-    font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em;
-    border: 1px solid var(--border); border-radius: 6px;
-    cursor: pointer; text-decoration: none; transition: all 0.25s;
-  }
+  .hero-sub { font-size: 1.15rem; color: var(--text-dim); max-width: 640px; line-height: 1.7; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
+  .btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); transform: translateY(-1px); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: transparent; color: var(--text-dim); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
   .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    position: relative; z-index: 1;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 2.5rem 2rem;
-  }
-  .stats-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
-  }
+  .stats-bar { position: relative; z-index: 1; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2.5rem 2rem; }
+  .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
   .stat { text-align: center; }
-  .stat-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.5rem; font-weight: 500; color: var(--green); margin-bottom: 0.3rem;
-  }
-  .stat-label {
-    font-size: 0.78rem; color: var(--text-muted);
-    letter-spacing: 0.08em; text-transform: uppercase;
-  }
-
-  /* ── SECTIONS ── */
-  section {
-    position: relative; z-index: 1;
-    padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;
-  }
-  .section-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; color: var(--text-muted);
-    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem;
-  }
-  .section-desc {
-    color: var(--text-dim); font-size: 1.05rem;
-    max-width: 680px; line-height: 1.7; margin-bottom: 3rem;
-  }
+  .stat-value { font-family: 'DM Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--green); margin-bottom: 0.3rem; }
+  .stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+  .section-title { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem; }
+  .section-desc { color: var(--text-dim); font-size: 1.05rem; max-width: 680px; line-height: 1.7; margin-bottom: 3rem; }
   .section-divider { width: 100%; border: none; border-top: 1px solid var(--border); margin: 0; }
-
-  /* ── PROTOCOL / SOLUTION STACK ── */
-  .solution-stack {
-    display: flex; flex-direction: column; gap: 1px;
-    background: var(--border); border-radius: 8px; overflow: hidden;
-  }
-  .solution-row {
-    display: grid; grid-template-columns: 200px 1fr;
-    background: var(--bg-card); padding: 2rem; gap: 2rem;
-    align-items: start; transition: background 0.3s;
-  }
+  .solution-stack { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; }
+  .solution-row { display: grid; grid-template-columns: 200px 1fr; background: var(--bg-card); padding: 2rem; gap: 2rem; align-items: start; transition: background 0.3s; }
   .solution-row:hover { background: var(--bg-elevated); }
-  .solution-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem; color: var(--green);
-    letter-spacing: 0.1em; padding-top: 0.15rem;
-  }
-  .solution-row h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.15rem; font-weight: 400; margin-bottom: 0.5rem;
-  }
+  .solution-label { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.1em; padding-top: 0.15rem; }
+  .solution-row h3 { font-family: 'Instrument Serif', serif; font-size: 1.15rem; font-weight: 400; margin-bottom: 0.5rem; }
   .solution-row p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-
-  /* ── TERMINAL ── */
-  .terminal-section {
-    position: relative; z-index: 1;
-    padding: 4rem 2rem; max-width: 1100px; margin: 0 auto;
-  }
-  .terminal-window {
-    background: #0D0F0E; border: 1px solid var(--border);
-    border-radius: 10px; overflow: hidden;
-    font-family: 'DM Mono', monospace;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  }
-  .terminal-header {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.8rem 1.2rem; background: var(--bg-elevated);
-    border-bottom: 1px solid var(--border);
-  }
+  .terminal-section { position: relative; z-index: 1; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .terminal-window { background: #0D0F0E; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-family: 'DM Mono', monospace; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+  .terminal-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.2rem; background: var(--bg-elevated); border-bottom: 1px solid var(--border); }
   .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); }
-  .terminal-dot.red { background: #EF4444; }
-  .terminal-dot.yellow { background: #F59E0B; }
-  .terminal-dot.green { background: #3ECF8E; }
-  .terminal-title {
-    font-size: 0.7rem; color: var(--text-muted);
-    margin-left: 0.5rem; letter-spacing: 0.05em;
-  }
-  .terminal-body {
-    padding: 1.5rem; font-size: 0.82rem; line-height: 1.8;
-    color: var(--text-dim); min-height: 380px;
-  }
-  .terminal-body .prompt { color: var(--green); }
-  .terminal-body .comment { color: var(--text-muted); font-style: italic; }
-  .terminal-body .key { color: var(--bronze); }
-  .terminal-body .value { color: var(--green); }
-  .terminal-body .string { color: #E8EBE9; }
+  .terminal-dot.red { background: #EF4444; } .terminal-dot.yellow { background: #F59E0B; } .terminal-dot.green { background: #3ECF8E; }
+  .terminal-title { font-size: 0.7rem; color: var(--text-muted); margin-left: 0.5rem; letter-spacing: 0.05em; }
+  .terminal-body { padding: 1.5rem; font-size: 0.82rem; line-height: 1.8; color: var(--text-dim); min-height: 380px; }
+  .terminal-body .prompt { color: var(--green); } .terminal-body .comment { color: var(--text-muted); font-style: italic; }
+  .terminal-body .key { color: var(--bronze); } .terminal-body .value { color: var(--green); } .terminal-body .string { color: #E8EBE9; }
   .terminal-body .terminal-line { opacity: 0; animation: termLine 0.3s ease forwards; }
   @keyframes termLine { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: translateX(0); } }
-
-  /* ── TIER STACK ── */
-  .tier-stack {
-    display: flex; flex-direction: column; gap: 1px;
-    background: var(--border); border-radius: 8px; overflow: hidden;
-  }
-  .tier-row {
-    display: grid; grid-template-columns: 120px 140px 1fr 140px;
-    background: var(--bg-card); padding: 1.5rem 2rem; gap: 1.5rem; align-items: center;
-  }
+  .tier-stack { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; }
+  .tier-row { display: grid; grid-template-columns: 120px 140px 1fr 140px; background: var(--bg-card); padding: 1.5rem 2rem; gap: 1.5rem; align-items: center; }
   .tier-row.tier-header { background: var(--bg-elevated); }
-  .tier-row.tier-header span {
-    font-family: 'DM Mono', monospace; font-size: 0.7rem;
-    color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;
-  }
-  .tier-name { font-weight: 600; color: var(--text); }
-  .tier-name small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+  .tier-row.tier-header span { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .tier-name { font-weight: 600; color: var(--text); } .tier-name small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
   .tier-price { font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--green); }
   .tier-desc { color: var(--text-dim); font-size: 0.88rem; }
   .tier-cum { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--text-dim); text-align: right; }
-  .tier-note {
-    margin-top: 2rem; font-size: 0.82rem; color: var(--text-muted);
-    line-height: 1.7; padding: 1.5rem; background: var(--bg-card);
-    border: 1px solid var(--border); border-radius: 8px;
-    border-left: 3px solid var(--green-dim);
-  }
-
-  /* ── CONTRACT STATUS ── */
+  .tier-note { margin-top: 2rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--green-dim); }
   .contract-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-  .contract-card {
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: 8px; padding: 2rem;
-  }
-  .contract-card-label {
-    font-family: 'DM Mono', monospace; font-size: 0.7rem;
-    color: var(--green); letter-spacing: 0.12em;
-    text-transform: uppercase; margin-bottom: 0.8rem;
-  }
+  .contract-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; }
+  .contract-card-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8rem; }
   .contract-card-name { font-size: 1.1rem; color: var(--text); font-weight: 600; margin-bottom: 1rem; }
-  .contract-detail {
-    font-family: 'DM Mono', monospace; font-size: 0.78rem;
-    color: var(--text-muted); margin-bottom: 0.5rem;
-  }
+  .contract-detail { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; }
   .contract-detail span { color: var(--text-dim); }
-  .contract-link {
-    display: inline-block; margin-top: 1rem;
-    font-family: 'DM Mono', monospace; font-size: 0.78rem;
-    color: var(--green); text-decoration: none;
-    border-bottom: 1px solid transparent; transition: border-color 0.2s;
-  }
+  .contract-link { display: inline-block; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--green); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
   .contract-link:hover { border-bottom-color: var(--green); }
-
-  /* ── ROADMAP ── */
   .roadmap-list { position: relative; padding-left: 2rem; }
-  .roadmap-list::before {
-    content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem;
-    width: 1px; background: linear-gradient(to bottom, var(--green), var(--border));
-  }
+  .roadmap-list::before { content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem; width: 1px; background: linear-gradient(to bottom, var(--green), var(--border)); }
   .roadmap-item { position: relative; margin-bottom: 2.5rem; padding-left: 2rem; }
-  .roadmap-item::before {
-    content: ''; position: absolute; left: -2.35rem; top: 0.5rem;
-    width: 9px; height: 9px; border-radius: 50%;
-    background: var(--green); border: 2px solid var(--bg);
-    box-shadow: 0 0 10px var(--green-glow);
-  }
+  .roadmap-item::before { content: ''; position: absolute; left: -2.35rem; top: 0.5rem; width: 9px; height: 9px; border-radius: 50%; background: var(--green); border: 2px solid var(--bg); box-shadow: 0 0 10px var(--green-glow); }
   .roadmap-item.completed::before { background: var(--green); }
   .roadmap-item.current::before { background: var(--green); box-shadow: 0 0 16px rgba(62,207,142,0.4); }
   .roadmap-item.future::before { background: var(--text-muted); box-shadow: none; }
-  .roadmap-phase {
-    font-family: 'DM Mono', monospace; font-size: 0.75rem;
-    color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.5rem;
-  }
+  .roadmap-phase { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
   .roadmap-item.future .roadmap-phase { color: var(--text-muted); }
-  .roadmap-item h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem;
-  }
+  .roadmap-item h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; }
   .roadmap-item p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-
-  /* ── APPLICATION FORM ── */
-  .apply-section {
-    position: relative; z-index: 1;
-    padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;
-  }
+  .apply-section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
   .apply-form { max-width: 560px; }
   .form-group { margin-bottom: 1.5rem; }
-  .form-group label {
-    display: block; font-family: 'DM Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.15em;
-    color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;
-  }
-  .form-group input, .form-group textarea {
-    width: 100%; padding: 0.9rem 1rem;
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: 6px; color: var(--text);
-    font-family: 'DM Mono', monospace; font-size: 0.88rem;
-    outline: none; transition: border-color 0.2s;
-  }
+  .form-group label { display: block; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea { width: 100%; padding: 0.9rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
   .form-group input:focus, .form-group textarea:focus { border-color: var(--green-dim); }
   .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
   .form-group textarea { resize: vertical; min-height: 100px; font-family: 'DM Sans', sans-serif; }
-  .form-disclaimer {
-    font-size: 0.78rem; color: var(--text-muted); line-height: 1.7;
-    margin-bottom: 1.5rem; padding: 1.2rem 1.5rem;
-    background: var(--bg-card); border-left: 3px solid var(--green-dim);
-    border-radius: 0 6px 6px 0;
-  }
-  .form-submit {
-    padding: 0.9rem 2.5rem; background: var(--green); color: #0A0C0B;
-    border: none; border-radius: 6px;
-    font-family: 'DM Sans', sans-serif; font-weight: 700;
-    font-size: 0.9rem; letter-spacing: 0.03em;
-    cursor: pointer; transition: all 0.25s;
-  }
+  .form-disclaimer { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; padding: 1.2rem 1.5rem; background: var(--bg-card); border-left: 3px solid var(--green-dim); border-radius: 0 6px 6px 0; }
+  .form-submit { padding: 0.9rem 2.5rem; background: var(--green); color: #0A0C0B; border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; cursor: pointer; transition: all 0.25s; }
   .form-submit:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
   #form-message { margin-top: 1rem; font-size: 0.85rem; display: none; }
-
-  /* ── DOCS GRID ── */
-  .docs-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.2rem;
-  }
-  .doc-card {
-    display: block; background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: 8px; padding: 1.6rem; text-decoration: none;
-    transition: border-color 0.3s, transform 0.3s;
-  }
+  .docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; }
+  .doc-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem; text-decoration: none; transition: border-color 0.3s, transform 0.3s; }
   .doc-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
   .doc-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
   .doc-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.6rem; }
-  .doc-meta {
-    font-family: 'DM Mono', monospace; font-size: 0.68rem;
-    color: var(--text-muted); letter-spacing: 0.05em;
-  }
-  .doc-badge {
-    display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem;
-    padding: 0.15rem 0.4rem; background: var(--green-glow);
-    border: 1px solid var(--border-accent); border-radius: 3px;
-    color: var(--green); letter-spacing: 0.05em; margin-bottom: 0.6rem;
-  }
-
-  /* ── FOUNDER ── */
-  .founder-section {
-    position: relative; z-index: 1;
-    padding: 5rem 2rem; max-width: 1100px; margin: 0 auto;
-  }
-  .founder-card {
-    display: flex; align-items: center; gap: 2rem;
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 2.5rem;
-  }
-  .founder-photo {
-    width: 100px; height: 100px; border-radius: 50%;
-    object-fit: cover; border: 2px solid var(--border-accent); flex-shrink: 0;
-  }
-  .founder-info h3 {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.2rem; font-weight: 400; margin-bottom: 0.2rem;
-  }
-  .founder-role {
-    font-family: 'DM Mono', monospace; font-size: 0.72rem;
-    color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.6rem;
-  }
+  .doc-meta { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  .doc-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem; padding: 0.15rem 0.4rem; background: var(--green-glow); border: 1px solid var(--border-accent); border-radius: 3px; color: var(--green); letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+  .founder-section { position: relative; z-index: 1; padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .founder-card { display: flex; align-items: center; gap: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2.5rem; }
+  .founder-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-accent); flex-shrink: 0; }
+  .founder-info h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.2rem; }
+  .founder-role { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
   .founder-info p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-
-  /* ── FOOTER ── */
-  footer {
-    position: relative; z-index: 1;
-    border-top: 1px solid var(--border); padding: 3rem 2rem;
-  }
-  .footer-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 1.5rem;
-  }
-  .footer-brand {
-    font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted);
-  }
-  .footer-brand a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-  .footer-brand a:hover { color: var(--text); }
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; } .footer-brand a:hover { color: var(--text); }
   .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--text-dim); }
-  .footer-disclaimer {
-    max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0;
-    border-top: 1px solid var(--border); margin-top: 2rem;
-  }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; } .footer-links a:hover { color: var(--text-dim); }
+  .footer-disclaimer { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; }
   .footer-disclaimer p { font-size: 0.7rem; color: var(--text-muted); line-height: 1.7; }
   .footer-legal-links { display: flex; gap: 1.5rem; margin-top: 1rem; }
-  .footer-legal-links a { font-size: 0.72rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  .footer-legal-links a:hover { color: var(--text-dim); }
-
-  /* ── ANIMATIONS ── */
+  .footer-legal-links a { font-size: 0.72rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; } .footer-legal-links a:hover { color: var(--text-dim); }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    nav { padding: 0.8rem 1.2rem; }
-    .nav-links { gap: 1rem; }
-    .nav-links a:not(.nav-badge):not(.nav-mint) { display: none; }
-    .hero { padding: 4rem 1.5rem 3rem; }
-    .stats-inner { grid-template-columns: repeat(2, 1fr); }
-    section, .apply-section { padding: 4rem 1.5rem; }
-    .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
-    .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    .tier-row.tier-header { display: none; }
-    .tier-desc { grid-column: span 2; }
-    .contract-grid { grid-template-columns: 1fr; }
-    .footer-inner { flex-direction: column; text-align: center; }
-    .footer-legal-links { justify-content: center; }
-    .terminal-body { font-size: 0.72rem; padding: 1rem; }
-    .docs-grid { grid-template-columns: 1fr; }
+    nav { padding: 0.8rem 1.2rem; } .nav-links { gap: 1rem; } .nav-links a:not(.nav-badge):not(.nav-mint) { display: none; }
+    .hero { padding: 4rem 1.5rem 3rem; } .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    section, .apply-section { padding: 4rem 1.5rem; } .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; } .tier-row.tier-header { display: none; } .tier-desc { grid-column: span 2; }
+    .contract-grid { grid-template-columns: 1fr; } .footer-inner { flex-direction: column; text-align: center; } .footer-legal-links { justify-content: center; }
+    .terminal-body { font-size: 0.72rem; padding: 1rem; } .docs-grid { grid-template-columns: 1fr; }
     .founder-card { flex-direction: column; text-align: center; gap: 1.2rem; }
   }
-
-/* ═══════════════════════════════════════
-   SECTION 00 — WHY BCCS EXISTS
-   ═══════════════════════════════════════ */
-
-.s00 {
-  position: relative; z-index: 1;
-  padding: 5rem 2rem 4rem;
-  border-bottom: 1px solid var(--border);
-}
-.s00-inner { max-width: 900px; margin: 0 auto; }
-
-.s00-tag {
-  font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green);
-  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem;
-}
-.s00-tag span {
-  display: inline-block; padding: 0.3rem 0.6rem;
-  border: 1px solid var(--border-accent); border-radius: 3px;
-  background: var(--green-glow); margin-right: 0.5rem;
-}
-
-.s00-headline {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 400;
-  line-height: 1.2; margin-bottom: 3rem; max-width: 800px;
-}
-.s00-headline em { font-style: italic; color: var(--green); }
-
-/* Three-column problem cards */
-.s00-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; }
-.s00-card {
-  background: var(--bg-card); padding: 2rem;
-}
-.s00-card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
-.s00-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.8rem; }
-.s00-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 0.8rem; }
-.s00-card p:last-child { margin-bottom: 0; }
-.s00-card em { color: var(--text); font-style: italic; }
-.s00-card strong { color: var(--text); }
-.s00-highlight {
-  background: rgba(62, 207, 142, 0.08); border-left: 2px solid var(--green);
-  padding: 0.6rem 0.8rem; border-radius: 0 4px 4px 0;
-  font-size: 0.85rem; color: var(--green); line-height: 1.5;
-}
-
-.s00-divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; height: 0; }
-
-.s00-subhead {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem;
-}
-
-/* Who needs this grid */
-.s00-who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; }
-.s00-who { background: var(--bg-card); padding: 1.8rem; }
-.s00-who-label {
-  font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green);
-  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem;
-}
-.s00-who p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
-
-/* Node License explainer */
-.s00-explain { margin-bottom: 3rem; }
-.s00-explain > p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.5rem; max-width: 720px; }
-.s00-explain strong { color: var(--text); }
-
-.s00-what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; }
-.s00-what-item { background: var(--bg-card); padding: 1.8rem; }
-.s00-what-label {
-  font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--bronze);
-  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem;
-}
-.s00-what-item p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
-.s00-what-item strong { color: var(--text); }
-
-/* CTA box */
-.s00-cta-box {
-  background: var(--bg-card); border: 2px solid var(--green-dim); border-radius: 10px;
-  padding: 2.5rem; display: flex; align-items: center; justify-content: space-between;
-  gap: 2rem; margin-top: 3rem;
-}
-.s00-cta-text h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem; }
-.s00-cta-text p { font-size: 0.88rem; color: var(--text-dim); }
-.s00-cta-buttons { display: flex; gap: 1rem; flex-shrink: 0; }
-.s00-btn-primary {
-  display: inline-flex; align-items: center; padding: 0.8rem 2rem;
-  background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.85rem;
-  border-radius: 6px; text-decoration: none; transition: all 0.25s;
-}
-.s00-btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
-.s00-btn-secondary {
-  display: inline-flex; align-items: center; padding: 0.8rem 2rem;
-  border: 1px solid var(--border-accent); color: var(--text-dim); font-size: 0.85rem;
-  border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.2s;
-}
-.s00-btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
-
-/* Mobile */
-@media (max-width: 768px) {
-  .s00 { padding: 7rem 1.5rem 3rem; }
-  .s00-grid { grid-template-columns: 1fr; }
-  .s00-who-grid { grid-template-columns: 1fr; }
-  .s00-what-grid { grid-template-columns: 1fr; }
-  .s00-cta-box { flex-direction: column; text-align: center; }
-  .s00-cta-buttons { flex-direction: column; width: 100%; }
-  .s00-btn-primary, .s00-btn-secondary { justify-content: center; width: 100%; }
-}
+  .s00 { position: relative; z-index: 1; padding: 5rem 2rem 4rem; border-bottom: 1px solid var(--border); }
+  .s00-inner { max-width: 900px; margin: 0 auto; }
+  .s00-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem; }
+  .s00-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
+  .s00-headline { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 400; line-height: 1.2; margin-bottom: 3rem; max-width: 800px; }
+  .s00-headline em { font-style: italic; color: var(--green); }
+  .s00-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; }
+  .s00-card { background: var(--bg-card); padding: 2rem; }
+  .s00-card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; } .s00-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.8rem; }
+  .s00-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 0.8rem; } .s00-card p:last-child { margin-bottom: 0; }
+  .s00-card em { color: var(--text); font-style: italic; } .s00-card strong { color: var(--text); }
+  .s00-highlight { background: rgba(62, 207, 142, 0.08); border-left: 2px solid var(--green); padding: 0.6rem 0.8rem; border-radius: 0 4px 4px 0; font-size: 0.85rem; color: var(--green); line-height: 1.5; }
+  .s00-divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; height: 0; }
+  .s00-subhead { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem; }
+  .s00-who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; }
+  .s00-who { background: var(--bg-card); padding: 1.8rem; }
+  .s00-who-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .s00-who p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
+  .s00-explain { margin-bottom: 3rem; }
+  .s00-explain > p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.5rem; max-width: 720px; } .s00-explain strong { color: var(--text); }
+  .s00-what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; }
+  .s00-what-item { background: var(--bg-card); padding: 1.8rem; }
+  .s00-what-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--bronze); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .s00-what-item p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; } .s00-what-item strong { color: var(--text); }
+  .s00-cta-box { background: var(--bg-card); border: 2px solid var(--green-dim); border-radius: 10px; padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 3rem; }
+  .s00-cta-text h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem; } .s00-cta-text p { font-size: 0.88rem; color: var(--text-dim); }
+  .s00-cta-buttons { display: flex; gap: 1rem; flex-shrink: 0; }
+  .s00-btn-primary { display: inline-flex; align-items: center; padding: 0.8rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.85rem; border-radius: 6px; text-decoration: none; transition: all 0.25s; }
+  .s00-btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
+  .s00-btn-secondary { display: inline-flex; align-items: center; padding: 0.8rem 2rem; border: 1px solid var(--border-accent); color: var(--text-dim); font-size: 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.2s; }
+  .s00-btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
+  @media (max-width: 768px) {
+    .s00 { padding: 7rem 1.5rem 3rem; } .s00-grid { grid-template-columns: 1fr; } .s00-who-grid { grid-template-columns: 1fr; }
+    .s00-what-grid { grid-template-columns: 1fr; } .s00-cta-box { flex-direction: column; text-align: center; }
+    .s00-cta-buttons { flex-direction: column; width: 100%; } .s00-btn-primary, .s00-btn-secondary { justify-content: center; width: 100%; }
+  }
 </style>
 </head>
 <body>
-
 <div class="grid-bg"></div>
 
-<!-- ═══ NAV — with Buy License + Audit ═══ -->
 <nav>
   <a href="#" class="nav-logo">BCCS</a>
   <div class="nav-links">
@@ -597,6 +203,7 @@
     <a href="#protocol">Protocol</a>
     <a href="#access">Access</a>
     <a href="#contracts">Contracts</a>
+    <a href="implementation.html">Implementation</a>
     <a href="audit.html">Audit</a>
     <a href="#docs">Docs</a>
     <a href="mint.html" class="nav-mint">Buy License</a>
@@ -604,128 +211,52 @@
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SECTION 00 — WHY BCCS EXISTS (new, before hero)
-     ═══════════════════════════════════════════════════════════════ -->
-<!-- ═══════════════════════════════════════════════════════════════
-     SECTION 00 — "WHY BCCS EXISTS" 
-     ═══════════════════════════════════════════════════════════════ -->
-
-<!-- SECTION 00: THE PROBLEM -->
 <section id="why" class="s00">
   <div class="s00-inner">
-
     <div class="s00-tag"><span>00</span> Why This Exists</div>
-
-    <h2 class="s00-headline">The world runs on biological assets<br>
-    <em>None of them are verified</em></h2>
-
+    <h2 class="s00-headline">The world runs on biological assets<br><em>None of them are verified</em></h2>
     <div class="s00-grid">
-      <div class="s00-card">
-        <div class="s00-card-icon">🌍</div>
-        <h3>The Problem</h3>
-        <p>Forests, soil, oceans, organisms — they represent over $150 trillion in global natural capital. Governments tax them. Companies trade them. Carbon credits are sold against them. But nobody can computationally verify whether these assets are actually in the state they claim to be.</p>
-        <p class="s00-highlight">A forest can be logged while its carbon credits are still being traded. Nobody would know until it's too late.</p>
-      </div>
-
-      <div class="s00-card">
-        <div class="s00-card-icon">🔬</div>
-        <h3>Why It Matters Now</h3>
-        <p>AI can generate fake satellite images. Sensor data can be fabricated. Reports can be forged. As AI becomes more powerful, the gap between <em>claimed</em> biological state and <em>actual</em> biological state will only grow.</p>
-        <p>This is the <strong>Biological Computing Verification Gap</strong> — the fundamental inability to trust biological data at scale.</p>
-      </div>
-
-      <div class="s00-card">
-        <div class="s00-card-icon">⛓️</div>
-        <h3>What BCCS Does</h3>
-        <p>BCCS is a protocol that makes biological assets <strong>computationally verifiable</strong>. Every asset gets a unique 21-character ID. Its state is verified through three independent data sources — satellites, ground sensors, and physical inspection. No single source can fake a verification.</p>
-        <p>The result is stored on-chain. Immutable. Queryable by any AI, institution, or smart contract.</p>
-      </div>
+      <div class="s00-card"><div class="s00-card-icon">🌍</div><h3>The Problem</h3><p>Forests, soil, oceans, organisms — they represent over $150 trillion in global natural capital. Governments tax them. Companies trade them. Carbon credits are sold against them. But nobody can computationally verify whether these assets are actually in the state they claim to be.</p><p class="s00-highlight">A forest can be logged while its carbon credits are still being traded. Nobody would know until it's too late.</p></div>
+      <div class="s00-card"><div class="s00-card-icon">🔬</div><h3>Why It Matters Now</h3><p>AI can generate fake satellite images. Sensor data can be fabricated. Reports can be forged. As AI becomes more powerful, the gap between <em>claimed</em> biological state and <em>actual</em> biological state will only grow.</p><p>This is the <strong>Biological Computing Verification Gap</strong> — the fundamental inability to trust biological data at scale.</p></div>
+      <div class="s00-card"><div class="s00-card-icon">⛓️</div><h3>What BCCS Does</h3><p>BCCS is a protocol that makes biological assets <strong>computationally verifiable</strong>. Every asset gets a unique 21-character ID. Its state is verified through three independent data sources — satellites, ground sensors, and physical inspection. No single source can fake a verification.</p><p>The result is stored on-chain. Immutable. Queryable by any AI, institution, or smart contract.</p></div>
     </div>
-
-    <!-- WHO NEEDS THIS -->
     <div class="s00-divider"></div>
     <h2 class="s00-subhead">Who needs this?</h2>
     <div class="s00-who-grid">
-      <div class="s00-who">
-        <div class="s00-who-label">Governments</div>
-        <p>You regulate natural resources but can't verify them. Your environmental agencies rely on self-reported data. BCCS gives you machine-readable, independently verified biological state for every asset under your jurisdiction.</p>
-      </div>
-      <div class="s00-who">
-        <div class="s00-who-label">Corporations</div>
-        <p>Your ESG reporting is based on trust, not verification. Your supply chain claims are unauditable. BCCS provides cryptographic proof that the biological assets in your value chain are in the state you claim.</p>
-      </div>
-      <div class="s00-who">
-        <div class="s00-who-label">Carbon Markets</div>
-        <p>Credits are traded against assets nobody can verify. Double-counting is rampant. BCCS makes every carbon-linked biological asset independently verifiable — no more phantom credits.</p>
-      </div>
-      <div class="s00-who">
-        <div class="s00-who-label">Node Operators</div>
-        <p>You run the infrastructure. You operate verification nodes, submit evidence data, and earn $BCCS tokens for honest work. False submissions are economically penalized. This is DePIN for the physical world.</p>
-      </div>
+      <div class="s00-who"><div class="s00-who-label">Governments</div><p>You regulate natural resources but can't verify them. Your environmental agencies rely on self-reported data. BCCS gives you machine-readable, independently verified biological state for every asset under your jurisdiction.</p></div>
+      <div class="s00-who"><div class="s00-who-label">Corporations</div><p>Your ESG reporting is based on trust, not verification. Your supply chain claims are unauditable. BCCS provides cryptographic proof that the biological assets in your value chain are in the state you claim.</p></div>
+      <div class="s00-who"><div class="s00-who-label">Carbon Markets</div><p>Credits are traded against assets nobody can verify. Double-counting is rampant. BCCS makes every carbon-linked biological asset independently verifiable — no more phantom credits.</p></div>
+      <div class="s00-who"><div class="s00-who-label">Node Operators</div><p>You run the infrastructure. You operate verification nodes, submit evidence data, and earn $BCCS tokens for honest work. False submissions are economically penalized. This is DePIN for the physical world.</p></div>
     </div>
-
-    <!-- NODE LICENSE EXPLAINER -->
     <div class="s00-divider"></div>
     <h2 class="s00-subhead">What is a Node License?</h2>
     <div class="s00-explain">
       <p>A <strong>Node License</strong> is your access credential to operate within the BCCS verification network. It is a non-transferable (soulbound) digital certificate on the Base blockchain.</p>
       <div class="s00-what-grid">
-        <div class="s00-what-item">
-          <div class="s00-what-label">What you get</div>
-          <p>The right to operate a BCCS verification node. When the network goes live, you process verification requests, submit evidence data, and earn $BCCS tokens for honest validation work.</p>
-        </div>
-        <div class="s00-what-item">
-          <div class="s00-what-label">What it costs</div>
-          <p>Alpha tier: <strong>$1,000 USDC</strong> on Base. This is a one-time payment. Five tiers exist (Alpha through Epsilon), each at increasing prices as the network expands.</p>
-        </div>
-        <div class="s00-what-item">
-          <div class="s00-what-label">What it is NOT</div>
-          <p>It is NOT an investment product. It is NOT a token. You do NOT receive $BCCS tokens by buying a license. You earn them by doing real verification work when the network is operational.</p>
-        </div>
-        <div class="s00-what-item">
-          <div class="s00-what-label">Why soulbound</div>
-          <p>Licenses cannot be resold or transferred. This prevents speculation and ensures every license holder is a committed infrastructure operator, not a flipper.</p>
-        </div>
+        <div class="s00-what-item"><div class="s00-what-label">What you get</div><p>The right to operate a BCCS verification node. When the network goes live, you process verification requests, submit evidence data, and earn $BCCS tokens for honest validation work.</p></div>
+        <div class="s00-what-item"><div class="s00-what-label">What it costs</div><p>Alpha tier: <strong>$1,000 USDC</strong> on Base. This is a one-time payment. Five tiers exist (Alpha through Epsilon), each at increasing prices as the network expands.</p></div>
+        <div class="s00-what-item"><div class="s00-what-label">What it is NOT</div><p>It is NOT an investment product. It is NOT a token. You do NOT receive $BCCS tokens by buying a license. You earn them by doing real verification work when the network is operational.</p></div>
+        <div class="s00-what-item"><div class="s00-what-label">Why soulbound</div><p>Licenses cannot be resold or transferred. This prevents speculation and ensures every license holder is a committed infrastructure operator, not a flipper.</p></div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ═══ ORIGINAL HERO ═══ -->
 <section class="hero">
-  <div class="hero-tag">
-    <span>DePIN</span> Biological Computing Control Standard
-  </div>
+  <div class="hero-tag"><span>DePIN</span> Biological Computing Control Standard</div>
   <h1>The <em>Verification Layer</em> for Biological Capital</h1>
   <p class="hero-sub">BCCS is a decentralized protocol that makes biological assets &mdash; forests, soil, organisms, aquatic ecosystems &mdash; computationally verifiable on-chain. Multi-source consensus. Machine-readable biological state.</p>
-  <div class="hero-actions">
-    <a href="mint.html" class="btn-primary">Acquire Node License &rarr;</a>
-    <a href="#protocol" class="btn-secondary">Read the Protocol &darr;</a>
-  </div>
+  <div class="hero-actions"><a href="mint.html" class="btn-primary">Acquire Node License &rarr;</a><a href="#protocol" class="btn-secondary">Read the Protocol &darr;</a></div>
 </section>
 
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat"><div class="stat-value">21-Char</div><div class="stat-label">BAIN ID Standard</div></div>
-    <div class="stat"><div class="stat-value">8-State</div><div class="stat-label">Verification Lifecycle</div></div>
-    <div class="stat"><div class="stat-value">3-Tier</div><div class="stat-label">Oracle Consensus</div></div>
-    <div class="stat"><div class="stat-value">Base L2</div><div class="stat-label">Coinbase Network</div></div>
-  </div>
-</div>
+<div class="stats-bar"><div class="stats-inner">
+  <div class="stat"><div class="stat-value">21-Char</div><div class="stat-label">BAIN ID Standard</div></div>
+  <div class="stat"><div class="stat-value">8-State</div><div class="stat-label">Verification Lifecycle</div></div>
+  <div class="stat"><div class="stat-value">3-Tier</div><div class="stat-label">Oracle Consensus</div></div>
+  <div class="stat"><div class="stat-value">Base L2</div><div class="stat-label">Coinbase Network</div></div>
+</div></div>
 
-<div class="terminal-section fade-in">
-  <div class="terminal-window">
-    <div class="terminal-header">
-      <div class="terminal-dot red"></div>
-      <div class="terminal-dot yellow"></div>
-      <div class="terminal-dot green"></div>
-      <span class="terminal-title">bccs-api &mdash; verification query</span>
-    </div>
-    <div class="terminal-body" id="terminal"></div>
-  </div>
-</div>
+<div class="terminal-section fade-in"><div class="terminal-window"><div class="terminal-header"><div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div><span class="terminal-title">bccs-api &mdash; verification query</span></div><div class="terminal-body" id="terminal"></div></div></div>
 
 <section id="protocol">
   <div class="section-tag fade-in">01 &mdash; Protocol Architecture</div>
@@ -763,30 +294,8 @@
   <h2 class="section-title fade-in">Contract status</h2>
   <p class="section-desc fade-in">All contracts are deployed on Base Layer 2 and source-verified on BaseScan.</p>
   <div class="contract-grid fade-in">
-    <div class="contract-card">
-      <div class="contract-card-label">Verification Unit</div>
-      <div class="contract-card-name">$BCCS &mdash; ERC-20</div>
-      <div class="contract-detail">Standard: <span>ERC-20 (OpenZeppelin)</span></div>
-      <div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div>
-      <div class="contract-detail">Supply: <span>1,000,000,000 (hard cap, non-mintable)</span></div>
-      <div class="contract-detail">Decimals: <span>18</span></div>
-      <div class="contract-detail">Pausable: <span>Yes</span></div>
-      <div class="contract-detail">Owner: <span>Safe Multisig</span></div>
-      <div class="contract-detail">Address: <span>0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7</span></div>
-      <a href="https://basescan.org/address/0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7" target="_blank" rel="noopener noreferrer" class="contract-link">View on BaseScan &rarr;</a>
-    </div>
-    <div class="contract-card">
-      <div class="contract-card-label">Infrastructure Access License</div>
-      <div class="contract-card-name">Node License &mdash; ERC-721</div>
-      <div class="contract-detail">Standard: <span>ERC-721 + EIP-5192 (Soulbound)</span></div>
-      <div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div>
-      <div class="contract-detail">Transferable: <span>No &mdash; non-transferable credential</span></div>
-      <div class="contract-detail">Tiers: <span>5 (Alpha through Epsilon)</span></div>
-      <div class="contract-detail">Total: <span>11,500 licenses</span></div>
-      <div class="contract-detail">Payment: <span>Native USDC on Base</span></div>
-      <div class="contract-detail">Address: <span>0x44B46f9D170ae8122cce71332884252934b66FBd</span></div>
-      <a href="https://basescan.org/address/0x44B46f9D170ae8122cce71332884252934b66FBd" target="_blank" rel="noopener noreferrer" class="contract-link">View on BaseScan &rarr;</a>
-    </div>
+    <div class="contract-card"><div class="contract-card-label">Verification Unit</div><div class="contract-card-name">$BCCS &mdash; ERC-20</div><div class="contract-detail">Standard: <span>ERC-20 (OpenZeppelin)</span></div><div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div><div class="contract-detail">Supply: <span>1,000,000,000 (hard cap, non-mintable)</span></div><div class="contract-detail">Decimals: <span>18</span></div><div class="contract-detail">Pausable: <span>Yes</span></div><div class="contract-detail">Owner: <span>Safe Multisig</span></div><div class="contract-detail">Address: <span>0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7</span></div><a href="https://basescan.org/address/0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7" target="_blank" rel="noopener noreferrer" class="contract-link">View on BaseScan &rarr;</a></div>
+    <div class="contract-card"><div class="contract-card-label">Infrastructure Access License</div><div class="contract-card-name">Node License &mdash; ERC-721</div><div class="contract-detail">Standard: <span>ERC-721 + EIP-5192 (Soulbound)</span></div><div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div><div class="contract-detail">Transferable: <span>No &mdash; non-transferable credential</span></div><div class="contract-detail">Tiers: <span>5 (Alpha through Epsilon)</span></div><div class="contract-detail">Total: <span>11,500 licenses</span></div><div class="contract-detail">Payment: <span>Native USDC on Base</span></div><div class="contract-detail">Address: <span>0x44B46f9D170ae8122cce71332884252934b66FBd</span></div><a href="https://basescan.org/address/0x44B46f9D170ae8122cce71332884252934b66FBd" target="_blank" rel="noopener noreferrer" class="contract-link">View on BaseScan &rarr;</a></div>
   </div>
 </section>
 
@@ -836,6 +345,7 @@
     <a href="BCCS_PoPS_Methodology_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>PoPS Methodology</h3><p>Three-tier verification, confidence scoring, slashing, and dispute resolution.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_Token_Economic_Model_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>Token Economic Model</h3><p>Emission schedule, fee mechanics, staking, stress tests, security budget.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_BAIN_Governance_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>BAIN Governance</h3><p>IP framework, consortium migration, standards body, open licensing path.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
+    <a href="implementation.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Implementation Architecture</h3><p>Complete technical blueprint. Satellite pipeline, IoT sensors, oracle consensus, software stack, API, and Founding Oracle deployment plan.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
     <a href="audit.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Security Review</h3><p>Internal security assessment of BCCSToken and BCCSNodeLicense. PASS &mdash; no critical issues.</p><span class="doc-meta">KRYONIS &middot; April 2026</span></a>
   </div>
 </section>
@@ -877,7 +387,6 @@
     entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
   const terminalLines = [
     { text: '# Verification query — biological asset state via BCCS API', cls: 'comment' },
     { text: '', cls: '' },
@@ -901,7 +410,6 @@
     { text: '  <span class="key">validator</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence</span>: <span class="value">sentinel_2B_spectral</span>', cls: '' },
     { text: '  <span class="key">status</span>:    <span class="value">Attestation accepted. State confirmed: Verified-Stable.</span>', cls: '' },
   ];
-
   function runTerminal() {
     const el = document.getElementById('terminal'); if (!el) return; el.innerHTML = '';
     let i = 0;
@@ -914,13 +422,11 @@
     }
     addLine();
   }
-
   const termObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => { if (entry.isIntersecting) { runTerminal(); termObs.unobserve(entry.target); } });
   }, { threshold: 0.3 });
   const termEl = document.querySelector('.terminal-section');
   if (termEl) termObs.observe(termEl);
-
   async function submitApplication() {
     const wallet = document.getElementById('wallet-input').value.trim();
     const email = document.getElementById('email-input').value.trim();
@@ -939,9 +445,7 @@
       else { throw new Error('Failed'); }
     } catch (err) { showMsg('Submission failed. Please try again or contact us directly.', false); btn.textContent = 'Submit Application'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
   }
-
   function showMsg(text, success) { const msg = document.getElementById('form-message'); msg.style.display = 'block'; msg.style.color = success ? '#3ECF8E' : '#EF4444'; msg.textContent = text; }
 </script>
-
 </body>
 </html>

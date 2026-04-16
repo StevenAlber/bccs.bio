@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCCS — Technical Implementation Architecture</title>
+<meta name="description" content="BCCS Technical Implementation Architecture — the complete engineering blueprint for sovereign-scale biological asset verification.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0C0B;--bg-el:#111413;--bg-card:#161A18;--border:#1E2422;--border-a:#2A3A30;--text:#E8EBE9;--text-dim:#7A8580;--text-mut:#4A5550;--green:#3ECF8E;--green-dim:#1B4D3E;--green-glow:rgba(62,207,142,0.12);--bronze:#C4982A}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;opacity:0.3;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 60% 50% at 50% 30%,black 0%,transparent 100%)}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,12,11,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:500;color:var(--green);letter-spacing:0.15em;text-decoration:none}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:0.85rem;font-weight:500;letter-spacing:0.03em;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-back{color:var(--green) !important;font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.05em}
+section{position:relative;z-index:1;padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.hero-impl{padding:8rem 2rem 4rem;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.s-tag{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-mut);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem}
+.s-title{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.15;margin-bottom:1.5rem}
+.s-title em{font-style:italic;color:var(--green)}
+.s-desc{color:var(--text-dim);font-size:1.05rem;max-width:680px;line-height:1.7;margin-bottom:3rem}
+.s-divider{width:100%;border:none;border-top:1px solid var(--border);margin:0}
+.hero-tag{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--green);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-tag span{display:inline-block;padding:0.3rem 0.6rem;border:1px solid var(--border-a);border-radius:3px;background:var(--green-glow);margin-right:0.5rem}
+
+/* Architecture rows */
+.arch-stack{display:flex;flex-direction:column;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:3rem}
+.arch-row{display:grid;grid-template-columns:200px 1fr;background:var(--bg-card);padding:2rem;gap:2rem;align-items:start;transition:background 0.3s}
+.arch-row:hover{background:var(--bg-el)}
+.arch-label{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--green);letter-spacing:0.1em;padding-top:0.15rem}
+.arch-row h3{font-family:'Instrument Serif',serif;font-size:1.15rem;font-weight:400;margin-bottom:0.5rem}
+.arch-row p{color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin-bottom:0.5rem}
+.arch-row p:last-child{margin-bottom:0}
+.arch-row ul{color:var(--text-dim);font-size:0.88rem;line-height:1.7;padding-left:1.2rem;margin-top:0.5rem}
+.arch-row li{margin-bottom:0.3rem}
+.arch-row strong{color:var(--text)}
+.arch-row code{font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--bronze);background:rgba(196,152,42,0.08);padding:0.1rem 0.4rem;border-radius:3px}
+
+/* Flow diagram */
+.flow-container{margin:3rem 0;padding:2.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:10px}
+.flow-title{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2rem}
+.flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:center}
+.flow-box{padding:1.2rem;background:var(--bg-el);border:1px solid var(--border-a);border-radius:6px;text-align:center;position:relative}
+.flow-box-label{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem}
+.flow-box-name{font-family:'Instrument Serif',serif;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem}
+.flow-box-desc{font-size:0.72rem;color:var(--text-mut);line-height:1.4}
+.flow-arrow{text-align:center;font-family:'DM Mono',monospace;font-size:1.2rem;color:var(--green);padding:0 0.5rem}
+
+/* Spec tables */
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-bottom:3rem}
+.spec-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:2rem}
+.spec-card-label{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.8rem}
+.spec-card h3{font-size:1.1rem;font-weight:600;margin-bottom:1rem}
+.spec-item{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+.spec-item:last-child{border-bottom:none}
+.spec-key{color:var(--text-dim)}
+.spec-val{font-family:'DM Mono',monospace;color:var(--text);font-size:0.82rem;text-align:right}
+
+/* Phase timeline */
+.phase-list{position:relative;padding-left:2rem}
+.phase-list::before{content:'';position:absolute;left:0;top:0.5rem;bottom:0.5rem;width:1px;background:linear-gradient(to bottom,var(--green),var(--border))}
+.phase-item{position:relative;margin-bottom:2.5rem;padding-left:2rem}
+.phase-item::before{content:'';position:absolute;left:-2.35rem;top:0.5rem;width:9px;height:9px;border-radius:50%;background:var(--green);border:2px solid var(--bg);box-shadow:0 0 10px var(--green-glow)}
+.phase-tag{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--green);letter-spacing:0.1em;margin-bottom:0.5rem}
+.phase-item h3{font-family:'Instrument Serif',serif;font-size:1.2rem;font-weight:400;margin-bottom:0.5rem}
+.phase-item p{color:var(--text-dim);font-size:0.9rem;line-height:1.6}
+
+/* Terminal */
+.term-window{background:#0D0F0E;border:1px solid var(--border);border-radius:10px;overflow:hidden;font-family:'DM Mono',monospace;box-shadow:0 20px 60px rgba(0,0,0,0.4);margin:2rem 0}
+.term-header{display:flex;align-items:center;gap:0.5rem;padding:0.8rem 1.2rem;background:var(--bg-el);border-bottom:1px solid var(--border)}
+.term-dot{width:10px;height:10px;border-radius:50%}.term-dot.r{background:#EF4444}.term-dot.y{background:#F59E0B}.term-dot.g{background:#3ECF8E}
+.term-title{font-size:0.7rem;color:var(--text-mut);margin-left:0.5rem;letter-spacing:0.05em}
+.term-body{padding:1.5rem;font-size:0.8rem;line-height:1.8;color:var(--text-dim)}
+.term-body .prompt{color:var(--green)}.term-body .comment{color:var(--text-mut);font-style:italic}
+.term-body .key{color:var(--bronze)}.term-body .val{color:var(--green)}.term-body .str{color:#E8EBE9}
+
+/* Alert box */
+.alert-box{background:var(--bg-card);border:2px solid var(--green-dim);border-radius:10px;padding:2rem;margin:2rem 0}
+.alert-box h3{font-family:'Instrument Serif',serif;font-size:1.1rem;margin-bottom:0.8rem}
+.alert-box p{color:var(--text-dim);font-size:0.9rem;line-height:1.7}
+
+/* Responsive */
+@media(max-width:768px){
+nav{padding:0.8rem 1.2rem}
+.nav-links a:not(.nav-back){display:none}
+.hero-impl{padding:6rem 1.5rem 3rem}
+section{padding:4rem 1.5rem}
+.arch-row{grid-template-columns:1fr;gap:0.5rem}
+.flow-grid{grid-template-columns:1fr;gap:0.8rem}
+.flow-arrow{transform:rotate(90deg)}
+.spec-grid{grid-template-columns:1fr}
+}
+
+/* Fade animation */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav>
+<a href="index.html" class="nav-logo">BCCS</a>
+<div class="nav-links">
+<a href="index.html" class="nav-back">&larr; Protocol</a>
+<a href="index.html#protocol">Architecture</a>
+<a href="index.html#contracts">Contracts</a>
+<a href="index.html#docs">Docs</a>
+<a href="audit.html">Audit</a>
+</div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero-impl">
+<div class="hero-tag"><span>TECHNICAL</span> Implementation Architecture</div>
+<h1 class="s-title">How BCCS verifies <em>biological state</em> at sovereign scale</h1>
+<p class="s-desc">The complete engineering blueprint for the BCCS verification network. From satellite observation to on-chain attestation &mdash; every layer, every component, every data flow.</p>
+</div>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 1: SYSTEM OVERVIEW ═══ -->
+<section>
+<div class="s-tag fade-in">01 &mdash; System Overview</div>
+<h2 class="s-title fade-in">End-to-end verification architecture</h2>
+<p class="s-desc fade-in">BCCS operates as a five-layer stack. Raw physical observations enter at the bottom. Cryptographically attested biological state exits at the top. No single layer can be compromised without detection by adjacent layers.</p>
+
+<div class="flow-container fade-in">
+<div class="flow-title">Data Flow &mdash; Observation to Attestation</div>
+<div class="flow-grid">
+<div class="flow-box">
+<div class="flow-box-label">Layer 1</div>
+<div class="flow-box-name">Physical Observation</div>
+<div class="flow-box-desc">Satellites, IoT sensors, field inspectors</div>
+</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">
+<div class="flow-box-label">Layer 2</div>
+<div class="flow-box-name">Data Ingestion</div>
+<div class="flow-box-desc">Normalization, timestamping, cryptographic hashing</div>
+</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">
+<div class="flow-box-label">Layer 3</div>
+<div class="flow-box-name">Oracle Consensus</div>
+<div class="flow-box-desc">PoPS 2-of-3 multi-source verification</div>
+</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">
+<div class="flow-box-label">Layer 4</div>
+<div class="flow-box-name">State Transition</div>
+<div class="flow-box-desc">BAIN ID lifecycle update on Base L2</div>
+</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">
+<div class="flow-box-label">Layer 5</div>
+<div class="flow-box-name">API &amp; Query</div>
+<div class="flow-box-desc">REST/WebSocket &mdash; AI agents, institutions, smart contracts</div>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 2: TIER 1 — SATELLITE ═══ -->
+<section>
+<div class="s-tag fade-in">02 &mdash; Tier 1: Satellite Remote Sensing</div>
+<h2 class="s-title fade-in">Orbital observation layer</h2>
+<p class="s-desc fade-in">The first tier of the PoPS consensus mechanism. Satellite-derived spectral data provides continuous, tamper-resistant observation of biological assets at continental scale.</p>
+
+<div class="arch-stack fade-in">
+<div class="arch-row">
+<div class="arch-label">PRIMARY SOURCE</div>
+<div>
+<h3>Copernicus Sentinel-2</h3>
+<p>European Space Agency constellation. Two satellites (2A/2B) providing global coverage every 5 days. 13 spectral bands, 10m spatial resolution in visible/NIR. <strong>Open access, zero cost.</strong></p>
+<p>Key indices derived: NDVI (vegetation health), NDWI (water content), NBR (burn severity), EVI (enhanced vegetation), LAI (leaf area index).</p>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">SECONDARY SOURCE</div>
+<div>
+<h3>Landsat 8/9 (USGS/NASA)</h3>
+<p>30m resolution, 16-day revisit cycle. Thermal infrared bands critical for permafrost surface temperature monitoring. 40+ year archive enables long-term baseline comparison. <strong>Open access, zero cost.</strong></p>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">HIGH-RES SOURCE</div>
+<div>
+<h3>Planet Labs (SkySat / PlanetScope)</h3>
+<p>Daily global imaging at 3&ndash;5m resolution. Sub-meter tasking available via SkySat. Used for targeted verification of specific assets when Tier 3 inspection is pending or disputed. <strong>Commercial API — licensed per area of interest.</strong></p>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">PROCESSING</div>
+<div>
+<h3>Spectral Analysis Pipeline</h3>
+<p>Raw satellite imagery is processed through a standardized pipeline:</p>
+<ul>
+<li><strong>Atmospheric correction</strong> &mdash; Sen2Cor (ESA) for Sentinel-2, LaSRC for Landsat</li>
+<li><strong>Cloud masking</strong> &mdash; s2cloudless (Sentinel Hub) + Fmask (Landsat)</li>
+<li><strong>Index computation</strong> &mdash; NDVI, NDWI, NBR, EVI, custom indices per asset class</li>
+<li><strong>Change detection</strong> &mdash; multi-temporal comparison against BAIN ID baseline</li>
+<li><strong>Anomaly flagging</strong> &mdash; statistical deviation triggers Tier 2/3 verification request</li>
+</ul>
+<p>Tools: <code>Google Earth Engine</code>, <code>Sentinel Hub API</code>, <code>STAC</code> (SpatioTemporal Asset Catalog), <code>rasterio</code>, <code>GDAL</code>.</p>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">OUTPUT</div>
+<div>
+<h3>Tier 1 Attestation Object</h3>
+<p>Each observation produces a cryptographically signed JSON attestation containing: BAIN ID reference, observation timestamp (UTC), satellite source ID, spectral index values, confidence score (0.0&ndash;1.0), SHA-256 hash of source imagery, and deviation flag (boolean).</p>
+<p>Attestation is submitted to the Oracle Consensus layer. A single Tier 1 observation cannot trigger a BAIN ID state transition alone &mdash; requires corroboration from Tier 2 or Tier 3.</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 3: TIER 2 — IoT SENSORS ═══ -->
+<section>
+<div class="s-tag fade-in">03 &mdash; Tier 2: Ground-Based IoT Sensor Network</div>
+<h2 class="s-title fade-in">Terrestrial measurement layer</h2>
+<p class="s-desc fade-in">The second tier operates at ground level. Sensors measure physical parameters that satellites cannot observe: subsurface temperature, soil chemistry, gas flux, microbial activity. Each sensor node is GPS-tagged, tamper-evident, and transmits encrypted data to the ingestion layer.</p>
+
+<div class="arch-stack fade-in">
+<div class="arch-row">
+<div class="arch-label">SENSOR TYPES</div>
+<div>
+<h3>Modular Sensor Stack</h3>
+<p>Sensor deployment is asset-class-specific. A permafrost monitoring installation uses different instruments than a tropical forest canopy station. The BCCS sensor taxonomy defines required and optional sensors per BAIN ID asset class.</p>
+<ul>
+<li><strong>Soil temperature probes</strong> &mdash; thermistor arrays at 0.5m, 1m, 2m, 5m depths. Critical for permafrost active layer monitoring.</li>
+<li><strong>Soil moisture sensors</strong> &mdash; TDR (Time Domain Reflectometry) and capacitance-based. Volumetric water content at multiple depths.</li>
+<li><strong>Gas flux chambers</strong> &mdash; CO₂ and CH₄ flux measurement. Eddy covariance or closed-chamber method. Essential for carbon accounting verification.</li>
+<li><strong>Dendrometers</strong> &mdash; tree growth rings, diameter change. Sub-millimeter resolution for biomass accumulation tracking.</li>
+<li><strong>Weather stations</strong> &mdash; air temperature, humidity, precipitation, wind speed, solar radiation. Baseline environmental context.</li>
+<li><strong>Acoustic sensors</strong> &mdash; biodiversity monitoring via bioacoustic analysis. Species identification, ecosystem health indicators.</li>
+<li><strong>Water quality probes</strong> &mdash; pH, dissolved oxygen, turbidity, conductivity. For aquatic and wetland BAIN IDs.</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">HARDWARE</div>
+<div>
+<h3>Node Hardware Architecture</h3>
+<p>Each ground station operates as an autonomous edge computing unit:</p>
+<ul>
+<li><strong>Compute</strong> &mdash; ARM-based SBC (Single Board Computer). Runs data collection daemon, local preprocessing, encryption, and uplink management.</li>
+<li><strong>Connectivity</strong> &mdash; LoRaWAN (primary, long-range/low-power), cellular fallback (4G/5G), satellite uplink (Iridium/Starlink) for remote deployments.</li>
+<li><strong>Power</strong> &mdash; solar panel + battery bank for off-grid operation. Power budget designed for 30+ days of autonomous operation without solar input (arctic winter scenario).</li>
+<li><strong>Enclosure</strong> &mdash; IP67 rated. Operating range -40°C to +60°C. Tamper-evident seals with accelerometer-based intrusion detection.</li>
+<li><strong>GPS/GNSS</strong> &mdash; precise geolocation with sub-meter accuracy. Timestamp synchronized via NTP over satellite.</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">DATA PROTOCOL</div>
+<div>
+<h3>Sensor-to-Chain Data Flow</h3>
+<p>Sensor readings follow a standardized ingestion protocol:</p>
+<ul>
+<li><strong>Sample</strong> &mdash; sensor reads at configurable interval (default: 15 minutes)</li>
+<li><strong>Preprocess</strong> &mdash; on-device outlier filtering, unit normalization, quality flagging</li>
+<li><strong>Package</strong> &mdash; JSON payload with sensor ID, BAIN ID reference, timestamp, readings array, device health metrics</li>
+<li><strong>Sign</strong> &mdash; Ed25519 digital signature with device-specific private key (stored in hardware security module)</li>
+<li><strong>Encrypt</strong> &mdash; AES-256-GCM encryption before transmission</li>
+<li><strong>Transmit</strong> &mdash; to BCCS ingestion endpoint via LoRaWAN gateway or direct cellular/satellite uplink</li>
+<li><strong>Verify</strong> &mdash; ingestion layer validates signature, decrypts, checks timestamp freshness, stores in time-series database</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">OUTPUT</div>
+<div>
+<h3>Tier 2 Attestation Object</h3>
+<p>Aggregated sensor data produces a Tier 2 attestation: BAIN ID reference, time window (UTC start/end), sensor node IDs contributing, parameter readings (mean, min, max, std dev), device health score, data completeness percentage, SHA-256 hash of raw dataset, and deviation flag.</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 4: TIER 3 — PHYSICAL INSPECTION ═══ -->
+<section>
+<div class="s-tag fade-in">04 &mdash; Tier 3: Physical Inspection</div>
+<h2 class="s-title fade-in">Human verification layer</h2>
+<p class="s-desc fade-in">The third tier is the hardest to fake. Accredited inspectors physically visit the biological asset, collect evidence, and submit GPS-stamped, timestamped documentation. This tier resolves disputes between Tier 1 and Tier 2 and provides the highest confidence attestation.</p>
+
+<div class="arch-stack fade-in">
+<div class="arch-row">
+<div class="arch-label">INSPECTOR PROTOCOL</div>
+<div>
+<h3>Standardized Field Verification</h3>
+<ul>
+<li><strong>Accreditation</strong> &mdash; inspectors must hold a valid BCCS Inspection Credential (soulbound, revocable). Training and certification through KRYONIS Lab MSV Certification program.</li>
+<li><strong>Assignment</strong> &mdash; verification requests are assigned pseudonymously &mdash; inspectors do not know which node operator requested the inspection, preventing collusion.</li>
+<li><strong>Evidence capture</strong> &mdash; geotagged photographs (EXIF verified), video documentation, soil/water/tissue sampling where applicable, field measurement data.</li>
+<li><strong>GPS trajectory</strong> &mdash; continuous GPS logging during site visit. Track must demonstrate physical presence within BAIN ID boundary polygon.</li>
+<li><strong>Timestamp authority</strong> &mdash; all evidence timestamped via RFC 3161 trusted timestamping service.</li>
+<li><strong>Submission</strong> &mdash; evidence package uploaded to BCCS within 48 hours. Package includes: inspection report (structured form), evidence files, GPS track, inspector credential ID.</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">ANTI-FRAUD</div>
+<div>
+<h3>Inspection Integrity Mechanisms</h3>
+<ul>
+<li><strong>Random audit</strong> &mdash; 10% of inspections are re-inspected by a second independent inspector within 14 days</li>
+<li><strong>Cross-reference</strong> &mdash; Tier 3 evidence is automatically cross-validated against concurrent Tier 1 and Tier 2 data. Discrepancies trigger dispute resolution.</li>
+<li><strong>Stake at risk</strong> &mdash; inspectors stake $BCCS against their attestations. False or negligent reports result in slashing.</li>
+<li><strong>Reputation scoring</strong> &mdash; cumulative accuracy score affects future assignment priority and earning potential.</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">OUTPUT</div>
+<div>
+<h3>Tier 3 Attestation Object</h3>
+<p>Inspector evidence produces the highest-weight attestation: BAIN ID reference, inspection date/time (UTC), inspector credential ID (anonymized in public record), GPS boundary confirmation, evidence file hashes, field measurements, condition assessment (structured rubric), confidence score, and inspector stake amount.</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 5: ORACLE CONSENSUS ═══ -->
+<section>
+<div class="s-tag fade-in">05 &mdash; Oracle Consensus Engine</div>
+<h2 class="s-title fade-in">Proof-of-Physical-State <em>(PoPS)</em></h2>
+<p class="s-desc fade-in">The consensus engine receives attestation objects from all three tiers, evaluates agreement, computes a composite confidence score, and determines whether a BAIN ID state transition is warranted. This is the core of the protocol.</p>
+
+<div class="arch-stack fade-in">
+<div class="arch-row">
+<div class="arch-label">CONSENSUS RULE</div>
+<div>
+<h3>2-of-3 Multi-Source Agreement</h3>
+<p>A BAIN ID state transition requires attestation agreement from at least two of three tiers. No single data source &mdash; regardless of confidence &mdash; can unilaterally change biological state on-chain. This is the fundamental security property of PoPS.</p>
+<ul>
+<li><strong>Tier 1 + Tier 2 agree</strong> &mdash; state transition proceeds. Tier 3 inspection scheduled for confirmation within 90 days.</li>
+<li><strong>Tier 1 + Tier 3 agree</strong> &mdash; state transition proceeds. Tier 2 sensor calibration review triggered.</li>
+<li><strong>Tier 2 + Tier 3 agree</strong> &mdash; state transition proceeds. Tier 1 observation anomaly flagged for review.</li>
+<li><strong>All three disagree</strong> &mdash; state remains unchanged. Dispute resolution protocol initiated. All three tiers re-assessed within 30 days.</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">CONFIDENCE SCORING</div>
+<div>
+<h3>Composite Confidence Calculation</h3>
+<p>Each tier attestation carries a confidence score (0.0&ndash;1.0). The Oracle Engine computes a weighted composite:</p>
+<p><code>C = (w1 &times; T1) + (w2 &times; T2) + (w3 &times; T3)</code></p>
+<p>Default weights: <code>w1=0.30</code> (satellite), <code>w2=0.30</code> (IoT), <code>w3=0.40</code> (inspection). Weights are adjustable per asset class &mdash; permafrost assets may weight Tier 2 (subsurface temperature) higher; forest assets may weight Tier 1 (canopy spectral analysis) higher.</p>
+<p>State transition requires <code>C &ge; 0.70</code>. Scores below threshold are flagged for additional evidence collection.</p>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">SLASHING</div>
+<div>
+<h3>Economic Security via Penalty</h3>
+<p>Node operators and inspectors who submit attestations that are later contradicted by multi-tier consensus face economic penalties:</p>
+<ul>
+<li><strong>Minor deviation</strong> (within tolerance) &mdash; warning, reputation score reduction</li>
+<li><strong>Major deviation</strong> (outside tolerance, single instance) &mdash; 10% stake slash, 30-day probation</li>
+<li><strong>Fraudulent submission</strong> (proven intent) &mdash; 100% stake slash, permanent credential revocation, slashed tokens burned</li>
+</ul>
+<p>Slashed tokens are permanently burned &mdash; reducing total circulating supply. This creates a direct economic link between network integrity and token scarcity.</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 6: SOFTWARE STACK ═══ -->
+<section>
+<div class="s-tag fade-in">06 &mdash; Software Architecture</div>
+<h2 class="s-title fade-in">The engineering stack</h2>
+<p class="s-desc fade-in">Every component of the BCCS verification network is built on open, auditable, and composable infrastructure.</p>
+
+<div class="spec-grid fade-in">
+<div class="spec-card">
+<div class="spec-card-label">Smart Contracts</div>
+<h3>On-Chain Layer</h3>
+<div class="spec-item"><span class="spec-key">Language</span><span class="spec-val">Solidity 0.8.x</span></div>
+<div class="spec-item"><span class="spec-key">Framework</span><span class="spec-val">OpenZeppelin</span></div>
+<div class="spec-item"><span class="spec-key">Chain</span><span class="spec-val">Base L2 (OP Stack)</span></div>
+<div class="spec-item"><span class="spec-key">Token</span><span class="spec-val">ERC-20 ($BCCS)</span></div>
+<div class="spec-item"><span class="spec-key">License NFT</span><span class="spec-val">ERC-721 + EIP-5192</span></div>
+<div class="spec-item"><span class="spec-key">BAIN Registry</span><span class="spec-val">Custom contract</span></div>
+<div class="spec-item"><span class="spec-key">Governance</span><span class="spec-val">Safe Multisig → DAO</span></div>
+<div class="spec-item"><span class="spec-key">Verification</span><span class="spec-val">BaseScan source verified</span></div>
+</div>
+<div class="spec-card">
+<div class="spec-card-label">Backend Services</div>
+<h3>Oracle &amp; API Layer</h3>
+<div class="spec-item"><span class="spec-key">Runtime</span><span class="spec-val">Rust / Node.js</span></div>
+<div class="spec-item"><span class="spec-key">API Framework</span><span class="spec-val">Axum (Rust) / Express</span></div>
+<div class="spec-item"><span class="spec-key">Database</span><span class="spec-val">PostgreSQL + TimescaleDB</span></div>
+<div class="spec-item"><span class="spec-key">Cache</span><span class="spec-val">Redis</span></div>
+<div class="spec-item"><span class="spec-key">Queue</span><span class="spec-val">NATS / RabbitMQ</span></div>
+<div class="spec-item"><span class="spec-key">Geospatial</span><span class="spec-val">PostGIS</span></div>
+<div class="spec-item"><span class="spec-key">Satellite Data</span><span class="spec-val">STAC API + GEE</span></div>
+<div class="spec-item"><span class="spec-key">Infrastructure</span><span class="spec-val">Docker / Kubernetes</span></div>
+</div>
+<div class="spec-card">
+<div class="spec-card-label">Sensor Network</div>
+<h3>Edge &amp; IoT Layer</h3>
+<div class="spec-item"><span class="spec-key">Edge OS</span><span class="spec-val">Linux (Yocto / Buildroot)</span></div>
+<div class="spec-item"><span class="spec-key">Firmware</span><span class="spec-val">Rust / C (embedded)</span></div>
+<div class="spec-item"><span class="spec-key">Protocol</span><span class="spec-val">MQTT over TLS</span></div>
+<div class="spec-item"><span class="spec-key">Connectivity</span><span class="spec-val">LoRaWAN / 4G / Sat</span></div>
+<div class="spec-item"><span class="spec-key">Crypto</span><span class="spec-val">Ed25519 + AES-256-GCM</span></div>
+<div class="spec-item"><span class="spec-key">HSM</span><span class="spec-val">ATECC608B</span></div>
+<div class="spec-item"><span class="spec-key">Time Sync</span><span class="spec-val">NTP over satellite</span></div>
+<div class="spec-item"><span class="spec-key">Power</span><span class="spec-val">Solar + LiFePO4</span></div>
+</div>
+</div>
+
+<div class="term-window fade-in">
+<div class="term-header">
+<div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+<span class="term-title">bccs-api &mdash; verification attestation schema</span>
+</div>
+<div class="term-body">
+<div class="comment"># BAIN ID state transition attestation — on-chain record</div>
+<br>
+<div>{</div>
+<div>&nbsp;&nbsp;<span class="key">"bain_id"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"RUS-PF-8a4c2e1d7b3f-B2D9"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"asset_class"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Permafrost"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"region"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"RUS"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"previous_state"</span>:&nbsp;&nbsp;<span class="val">"Verified-Stable"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"new_state"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Verified-Degrading"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"composite_score"</span>:&nbsp;<span class="val">0.87</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"tier_1"</span>: {</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"source"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Sentinel-2B"</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"index"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"NDVI anomaly -0.12"</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"confidence"</span>:&nbsp;&nbsp;&nbsp;<span class="val">0.82</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"deviation"</span>:&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">true</span></div>
+<div>&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;<span class="key">"tier_2"</span>: {</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"sensors"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">12</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"temp_2m"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"-1.2°C (baseline: -3.8°C)"</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"ch4_flux"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"elevated +340%"</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"confidence"</span>:&nbsp;&nbsp;&nbsp;<span class="val">0.91</span>,</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"deviation"</span>:&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">true</span></div>
+<div>&nbsp;&nbsp;},</div>
+<div>&nbsp;&nbsp;<span class="key">"tier_3"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Pending — scheduled within 90 days"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"consensus"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"2-of-3 confirmed (T1+T2)"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"tx_hash"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"0x7a3f...9c12"</span>,</div>
+<div>&nbsp;&nbsp;<span class="key">"block"</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="val">28441067</span></div>
+<div>}</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 7: API ═══ -->
+<section>
+<div class="s-tag fade-in">07 &mdash; API Specification</div>
+<h2 class="s-title fade-in">Machine-readable <em>biological state</em></h2>
+<p class="s-desc fade-in">Every BAIN ID is queryable via REST and WebSocket interfaces. AI agents, smart contracts, institutional dashboards, and regulatory systems consume verified biological state through a unified API.</p>
+
+<div class="arch-stack fade-in">
+<div class="arch-row">
+<div class="arch-label">REST API</div>
+<div>
+<h3>Core Endpoints</h3>
+<ul>
+<li><code>GET /v1/bain/{id}/state</code> &mdash; current verified state of a BAIN ID</li>
+<li><code>GET /v1/bain/{id}/history</code> &mdash; full state transition history with attestations</li>
+<li><code>GET /v1/bain/{id}/attestations</code> &mdash; all tier attestations for a BAIN ID</li>
+<li><code>POST /v1/bain/{id}/verify</code> &mdash; submit new attestation (node operators only)</li>
+<li><code>GET /v1/bain/search</code> &mdash; query by region, asset class, state, confidence threshold</li>
+<li><code>GET /v1/stats/network</code> &mdash; active nodes, total BAIN IDs, verification volume</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">WEBSOCKET</div>
+<div>
+<h3>Real-Time State Events</h3>
+<p><code>ws://api.bccs.bio/v1/stream</code></p>
+<p>Subscribe to real-time state transition events. Filter by region, asset class, or specific BAIN IDs. Used by AI agents monitoring portfolio exposure, insurance parametric triggers, and regulatory compliance dashboards.</p>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">AUTHENTICATION</div>
+<div>
+<h3>API Access Control</h3>
+<p>Public read access for basic state queries (rate-limited). Authenticated access via API key for institutional consumers. Node operators authenticate via wallet signature (EIP-4361 / Sign-In with Ethereum). All queries priced in $BCCS — creating protocol-native demand proportional to verification consumption.</p>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 8: FOUNDING ORACLE DEPLOYMENT ═══ -->
+<section>
+<div class="s-tag fade-in">08 &mdash; Founding Oracle Pilot</div>
+<h2 class="s-title fade-in">Sovereign-scale deployment blueprint</h2>
+<p class="s-desc fade-in">The Founding Oracle is the first sovereign-scale deployment of BCCS verification infrastructure. A national government or institutional partner deploys PoPS against a defined biological asset class — producing the protocol's first verified case study.</p>
+
+<div class="phase-list fade-in">
+<div class="phase-item">
+<div class="phase-tag">MONTH 1&ndash;2 — SCOPING &amp; LEGAL</div>
+<h3>Asset selection and framework agreement</h3>
+<p>Define target biological asset class (e.g. permafrost zone, national forest reserve, marine protected area). Execute cooperation agreement between sovereign entity and KRYONIS. Establish BAIN ID taxonomy for selected asset class. Define verification parameters and success criteria.</p>
+</div>
+<div class="phase-item">
+<div class="phase-tag">MONTH 2&ndash;4 — INFRASTRUCTURE DEPLOYMENT</div>
+<h3>Sensor network and satellite pipeline</h3>
+<p>Deploy IoT sensor stations across pilot area. Configure Sentinel-2 and Landsat observation windows. Establish Planet Labs commercial tasking for high-resolution verification. Connect sensor network to BCCS ingestion layer. Register pilot area BAIN IDs on Base.</p>
+</div>
+<div class="phase-item">
+<div class="phase-tag">MONTH 4&ndash;6 — CALIBRATION &amp; BASELINE</div>
+<h3>Data collection and system calibration</h3>
+<p>Collect 60&ndash;90 days of continuous multi-tier data. Establish baseline state for each BAIN ID. Calibrate confidence scoring weights for asset class. Train and accredit local Tier 3 inspectors. Validate PoPS consensus against known ground truth.</p>
+</div>
+<div class="phase-item">
+<div class="phase-tag">MONTH 6&ndash;8 — LIVE VERIFICATION</div>
+<h3>Operational PoPS verification</h3>
+<p>Activate live verification cycle. First on-chain state transitions recorded. API serving verified biological state. Dashboard operational for sovereign partner. Node operators earning $BCCS for verification work.</p>
+</div>
+<div class="phase-item">
+<div class="phase-tag">MONTH 8&ndash;12 — CASE STUDY &amp; SCALING</div>
+<h3>Publication and expansion planning</h3>
+<p>Produce published case study with sovereign partner co-authorship. Present results at international forums. Define expansion roadmap — additional asset classes, additional regions. Establish pathway to permanent national verification infrastructure.</p>
+</div>
+</div>
+
+<div class="alert-box fade-in">
+<h3>The Founding Oracle produces three things simultaneously</h3>
+<p><strong>1. Scientific credibility</strong> — a published, peer-reviewable case study proving PoPS verification works at sovereign scale.<br>
+<strong>2. Institutional reference</strong> — a named sovereign partner whose participation de-risks the protocol for subsequent adopters.<br>
+<strong>3. Live infrastructure</strong> — a permanent, operational verification network that continues generating verified biological state data beyond the pilot period.</p>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ SECTION 9: SECURITY ═══ -->
+<section>
+<div class="s-tag fade-in">09 &mdash; Security Architecture</div>
+<h2 class="s-title fade-in">Trust assumptions and attack surfaces</h2>
+<p class="s-desc fade-in">BCCS is designed under the assumption that any individual data source, sensor, inspector, or node operator may be compromised. The protocol's security derives from multi-source consensus, economic penalties, and cryptographic verification — not from trusting any single actor.</p>
+
+<div class="arch-stack fade-in">
+<div class="arch-row">
+<div class="arch-label">THREAT MODEL</div>
+<div>
+<h3>Addressed Attack Vectors</h3>
+<ul>
+<li><strong>Satellite spoofing</strong> &mdash; mitigated by Tier 2/3 cross-validation. Fabricating satellite imagery that also matches ground sensor data and physical inspection is economically infeasible.</li>
+<li><strong>Sensor tampering</strong> &mdash; mitigated by tamper-evident hardware, HSM-signed data, and cross-validation with Tier 1/3. Replacing a sensor requires physical access and produces detectable signature discontinuity.</li>
+<li><strong>Inspector collusion</strong> &mdash; mitigated by pseudonymous assignment, random re-inspection, stake-at-risk, and cross-tier validation. Colluding with a sensor operator AND a satellite provider simultaneously is not practically achievable.</li>
+<li><strong>Node operator manipulation</strong> &mdash; mitigated by PoPS consensus rules (no single operator can force state transition), slashing for false attestations, and soulbound identity (operators cannot hide behind disposable accounts).</li>
+<li><strong>AI-generated fake evidence</strong> &mdash; mitigated by multi-source requirement. AI can generate convincing satellite imagery OR sensor data OR inspection photos — but generating all three in mutual agreement requires compromising physically separate, cryptographically independent systems.</li>
+</ul>
+</div>
+</div>
+<div class="arch-row">
+<div class="arch-label">SMART CONTRACT</div>
+<div>
+<h3>On-Chain Security</h3>
+<p>All contracts built on audited OpenZeppelin libraries. Ownership held by Safe multisig (multi-signature wallet requiring multiple authorized signers). Pausable in emergency. Internal security review completed April 15, 2026 — no critical or high severity issues found. <a href="audit.html" style="color:var(--green);">Full report &rarr;</a></p>
+</div>
+</div>
+</div>
+</section>
+
+<hr class="s-divider">
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="position:relative;z-index:1;border-top:1px solid var(--border);padding:3rem 2rem;">
+<div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;">
+<div style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--text-mut);">
+<a href="https://kryonislab.org" style="color:var(--text-dim);text-decoration:none;">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>&copy; 2026
+</div>
+<div style="display:flex;gap:1.5rem;">
+<a href="https://kryonislab.org" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--text-mut);text-decoration:none;">KRYONIS Lab</a>
+<a href="index.html" style="font-size:0.8rem;color:var(--text-mut);text-decoration:none;">BCCS Protocol</a>
+<a href="index.html#docs" style="font-size:0.8rem;color:var(--text-mut);text-decoration:none;">Documentation</a>
+</div>
+</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
