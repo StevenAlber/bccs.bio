@@ -147,7 +147,7 @@
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
   @media (max-width: 768px) {
-    nav { padding: 0.8rem 1.2rem; } .nav-links { gap: 1rem; } .nav-links a:not(.nav-badge):not(.nav-mint) { display: none; }
+    nav { padding: 0.8rem 1.2rem; } .nav-links { gap: 1rem; } .nav-links { display: none; } .nav-hamburger { display: block; }
     .hero { padding: 4rem 1.5rem 3rem; } .stats-inner { grid-template-columns: repeat(2, 1fr); }
     section, .apply-section { padding: 4rem 1.5rem; } .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
     .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; } .tier-row.tier-header { display: none; } .tier-desc { grid-column: span 2; }
@@ -191,6 +191,17 @@
     .s00-what-grid { grid-template-columns: 1fr; } .s00-cta-box { flex-direction: column; text-align: center; }
     .s00-cta-buttons { flex-direction: column; width: 100%; } .s00-btn-primary, .s00-btn-secondary { justify-content: center; width: 100%; }
   }
+
+  /* ── MOBILE MENU ── */
+  .nav-hamburger { display: none; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 8px; }
+  .nav-hamburger svg { display: block; }
+  .mob-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 12, 11, 0.97); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .mob-menu.open { display: flex; }
+  .mob-menu a { font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); text-decoration: none; transition: color 0.2s; }
+  .mob-menu a:hover { color: var(--text); }
+  .mob-menu .mob-mint { display: inline-flex; padding: 0.7rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; border-radius: 5px; margin-top: 1rem; }
+  .mob-x { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 24px; font-family: 'DM Mono', monospace; }
+
 </style>
 </head>
 <body>
@@ -209,7 +220,21 @@
     <a href="mint.html" class="nav-mint">Buy License</a>
     <span class="nav-badge">BASE L2</span>
   </div>
+  <button class="nav-hamburger" onclick="document.getElementById('mob-menu').classList.add('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button>
 </nav>
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-x" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="#why" onclick="this.parentElement.classList.remove('open')">Why BCCS</a>
+  <a href="#protocol" onclick="this.parentElement.classList.remove('open')">Protocol</a>
+  <a href="#access" onclick="this.parentElement.classList.remove('open')">Access</a>
+  <a href="#contracts" onclick="this.parentElement.classList.remove('open')">Contracts</a>
+  <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
+  <a href="audit.html" onclick="this.parentElement.classList.remove('open')">Audit</a>
+  <a href="#docs" onclick="this.parentElement.classList.remove('open')">Docs</a>
+  <a href="#apply" onclick="this.parentElement.classList.remove('open')">Apply</a>
+  <a href="mint.html" class="mob-mint" onclick="this.parentElement.classList.remove('open')">Buy License</a>
+</div>
+
 
 <section id="why" class="s00">
   <div class="s00-inner">
