@@ -36,7 +36,7 @@
   .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%); }
   nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
   .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
   .nav-right { display: flex; gap: 1rem; align-items: center; }
   .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
@@ -223,6 +223,7 @@
     <a href="#protocol">Protocol</a>
     <a href="#access">Access</a>
     <a href="not-carbon.html">Not Carbon</a>
+    <a href="activation-sequence.html">Sequence</a>
     <a href="#contracts">Contracts</a>
     <a href="implementation.html">Implementation</a>
     <a href="audit.html">Audit</a>
@@ -241,6 +242,7 @@
   <a href="#protocol" onclick="this.parentElement.classList.remove('open')">Protocol</a>
   <a href="#access" onclick="this.parentElement.classList.remove('open')">Access</a>
   <a href="not-carbon.html" onclick="this.parentElement.classList.remove('open')">Not Carbon</a>
+  <a href="activation-sequence.html" onclick="this.parentElement.classList.remove('open')">Sequence</a>
   <a href="#contracts" onclick="this.parentElement.classList.remove('open')">Contracts</a>
   <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
   <a href="audit.html" onclick="this.parentElement.classList.remove('open')">Audit</a>
@@ -382,7 +384,7 @@
 <section id="roadmap">
   <div class="section-tag fade-in">04 &mdash; Protocol Phases</div>
   <h2 class="section-title fade-in">Phase-gated development</h2>
-  <p class="section-desc fade-in">Each phase transitions when measurable criteria are met. No phase is triggered by time alone.</p>
+  <p class="section-desc fade-in">Each phase transitions when measurable criteria are met. No phase is triggered by time alone. <a href="activation-sequence.html" style="color:var(--green);">Full activation framework &rarr;</a></p>
   <div class="roadmap-list fade-in">
     <div class="roadmap-item completed"><div class="roadmap-phase">PHASE 0 &mdash; FOUNDATION</div><h3>Development environment and legal preparation</h3><p>Testnet deployment, legal document drafting, multisig setup, language control finalization, landing page, waitlist form.</p></div>
     <div class="roadmap-item completed"><div class="roadmap-phase">PHASE 1 &mdash; MAINNET DEPLOY</div><h3>Contracts deployed and verified on BaseScan</h3><p>ERC-20 and ERC-721 contracts deployed to Base mainnet. Source verified. Treasury mint to Safe multisig. Completed April 15, 2026.</p></div>
@@ -418,6 +420,7 @@
   <div class="docs-grid fade-in">
     <a href="BCCS_Whitepaper_v1.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v1.0</div><h3>Whitepaper</h3><p>Complete protocol specification, tokenomics, oracle design, and governance model. 15 sections.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_Executive_Brief_v3.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v3</div><h3>Executive Brief</h3><p>Strategic overview for institutional partners and infrastructure operators.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
+    <a href="activation-sequence.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Activation Sequence</h3><p>Public framework governing phase activation. Conditions, not dates. The operating discipline of the economic layer.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
     <a href="BCCS_Tokenomics_Litepaper_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>Tokenomics Litepaper</h3><p>Verification unit economy, infrastructure access, and protocol mechanics.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_BAIN_ID_Specification_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>BAIN ID Specification</h3><p>21-character identifier format, 8-state lifecycle, asset taxonomy, API schema.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_PoPS_Methodology_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>PoPS Methodology</h3><p>Three-tier verification, confidence scoring, slashing, and dispute resolution.</p><span class="doc-meta">PDF &middot; April 2026</span></a>

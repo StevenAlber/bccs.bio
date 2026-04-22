@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activation Sequence — BCCS</title>
+<meta name="description" content="The BCCS protocol activates in phases, each gated by measurable conditions. This page publishes the framework.">
+<meta property="og:title" content="BCCS Activation Sequence — Conditions, Not Dates">
+<meta property="og:description" content="Each phase of the BCCS economic layer activates when defined conditions are met. The framework is public. The discipline is binding.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bccs.bio/activation-sequence.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0C0B;
+    --bg-elevated: #111413;
+    --bg-card: #161A18;
+    --border: #1E2422;
+    --border-accent: #2A3A30;
+    --text: #E8EBE9;
+    --text-dim: #7A8580;
+    --text-muted: #4A5550;
+    --green: #3ECF8E;
+    --green-dim: #1B4D3E;
+    --green-glow: rgba(62, 207, 142, 0.12);
+    --bronze: #C4982A;
+    --red: #EF4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%); }
+
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-right { display: flex; gap: 1rem; align-items: center; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--green); }
+  .nav-badge { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.35rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 4px; color: var(--green); background: var(--green-glow); letter-spacing: 0.05em; }
+  .nav-mint { display: inline-flex; align-items: center; padding: 0.45rem 1rem; background: var(--green); color: #0A0C0B !important; font-weight: 700 !important; font-size: 0.8rem !important; border-radius: 5px; letter-spacing: 0.03em; transition: all 0.25s; }
+  .nav-mint:hover { background: #4FE09F; box-shadow: 0 0 20px rgba(62, 207, 142, 0.25); }
+  .nav-hamburger { display: none; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 8px; }
+  .nav-hamburger svg { display: block; }
+  .mob-menu { display: none; position: fixed; inset: 0; background: rgba(10, 12, 11, 0.97); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+  .mob-menu.open { display: flex; }
+  .mob-menu a { font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); text-decoration: none; transition: color 0.2s; }
+  .mob-menu a:hover { color: var(--text); }
+  .mob-x { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 24px; font-family: 'DM Mono', monospace; }
+
+  /* Hero */
+  .hero { position: relative; z-index: 1; padding: 9rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
+  .hero h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 1.5rem; max-width: 900px; }
+  .hero h1 em { font-style: italic; color: var(--green); }
+  .hero-sub { font-size: 1.1rem; color: var(--text-dim); max-width: 680px; line-height: 1.75; margin-bottom: 2rem; }
+
+  /* Principle card */
+  .principle-card { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto 5rem; padding: 0 2rem; }
+  .principle-inner { background: var(--bg-card); border: 1px solid var(--border-accent); border-left: 3px solid var(--green); border-radius: 8px; padding: 2rem 2.5rem; }
+  .principle-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .principle-text { font-family: 'Instrument Serif', serif; font-size: 1.3rem; font-style: italic; line-height: 1.5; color: var(--text); }
+
+  /* Sections */
+  section { position: relative; z-index: 1; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+  .section-title { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 400; line-height: 1.2; margin-bottom: 1.5rem; max-width: 28ch; }
+  .section-title em { font-style: italic; color: var(--green); }
+  .section-desc { color: var(--text-dim); font-size: 1rem; max-width: 68ch; line-height: 1.75; margin-bottom: 2.5rem; }
+  .section-desc + .section-desc { margin-top: -1.2rem; }
+  .section-divider { width: 100%; border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* Phase card */
+  .phases { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+  .phase { background: var(--bg-card); padding: 2.2rem 2rem; display: grid; grid-template-columns: 180px 1fr; gap: 2rem; align-items: start; transition: background 0.25s; }
+  .phase:hover { background: var(--bg-elevated); }
+  .phase-head { display: flex; flex-direction: column; gap: 0.6rem; }
+  .phase-num { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.15em; text-transform: uppercase; }
+  .phase-status { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .phase-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; }
+  .phase-status.active { color: var(--green); }
+  .phase-status.active::before { background: var(--green); box-shadow: 0 0 8px rgba(62,207,142,0.6); animation: pulse 2s ease-in-out infinite; }
+  .phase-status.pending { color: var(--bronze); }
+  .phase-status.pending::before { background: var(--bronze); }
+  .phase-status.future { color: var(--text-muted); }
+  .phase-status.future::before { background: var(--text-muted); }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .phase-body h3 { font-family: 'Instrument Serif', serif; font-size: 1.35rem; font-weight: 400; color: var(--text); margin-bottom: 0.6rem; line-height: 1.3; }
+  .phase-body h3 em { font-style: italic; color: var(--green); }
+  .phase-body > p { color: var(--text-dim); font-size: 0.93rem; line-height: 1.7; margin-bottom: 1.2rem; }
+  .conditions-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .conditions-rule { font-size: 0.85rem; color: var(--bronze); margin-bottom: 1rem; font-style: italic; }
+  .conditions { display: flex; flex-direction: column; gap: 0.7rem; }
+  .condition { display: grid; grid-template-columns: 50px 1fr; gap: 0.8rem; padding: 0.7rem 0.9rem; background: rgba(0,0,0,0.2); border-left: 2px solid var(--border-accent); border-radius: 0 4px 4px 0; }
+  .condition-code { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); font-weight: 500; }
+  .condition-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.55; }
+  .phase-auth { margin-top: 1.2rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  .phase-auth span { color: var(--text-dim); }
+
+  /* Rules grid */
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .rule { background: var(--bg-card); padding: 1.8rem 1.6rem; }
+  .rule-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.15em; margin-bottom: 0.6rem; }
+  .rule-title { font-family: 'Instrument Serif', serif; font-size: 1.1rem; font-style: italic; color: var(--text); margin-bottom: 0.6rem; line-height: 1.3; }
+  .rule-body { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
+
+  /* Transparency note */
+  .transparency { position: relative; z-index: 1; max-width: 1100px; margin: 3rem auto 4rem; padding: 0 2rem; }
+  .transparency-inner { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem 2.5rem; }
+  .transparency-inner h4 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; font-style: italic; color: var(--text); margin-bottom: 0.8rem; }
+  .transparency-inner p { color: var(--text-dim); font-size: 0.92rem; line-height: 1.75; }
+
+  /* Footer */
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; margin-top: 4rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; } .footer-brand a:hover { color: var(--text); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; } .footer-links a:hover { color: var(--text-dim); }
+  .footer-disclaimer { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; }
+  .footer-disclaimer p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.7; }
+
+  @media (max-width: 820px) {
+    nav { padding: 0.8rem 1.2rem; } .nav-links { display: none !important; } .nav-badge { display: none !important; } .nav-hamburger { display: block; }
+    .hero { padding: 7rem 1.5rem 3rem; } .principle-card, .transparency { padding: 0 1.5rem; } .principle-inner, .transparency-inner { padding: 1.6rem 1.4rem; }
+    section { padding: 3rem 1.5rem; }
+    .phase { grid-template-columns: 1fr; gap: 1rem; padding: 1.8rem 1.4rem; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">BCCS</a>
+  <div class="nav-links">
+    <a href="index.html#why">Why BCCS</a>
+    <a href="index.html#protocol">Protocol</a>
+    <a href="index.html#access">Access</a>
+    <a href="not-carbon.html">Not Carbon</a>
+    <a href="activation-sequence.html" class="active">Sequence</a>
+    <a href="index.html#contracts">Contracts</a>
+    <a href="audit.html">Audit</a>
+    <a href="bioclearing.html">BioClearing</a>
+  </div>
+  <div class="nav-right">
+    <a href="mint.html" class="nav-mint">Buy License</a>
+    <span class="nav-badge">BASE L2</span>
+    <button class="nav-hamburger" onclick="document.getElementById('mob-menu').classList.add('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-x" onclick="this.parentElement.classList.remove('open')">&times;</button>
+  <a href="index.html#why">Why BCCS</a>
+  <a href="index.html#protocol">Protocol</a>
+  <a href="index.html#access">Access</a>
+  <a href="not-carbon.html">Not Carbon</a>
+  <a href="activation-sequence.html">Sequence</a>
+  <a href="index.html#contracts">Contracts</a>
+  <a href="audit.html">Audit</a>
+  <a href="bioclearing.html">BioClearing</a>
+  <a href="mint.html">Buy License</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-tag"><span>Activation Sequence</span> Public Framework v1.0</div>
+  <h1>Conditions, <em>not dates</em></h1>
+  <p class="hero-sub">Each phase of the BCCS economic layer activates when measurable conditions are documented as met. Not before. Not because a market window opens. Not because a calendar page turns. This page publishes the framework that governs every phase transition.</p>
+</section>
+
+<!-- Principle -->
+<div class="principle-card">
+  <div class="principle-inner">
+    <div class="principle-label">Core Principle</div>
+    <p class="principle-text">The protocol does not run on a calendar. It runs on conditions. Conditions are published. Conditions are measurable. Conditions are verifiable. When they are met, the next phase activates. Until they are met, it does not — regardless of market sentiment, external pressure, or internal impatience.</p>
+  </div>
+</div>
+
+<!-- Why this matters -->
+<section>
+  <div class="section-tag">01 — Why This Document Exists</div>
+  <h2 class="section-title">Infrastructure protocols do not launch — <em>they activate in stages</em></h2>
+  <p class="section-desc">The most common failure mode of token-economy projects is compressed timelines under external pressure, followed by credibility collapse when pre-announced milestones are missed or hollowed out. Dates create promises the protocol cannot keep; conditions create a discipline the protocol can honour.</p>
+  <p class="section-desc">BCCS follows the precedent set by long-horizon oracle and indexing protocols — where network activation proceeded phase by phase, each transition gated by demonstrable reality rather than by announcement. The comparables are infrastructure layers built for decades, not products launched for quarters.</p>
+  <p class="section-desc">This page is the public-facing version of the internal doctrinal framework that governs every economic decision in the protocol. It is published openly so that partners, counterparties, regulators, node operators, and interested observers can verify for themselves that no phase has activated prematurely, and no phase has been delayed for reasons other than those documented here.</p>
+</section>
+
+<hr class="section-divider">
+
+<!-- Phases -->
+<section>
+  <div class="section-tag">02 — The Four Phases</div>
+  <h2 class="section-title">Four phases, each <em>condition-gated</em></h2>
+  <p class="section-desc">Each phase corresponds to a distinct stage of economic-layer operation. Phase transitions are deliberate and formalised. Each activation is published as a Phase Activation Memo, signed and dated.</p>
+
+  <div class="phases">
+
+    <!-- Phase 0 -->
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Phase 0</div>
+        <div class="phase-status active">Active</div>
+      </div>
+      <div class="phase-body">
+        <h3>Foundation</h3>
+        <p>The protocol is deployed. Smart contracts are live on Base Layer 2. Node License sales fund operations. The economic layer has not yet activated — no $BCCS is in circulation, no price exists, no public market has opened.</p>
+        <p>During this phase, capital flows from Node License sales (USDC, one-time, tiered). No token allocations occur. No markets form. The discipline is to build, to document, and to prepare Phase 1 conditions without shortcuts.</p>
+        <div class="phase-auth"><span>Status:</span> Currently in effect.</div>
+      </div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Phase 1</div>
+        <div class="phase-status pending">Pending Conditions</div>
+      </div>
+      <div class="phase-body">
+        <h3>Founding Oracle <em>activation</em></h3>
+        <p>The first movement of $BCCS out of treasury. Not via a public market — through direct, partnership-based allocation to signed Founding Oracle partners. These are sovereign-grade entities that will use the protocol for verification of territorial biological assets. Allocations are tied to verification service rates, not to market speculation.</p>
+        <p>Founding Oracle allocations are subject to contractual lockup periods. Tokens acquired in Phase 1 may be consumed for verification queries but may not be resold on any market during the lockup.</p>
+
+        <div class="conditions-label">Activation Conditions</div>
+        <div class="conditions-rule">At least two of the following four must be documented as met.</div>
+        <div class="conditions">
+          <div class="condition"><div class="condition-code">T1.1</div><div class="condition-text">Node License cumulative sales cross a defined minimum threshold, demonstrating real infrastructure-operator commitment.</div></div>
+          <div class="condition"><div class="condition-code">T1.2</div><div class="condition-text">At least one signed Partnership Framework Agreement with a Tier-1 sovereign entity — national academy of sciences, ministry-level body, or sovereign-grade institution.</div></div>
+          <div class="condition"><div class="condition-code">T1.3</div><div class="condition-text">BAIN ID Registry API v1.0 is deployed and externally audited on mainnet, capable of processing real verification queries.</div></div>
+          <div class="condition"><div class="condition-code">T1.4</div><div class="condition-text">Utility-token classification opinion from qualified counsel in the primary jurisdiction (Hong Kong SAR) and at least one additional jurisdiction.</div></div>
+        </div>
+
+        <div class="phase-auth"><span>Decision authority:</span> KRYONIS Sovereign Systems Limited Board</div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Phase 2</div>
+        <div class="phase-status future">Future</div>
+      </div>
+      <div class="phase-body">
+        <h3>Controlled public <em>liquidity</em></h3>
+        <p>The first public market. A concentrated-liquidity pool opens on a decentralised exchange on Base L2, with liquidity depth centred on the Phase 1 verification rate. Concentration is intentional — buffering both against collapse and against speculative pump, until verification volume itself determines the price curve.</p>
+        <p>Phase 2 is not a retail launch. It is an operator-access layer: smaller institutions, AI-agent operators, and secondary-tier participants who require protocol access without qualifying for Founding Oracle status can acquire $BCCS for verification use.</p>
+
+        <div class="conditions-label">Activation Conditions</div>
+        <div class="conditions-rule">At least two of the following three must be documented as met.</div>
+        <div class="conditions">
+          <div class="condition"><div class="condition-code">T2.1</div><div class="condition-text">A defined minimum number of signed Partnership Framework Agreements — spanning at least two jurisdictions, proving the protocol is not a regional curiosity.</div></div>
+          <div class="condition"><div class="condition-code">T2.2</div><div class="condition-text">Cumulative Founding Oracle OTC allocations reach the minimum threshold required to validate the verification rate through real partnership commitments.</div></div>
+          <div class="condition"><div class="condition-code">T2.3</div><div class="condition-text">BAIN ID Registry operates online for at least 90 consecutive days without critical incident, with a defined minimum number of registered BAIN IDs.</div></div>
+        </div>
+
+        <div class="phase-auth"><span>Decision authority:</span> KRYONIS Board + Advisory Consultation with active Founding Oracle partners</div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Phase 3</div>
+        <div class="phase-status future">Future</div>
+      </div>
+      <div class="phase-body">
+        <h3>Network <em>activation</em></h3>
+        <p>The live verification network becomes operational. Node operators process real queries. Fees flow. $BCCS is earned from verification work, not from inflationary emission. This is the moment the economic layer becomes economically real — before Phase 3, the token is a claim on future capacity; after Phase 3, it is a live unit of account in operating infrastructure.</p>
+        <p>Fees generated from verification queries are distributed automatically at settlement: to the node operators performing the work, to the protocol treasury supporting long-term network operation, and to a deflationary sink that removes tokens from supply in proportion to use.</p>
+
+        <div class="conditions-label">Activation Conditions</div>
+        <div class="conditions-rule">At least two of the following three must be documented as met.</div>
+        <div class="conditions">
+          <div class="condition"><div class="condition-code">T3.1</div><div class="condition-text">A defined minimum number of active node operators processing real verification queries, providing meaningful network decentralisation.</div></div>
+          <div class="condition"><div class="condition-code">T3.2</div><div class="condition-text">Cumulative verification query volume crosses a defined minimum threshold post-Phase-2 — excluding test queries.</div></div>
+          <div class="condition"><div class="condition-code">T3.3</div><div class="condition-text">Node operators distributed across at least five jurisdictions — baseline resilience requirement for critical infrastructure.</div></div>
+        </div>
+
+        <div class="phase-auth"><span>Decision authority:</span> KRYONIS Board + full Advisory Council + independent technical security audit</div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-status future">Future</div>
+      </div>
+      <div class="phase-body">
+        <h3>Deep liquidity &amp; <em>institutional access</em></h3>
+        <p>Only after mature network operation: expanded liquidity, professional market-makers, Tier 2 and Tier 1 centralised-exchange listings, institutional custody integration. This is the phase where the protocol becomes accessible to sovereign wealth funds, regulated institutions, and corporate treasuries at scale.</p>
+        <p>Phase 4 activation is not a listing campaign. It is the recognition that the protocol has demonstrated enough operational maturity to meet the standards of Tier 1 exchanges and regulated custody providers on their own terms.</p>
+
+        <div class="conditions-label">Activation Conditions</div>
+        <div class="conditions-rule">All three of the following must be documented as met.</div>
+        <div class="conditions">
+          <div class="condition"><div class="condition-code">T4.1</div><div class="condition-text">Cumulative verification fee revenue crosses a defined threshold — demonstrating structural, not speculative, demand.</div></div>
+          <div class="condition"><div class="condition-code">T4.2</div><div class="condition-text">At least twelve months of stable Phase 3 operation without critical security incident.</div></div>
+          <div class="condition"><div class="condition-code">T4.3</div><div class="condition-text">Utility-token regulatory confirmation or no-action letters from at least three jurisdictions — not opinion letters, formal regulatory confirmations.</div></div>
+        </div>
+
+        <div class="phase-auth"><span>Decision authority:</span> KRYONIS Board + Advisory Council + formal legal opinion from partnership counsel</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Golden rules -->
+<section>
+  <div class="section-tag">03 — Operating Discipline</div>
+  <h2 class="section-title">Seven rules that <em>do not move</em></h2>
+  <p class="section-desc">These rules govern every economic-layer decision the protocol makes. They are written here so that partners, observers, and future board members can hold the protocol accountable to them.</p>
+
+  <div class="rules-grid">
+    <div class="rule">
+      <div class="rule-num">01</div>
+      <div class="rule-title">Price follows usage</div>
+      <div class="rule-body">Always. Never the other way around. The verification rate is derived from service cost, not from market sentiment. Price action that decouples from usage is a warning signal, not a success metric.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">02</div>
+      <div class="rule-title">Conditions, not dates</div>
+      <div class="rule-body">Every reference to the future is tied to a condition, not to a calendar. No phase activation date is announced in advance. No roadmap timelines are promised. When conditions are met, activation follows.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">03</div>
+      <div class="rule-title">Partner, not investor</div>
+      <div class="rule-body">Anyone acquiring $BCCS is a partner in building verification infrastructure. Investor is a category the protocol does not serve. The token is not offered as an investment product, a security, or a yield-bearing instrument.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">04</div>
+      <div class="rule-title">Infrastructure, not market</div>
+      <div class="rule-body">BCCS is a verification infrastructure. Words like market entry, market access, market timing, and market strategy belong to a different category. The protocol's success is measured by verification volume, not by trading volume.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">05</div>
+      <div class="rule-title">Jurisdictional neutrality</div>
+      <div class="rule-body">The protocol is apolitical technology. It serves governments, institutions, and commercial entities across jurisdictions. It does not take ideological positions on political questions. Its neutrality is a design feature, not a branding choice.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">06</div>
+      <div class="rule-title">Documented discipline</div>
+      <div class="rule-body">Every commitment the protocol makes is documented in writing and published somewhere verifiable. A statement that cannot be documented is not made. Verbal promises have no status; written conditions do.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">07</div>
+      <div class="rule-title">When in doubt, silence</div>
+      <div class="rule-body">The protocol declines to comment on matters that would breach doctrine — speculation on price, unconfirmed partnerships, pending regulatory outcomes, market sentiment. Silence preserves credibility. Improvisation erodes it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Transparency note -->
+<div class="transparency">
+  <div class="transparency-inner">
+    <h4>A note on transparency</h4>
+    <p>This page publishes the framework that governs BCCS phase activation. Specific numerical thresholds, allocation quantities, pricing parameters, and internal decision mechanics are not disclosed at this level — they are held in an internal doctrinal document maintained by KRYONIS Sovereign Systems Limited and reviewed by the board at each phase transition. The rationale is straightforward: publishing exact thresholds invites gaming of the thresholds; publishing the framework invites accountability to it. Partners under signed Framework Agreement receive access to the relevant internal parameters under confidentiality.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited — Hong Kong<br>&copy; 2026</div>
+    <div class="footer-links">
+      <a href="index.html">Protocol</a>
+      <a href="audit.html">Audit</a>
+      <a href="bioclearing.html">BioClearing</a>
+      <a href="https://kryonislab.org" target="_blank" rel="noopener noreferrer">KRYONIS Lab</a>
+    </div>
+  </div>
+  <div class="footer-disclaimer">
+    <p>BCCS is not an investment product. $BCCS is a protocol access unit, not a financial instrument. Node Licenses are non-transferable software permits granting operational rights within the BCCS verification network. This page describes the framework by which the protocol's economic layer activates in phases; it does not constitute an offer, solicitation, or guarantee of any financial outcome. KRYONIS Sovereign Systems Limited is incorporated in Hong Kong SAR.</p>
+  </div>
+</footer>
+
+</body>
+</html>
