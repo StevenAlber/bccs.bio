@@ -29,8 +29,8 @@
     --red: #EF4444;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; font-size: 16px; }
-  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; max-width: 100%; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
   .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%); }
 
@@ -39,7 +39,7 @@
   .nav-back { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
   .nav-back:hover { color: var(--text); }
 
-  .page-wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 7rem 2rem 5rem; }
+  .page-wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 7rem 2rem 6rem; }
 
   .page-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem; }
   .page-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
@@ -81,15 +81,15 @@
   .framework-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
   .framework-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
 
-  .callout { background: rgba(62, 207, 142, 0.06); border-left: 3px solid var(--green); padding: 1.3rem 1.6rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout { background: rgba(62, 207, 142, 0.06); border-left: 3px solid var(--green); padding: 1.3rem 1.6rem; border-radius: 0 8px 8px 0; margin: 2rem 0 2.5rem; }
   .callout p { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin: 0; }
   .callout p strong { color: var(--green); }
 
-  .warn-callout { background: rgba(196, 152, 42, 0.06); border-left: 3px solid var(--bronze); padding: 1.3rem 1.6rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warn-callout { background: rgba(196, 152, 42, 0.06); border-left: 3px solid var(--bronze); padding: 1.3rem 1.6rem; border-radius: 0 8px 8px 0; margin: 2rem 0 3rem; }
   .warn-callout p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; margin: 0; }
   .warn-callout p strong { color: var(--bronze); }
 
-  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 3.5rem; margin-bottom: 1.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
   .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; border-radius: 6px; text-decoration: none; transition: all 0.25s; }
   .btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
   .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: transparent; color: var(--text-dim); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; transition: all 0.25s; }
@@ -105,13 +105,15 @@
 
   @media (max-width: 768px) {
     nav { padding: 0.8rem 1.2rem; }
-    .page-wrap { padding: 6rem 1.5rem 3rem; }
+    .page-wrap { padding: 6rem 1.5rem 4rem; }
     .principle-row { grid-template-columns: 1fr; gap: 0.6rem; }
     .layer-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.2rem 0; }
     .layer-row.header { display: none; }
     .layer-loc { text-align: left; }
     .framework-grid { grid-template-columns: 1fr; }
     .footer-inner { flex-direction: column; text-align: center; }
+    .cta-row { margin-top: 2.5rem; padding-top: 2rem; }
+    .cta-row a { width: 100%; justify-content: center; }
   }
 </style>
 </head>
@@ -123,7 +125,7 @@
   <a href="index.html" class="nav-back">&larr; Back to protocol</a>
 </nav>
 
-<div class="page-wrap">
+<article class="page-wrap">
 
   <div class="page-tag"><span>DOC</span> Data Sovereignty Architecture &middot; v1.0</div>
 
@@ -362,7 +364,7 @@
     <a href="bioclearing.html" class="btn-secondary">BioClearing architecture &rarr;</a>
   </div>
 
-</div>
+</article>
 
 <footer>
   <div class="footer-inner">
