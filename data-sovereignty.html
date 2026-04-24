@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Sovereignty Architecture — BCCS</title>
+<meta name="description" content="How BCCS interoperates with national registry systems. Data locality, cryptographic anchors, jurisdictional compatibility.">
+<meta property="og:title" content="Data Sovereignty Architecture — BCCS">
+<meta property="og:description" content="Raw data stays in sovereign infrastructure. Only cryptographic attestations cross the protocol layer.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bccs.bio/data-sovereignty.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0C0B;
+    --bg-elevated: #111413;
+    --bg-card: #161A18;
+    --border: #1E2422;
+    --border-accent: #2A3A30;
+    --text: #E8EBE9;
+    --text-dim: #7A8580;
+    --text-muted: #4A5550;
+    --green: #3ECF8E;
+    --green-dim: #1B4D3E;
+    --green-glow: rgba(62, 207, 142, 0.12);
+    --bronze: #C4982A;
+    --red: #EF4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%); }
+
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
+  .nav-back { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+  .nav-back:hover { color: var(--text); }
+
+  .page-wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 7rem 2rem 5rem; }
+
+  .page-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem; }
+  .page-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
+
+  h1.page-title { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem; max-width: 800px; }
+  h1.page-title em { font-style: italic; color: var(--green); }
+
+  .page-lede { font-size: 1.15rem; color: var(--text-dim); max-width: 720px; line-height: 1.7; margin-bottom: 3rem; }
+
+  h2.sec-h { font-family: 'Instrument Serif', serif; font-size: 1.8rem; font-weight: 400; line-height: 1.25; margin: 3rem 0 1.2rem; color: var(--text); }
+  h2.sec-h em { font-style: italic; color: var(--green); }
+
+  h3.sub-h { font-size: 1.05rem; font-weight: 600; color: var(--text); margin: 2rem 0 0.8rem; }
+
+  p.body-p { color: var(--text-dim); font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.2rem; max-width: 720px; }
+  p.body-p strong { color: var(--text); font-weight: 600; }
+  p.body-p em { color: var(--text); font-style: italic; }
+
+  .principle-stack { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin: 2rem 0 2.5rem; }
+  .principle-row { display: grid; grid-template-columns: 160px 1fr; background: var(--bg-card); padding: 1.8rem 2rem; gap: 2rem; align-items: start; }
+  .principle-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.12em; padding-top: 0.2rem; text-transform: uppercase; }
+  .principle-content h4 { font-family: 'Instrument Serif', serif; font-size: 1.15rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--text); }
+  .principle-content p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.65; }
+
+  .layer-diagram { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; margin: 2rem 0 2.5rem; }
+  .layer-row { display: grid; grid-template-columns: 200px 1fr 160px; gap: 1.5rem; padding: 1.2rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+  .layer-row:last-child { border-bottom: none; }
+  .layer-row.header { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 0 1rem; }
+  .layer-name { font-weight: 600; color: var(--text); font-size: 0.95rem; }
+  .layer-name small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+  .layer-desc { color: var(--text-dim); font-size: 0.88rem; line-height: 1.6; }
+  .layer-loc { font-family: 'DM Mono', monospace; font-size: 0.78rem; text-align: right; letter-spacing: 0.03em; }
+  .layer-loc.sov { color: var(--bronze); }
+  .layer-loc.proto { color: var(--green); }
+
+  .framework-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin: 2rem 0 2.5rem; }
+  .framework-card { background: var(--bg-card); padding: 1.6rem 1.8rem; }
+  .framework-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.4rem; text-transform: uppercase; }
+  .framework-card h4 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+  .framework-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+  .callout { background: rgba(62, 207, 142, 0.06); border-left: 3px solid var(--green); padding: 1.3rem 1.6rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .callout p { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin: 0; }
+  .callout p strong { color: var(--green); }
+
+  .warn-callout { background: rgba(196, 152, 42, 0.06); border-left: 3px solid var(--bronze); padding: 1.3rem 1.6rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+  .warn-callout p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; margin: 0; }
+  .warn-callout p strong { color: var(--bronze); }
+
+  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; border-radius: 6px; text-decoration: none; transition: all 0.25s; }
+  .btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: transparent; color: var(--text-dim); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; transition: all 0.25s; }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
+
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; margin-top: 4rem; }
+  .footer-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  .footer-brand a { color: var(--text-dim); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text-dim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0.8rem 1.2rem; }
+    .page-wrap { padding: 6rem 1.5rem 3rem; }
+    .principle-row { grid-template-columns: 1fr; gap: 0.6rem; }
+    .layer-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.2rem 0; }
+    .layer-row.header { display: none; }
+    .layer-loc { text-align: left; }
+    .framework-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">BCCS</a>
+  <a href="index.html" class="nav-back">&larr; Back to protocol</a>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="page-tag"><span>DOC</span> Data Sovereignty Architecture &middot; v1.0</div>
+
+  <h1 class="page-title">How BCCS interoperates with <em>national registry systems</em></h1>
+
+  <p class="page-lede">
+    Every sovereign jurisdiction operating a BCCS node retains full control over the biological data generated within its territory. The protocol layer records only cryptographic attestations — not raw data. This is the architectural principle that makes BCCS deployable across 175 jurisdictions without conflicting with any of their data-protection or critical-infrastructure regimes.
+  </p>
+
+  <!-- ─── PRINCIPLE ─── -->
+  <h2 class="sec-h">The governing principle</h2>
+
+  <p class="body-p">
+    A verification infrastructure built on a public blockchain faces one unavoidable design choice: <strong>what actually goes on-chain, and what stays in sovereign infrastructure</strong>. BCCS answers this choice in the simplest way available. Raw biological evidence — satellite imagery, sensor telemetry, inspection records, genetic sequence data — never crosses the protocol layer. Only <em>cryptographic anchors</em> do.
+  </p>
+
+  <p class="body-p">
+    An anchor is a fixed-length hash computed from the underlying evidence. The hash proves that specific evidence existed in a specific state at a specific time. The hash <strong>cannot be used to reconstruct the original data</strong>. Any attempt to do so is computationally infeasible under every recognised cryptographic standard in current use (SHA-256, SHA-3, BLAKE3).
+  </p>
+
+  <p class="body-p">
+    This means: the protocol layer records <em>the fact of verification</em>. It does not record <em>the evidence itself</em>. The evidence stays where it was generated, under the legal regime of the jurisdiction that generated it.
+  </p>
+
+  <div class="callout">
+    <p><strong>Core principle.</strong> BCCS is a protocol for attesting to biological state, not a database for storing biological data. The distinction is architectural, not semantic — it is enforced by what the smart contracts will and will not accept as input.</p>
+  </div>
+
+  <!-- ─── LAYER DIAGRAM ─── -->
+  <h2 class="sec-h">Three layers, <em>two jurisdictions</em></h2>
+
+  <p class="body-p">
+    Every BCCS deployment separates cleanly into three data layers. The first two remain in sovereign infrastructure. The third — and only the third — touches the public protocol.
+  </p>
+
+  <div class="layer-diagram">
+    <div class="layer-row header">
+      <div>Layer</div>
+      <div>Contents</div>
+      <div style="text-align:right">Location</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-name">L1 &mdash; Raw Evidence<small>sensor output, imagery, inspection</small></div>
+      <div class="layer-desc">Satellite imagery, ground-based sensor telemetry, physical inspection records, laboratory analyses, genetic sequence data. Every byte generated by a verification measurement.</div>
+      <div class="layer-loc sov">SOVEREIGN<br>INFRASTRUCTURE</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-name">L2 &mdash; Aggregated Proofs<small>hashes, Merkle roots, certificates</small></div>
+      <div class="layer-desc">Cryptographic fingerprints computed from L1 evidence. Merkle tree roots summarising batches of measurements. Signed state-transition certificates from authorised oracle nodes.</div>
+      <div class="layer-loc sov">SOVEREIGN<br>INFRASTRUCTURE</div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-name">L3 &mdash; Registry Entries<small>BAIN ID, lifecycle state</small></div>
+      <div class="layer-desc">The 21-character BAIN ID, current lifecycle state (1 of 8), timestamp, Merkle root anchor from L2, and oracle signatures. Institutional metadata only — no raw or derivative evidence.</div>
+      <div class="layer-loc proto">PROTOCOL LAYER<br>(Base L2)</div>
+    </div>
+  </div>
+
+  <p class="body-p">
+    The boundary between L2 and L3 is the <strong>only</strong> point where data crosses sovereign borders. What crosses is a cryptographic proof — not evidence, not measurements, not personally or jurisdictionally sensitive content. The proof can be independently verified by any party holding the BAIN ID, but cannot be reversed into the underlying data.
+  </p>
+
+  <!-- ─── ANALOGY ─── -->
+  <h2 class="sec-h">The SWIFT analogy</h2>
+
+  <p class="body-p">
+    SWIFT is a messaging protocol between banks. When a bank in country A sends a payment instruction to a bank in country B, the customer data never transits SWIFT — only a standardised message referencing an internal account identifier. Account-level detail, transaction history, customer identity — all of this remains in the originating bank's infrastructure, under its jurisdiction's banking and privacy law.
+  </p>
+
+  <p class="body-p">
+    BCCS is structurally analogous. A sovereign node in jurisdiction A can register an attestation referring to a BAIN ID. The underlying evidence — the "customer data" equivalent — stays in that jurisdiction's infrastructure. What crosses the protocol is the institutional reference, not the substance.
+  </p>
+
+  <p class="body-p">
+    This is why SWIFT operates across more than 200 jurisdictions with radically different regulatory regimes. It does not because it harmonises them — it does not because it <em>never touches the data they regulate</em>.
+  </p>
+
+  <!-- ─── PRINCIPLES ─── -->
+  <h2 class="sec-h">Five architectural principles</h2>
+
+  <div class="principle-stack">
+
+    <div class="principle-row">
+      <div class="principle-label">01 &middot; Locality</div>
+      <div class="principle-content">
+        <h4>Data never leaves origin jurisdiction</h4>
+        <p>Raw evidence generated within a jurisdiction remains physically stored on infrastructure located within that jurisdiction. Cross-border replication, backup, or caching of raw evidence is not part of the BCCS protocol.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">02 &middot; Anchoring</div>
+      <div class="principle-content">
+        <h4>Only cryptographic proofs cross the protocol</h4>
+        <p>What enters the public chain is a hash or Merkle root derived from the underlying evidence. These anchors prove that specific evidence existed in a specific state at a specific time, but cannot be used to reconstruct the evidence itself.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">03 &middot; Autonomy</div>
+      <div class="principle-content">
+        <h4>Sovereign nodes operate independently</h4>
+        <p>Every jurisdiction operates its own node under its own legal framework, its own approved cryptographic standards, and its own data-governance regime. The BCCS protocol does not mandate a specific hosting provider, a specific cloud, or a specific country of operation.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">04 &middot; Graceful Degradation</div>
+      <div class="principle-content">
+        <h4>National registries function without the protocol</h4>
+        <p>If the public protocol layer becomes unavailable to a jurisdiction — for any technical, political, or regulatory reason — that jurisdiction's national registry continues to operate autonomously. Protocol-layer attestations are <em>additive</em> to sovereign infrastructure, not substitutive.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">05 &middot; Verifiability</div>
+      <div class="principle-content">
+        <h4>Proofs are independently auditable</h4>
+        <p>Any party holding a BAIN ID can verify that the on-chain attestation matches a claimed evidence set, provided the evidence is disclosed to them under the terms set by the originating jurisdiction. The protocol does not grant access — it confirms integrity.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── COMPATIBILITY ─── -->
+  <h2 class="sec-h">Jurisdictional compatibility</h2>
+
+  <p class="body-p">
+    The data-locality architecture is compatible with every major data-protection and critical-infrastructure regime currently in force. The list below is illustrative, not exhaustive. Every jurisdiction operating a BCCS sovereign node applies its own framework; the protocol does not impose a harmonised standard.
+  </p>
+
+  <div class="framework-grid">
+
+    <div class="framework-card">
+      <div class="framework-label">EU &middot; GDPR</div>
+      <h4>General Data Protection Regulation</h4>
+      <p>Personal data remains under the controllership of the sovereign node operator. Cross-border data transfer provisions (Chapter V) do not apply to cryptographic anchors, which do not constitute personal data.</p>
+    </div>
+
+    <div class="framework-card">
+      <div class="framework-label">Singapore &middot; PDPA</div>
+      <h4>Personal Data Protection Act</h4>
+      <p>Consistent with the sovereign-infrastructure principle. Data localisation handled at the node operator level; anchors are not personal data within the meaning of the Act.</p>
+    </div>
+
+    <div class="framework-card">
+      <div class="framework-label">Brazil &middot; LGPD</div>
+      <h4>Lei Geral de Proteção de Dados</h4>
+      <p>Evidence remains under ANPD jurisdiction. International transfer rules (Chapter V) are satisfied because the protocol layer handles only non-personal cryptographic metadata.</p>
+    </div>
+
+    <div class="framework-card">
+      <div class="framework-label">Japan &middot; APPI</div>
+      <h4>Act on the Protection of Personal Information</h4>
+      <p>Compatible with Japan's adequacy framework. Anchors do not trigger the extraterritorial provisions of the APPI, as they contain no identifiable personal information.</p>
+    </div>
+
+    <div class="framework-card">
+      <div class="framework-label">China &middot; PIPL</div>
+      <h4>Personal Information Protection Law</h4>
+      <p>Important data classification handled at the node operator level. The architecture does not require cross-border transfer of any information classified as important or sensitive under the PIPL.</p>
+    </div>
+
+    <div class="framework-card">
+      <div class="framework-label">Global &middot; Critical Infrastructure</h4>
+      <h4>Sectoral critical-information regimes</h4>
+      <p>Every major jurisdiction operates some form of critical-information-infrastructure regime (CII, NIS2, equivalents). Because BCCS never ingests CII-classified data into the protocol layer, such regimes do not constrain protocol participation.</p>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    <p><strong>Design intent.</strong> BCCS was designed to be deployable in every jurisdiction that operates a modern data-protection regime — and to remain deployable if any of those regimes tightens further. The architecture treats strict data localisation as the <em>default</em>, not the exception.</p>
+  </div>
+
+  <!-- ─── WHAT BCCS DOES NOT DO ─── -->
+  <h2 class="sec-h">What BCCS explicitly does <em>not</em> do</h2>
+
+  <p class="body-p">
+    Clarity about non-features is as important as clarity about features. The following are outside the scope of the BCCS protocol and are not enabled by node participation:
+  </p>
+
+  <div class="principle-stack">
+
+    <div class="principle-row">
+      <div class="principle-label">NOT &middot; 01</div>
+      <div class="principle-content">
+        <h4>Cross-border data export</h4>
+        <p>The protocol does not transfer raw biological evidence across jurisdictional boundaries. Any party requiring access to evidence must obtain it through the legal channels of the originating jurisdiction.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">NOT &middot; 02</div>
+      <div class="principle-content">
+        <h4>Harmonised regulation</h4>
+        <p>BCCS is not a regulatory instrument. It does not impose common data standards, common disclosure rules, or common sanctions frameworks. Regulatory decisions remain entirely with the sovereign node operator.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">NOT &middot; 03</div>
+      <div class="principle-content">
+        <h4>Centralised data repository</h4>
+        <p>There is no central BCCS database of biological evidence. There is no backup copy, no mirror, no aggregated archive. What exists is a distributed set of sovereign node operators, each holding only the evidence generated within their own jurisdiction.</p>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-label">NOT &middot; 04</div>
+      <div class="principle-content">
+        <h4>Compelled disclosure</h4>
+        <p>No provision of the protocol allows any external party — including the protocol developers — to compel disclosure of evidence from a sovereign node. Access requests follow the laws of the jurisdiction holding the data, not protocol rules.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── CLOSING ─── -->
+  <h2 class="sec-h">Summary</h2>
+
+  <p class="body-p">
+    BCCS is verification infrastructure, not a data platform. What crosses the protocol layer is the <em>attestation</em> — the cryptographic proof that a specific biological state has been verified by a qualified oracle under a defined methodology. The evidence supporting that attestation remains in sovereign infrastructure, under sovereign law, accessible only through sovereign process.
+  </p>
+
+  <p class="body-p">
+    This is not a workaround or a compromise. It is the architecture that makes global participation technically coherent and legally deployable. A protocol that required jurisdictions to export their biological evidence would have no universal path to adoption; a protocol that records only cryptographic facts about that evidence can operate everywhere.
+  </p>
+
+  <div class="warn-callout">
+    <p><strong>Note on this document.</strong> This is a public architectural specification, not a legal opinion. Specific compliance assessments for a given jurisdiction, asset class, or deployment configuration should be conducted by qualified counsel. KRYONIS Sovereign Systems Limited provides this document as a description of protocol design intent and technical behaviour.</p>
+  </div>
+
+  <div class="cta-row">
+    <a href="index.html" class="btn-primary">&larr; Back to BCCS protocol</a>
+    <a href="bioclearing.html" class="btn-secondary">BioClearing architecture &rarr;</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>&copy; 2026</div>
+    <div class="footer-links">
+      <a href="index.html">BCCS</a>
+      <a href="bioclearing.html">BioClearing</a>
+      <a href="https://kryonislab.org" target="_blank" rel="noopener noreferrer">KRYONIS Lab</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

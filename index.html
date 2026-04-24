@@ -223,6 +223,7 @@
     <a href="#protocol">Protocol</a>
     <a href="#access">Access</a>
     <a href="not-carbon.html">Not Carbon</a>
+    <a href="data-sovereignty.html">Sovereignty</a>
     <a href="activation-sequence.html">Sequence</a>
     <a href="#contracts">Contracts</a>
     <a href="implementation.html">Implementation</a>
@@ -242,6 +243,7 @@
   <a href="#protocol" onclick="this.parentElement.classList.remove('open')">Protocol</a>
   <a href="#access" onclick="this.parentElement.classList.remove('open')">Access</a>
   <a href="not-carbon.html" onclick="this.parentElement.classList.remove('open')">Not Carbon</a>
+  <a href="data-sovereignty.html" onclick="this.parentElement.classList.remove('open')">Sovereignty</a>
   <a href="activation-sequence.html" onclick="this.parentElement.classList.remove('open')">Sequence</a>
   <a href="#contracts" onclick="this.parentElement.classList.remove('open')">Contracts</a>
   <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
@@ -260,7 +262,7 @@
     <div class="s00-grid">
       <div class="s00-card"><div class="s00-card-icon">🌍</div><h3>The Problem</h3><p>Forests, soil, oceans, organisms — they represent over $150 trillion in global natural capital. Governments tax them. Companies trade them. Carbon credits are sold against them. But nobody can computationally verify whether these assets are actually in the state they claim to be.</p><p class="s00-highlight">A forest can be logged while its carbon credits are still being traded. Nobody would know until it's too late.</p></div>
       <div class="s00-card"><div class="s00-card-icon">🔬</div><h3>Why It Matters Now</h3><p>AI can generate fake satellite images. Sensor data can be fabricated. Reports can be forged. As AI becomes more powerful, the gap between <em>claimed</em> biological state and <em>actual</em> biological state will only grow.</p><p>This is the <strong>Biological Computing Verification Gap</strong> — the fundamental inability to trust biological data at scale.</p></div>
-      <div class="s00-card"><div class="s00-card-icon">⛓️</div><h3>What BCCS Does</h3><p>BCCS is a protocol that makes biological assets <strong>computationally verifiable</strong>. Every asset gets a unique 21-character ID. Its state is verified through three independent data sources — satellites, ground sensors, and physical inspection. No single source can fake a verification.</p><p>The result is stored on-chain. Immutable. Queryable by any AI, institution, or smart contract.</p></div>
+      <div class="s00-card"><div class="s00-card-icon">⛓️</div><h3>What BCCS Does</h3><p>BCCS is a protocol that makes biological assets <strong>computationally verifiable</strong>. Every asset gets a unique 21-character ID. Its state is verified through three independent data sources — satellites, ground sensors, and physical inspection. No single source can fake a verification.</p><p>The <strong>verification attestation</strong> is recorded on-chain as a cryptographic proof. Raw sensor data stays in sovereign infrastructure. The attestation is queryable by any AI, institution, or smart contract; the underlying data never leaves its jurisdiction of origin.</p></div>
     </div>
     <div class="s00-divider"></div>
     <h2 class="s00-subhead">Who needs this?</h2>
@@ -287,7 +289,7 @@
 <section class="hero">
   <div class="hero-tag"><span>DePIN</span> Biological Computing Control Standard</div>
   <h1>The <em>Verification Layer</em> for Biological Capital</h1>
-  <p class="hero-sub">BCCS is a decentralized protocol that makes biological assets &mdash; forests, soil, organisms, aquatic ecosystems &mdash; computationally verifiable on-chain. Multi-source consensus. Machine-readable biological state.</p>
+  <p class="hero-sub">BCCS is a decentralized protocol that makes biological assets &mdash; forests, soil, organisms, aquatic ecosystems &mdash; computationally verifiable on-chain. Multi-source consensus. Machine-readable biological state. <strong style="color:var(--text)">Sovereign-compliant by design.</strong></p>
   <div class="hero-actions"><a href="mint.html" class="btn-primary">Acquire Node License &rarr;</a><a href="#protocol" class="btn-secondary">Read the Protocol &darr;</a></div>
 </section>
 
@@ -344,8 +346,9 @@
   <p class="section-desc fade-in">Biological assets represent over $150 trillion in global natural capital, yet no computational infrastructure exists to verify their state. BCCS provides the missing verification layer.</p>
   <div class="solution-stack fade-in">
     <div class="solution-row"><div class="solution-label">BAIN ID</div><div><h3>Bio-Asset Identification Number</h3><p>A 21-character immutable identifier for every biological asset. Encodes region (ISO 3166-1), asset class, unique reference, and current verification state checksum. Anchored on Base. Eight possible states from Unverified through Verified-Stable to Decommissioned.</p></div></div>
-    <div class="solution-row"><div class="solution-label">3-TIER ORACLE</div><div><h3>Multi-Source Verification Consensus</h3><p>State transitions require consensus from at least two of three independent data tiers: Tier 1 &mdash; satellite remote sensing (Sentinel-2, Landsat, Planet Labs). Tier 2 &mdash; ground-based IoT sensors (soil moisture, air quality, biomass density). Tier 3 &mdash; physical inspection with timestamped GPS evidence. No single data source can trigger a state change.</p></div></div>
+    <div class="solution-row"><div class="solution-label">3-TIER ORACLE</div><div><h3>Multi-Source Verification Consensus</h3><p>State transitions require consensus from at least two of three independent data tiers: Tier 1 &mdash; satellite remote sensing (Sentinel-2, Landsat, Planet Labs). Tier 2 &mdash; ground-based IoT sensors (soil moisture, air quality, biomass density). Tier 3 &mdash; physical inspection with timestamped GPS evidence. No single data source can trigger a state change. <strong style="color:var(--text)">Evidence data is processed within its jurisdiction of origin; only the cryptographic attestation of verified state crosses the protocol layer.</strong></p></div></div>
     <div class="solution-row"><div class="solution-label">PoPS</div><div><h3>Proof-of-Physical-State</h3><p>Validators operate verification nodes, submit evidence data, and confirm biological state transitions on-chain. False data submissions are penalized through economic slashing &mdash; slashed verification units are permanently burned. Active participation required.</p></div></div>
+    <div class="solution-row"><div class="solution-label">DATA LOCALITY</div><div><h3>Sovereign-Compliant by Design</h3><p>Raw biological data &mdash; satellite imagery, sensor telemetry, inspection records, genetic information &mdash; never leaves its jurisdiction of origin. The BCCS protocol layer records only cryptographic attestations: hashes, Merkle roots, and state transition signatures. Original data cannot be reconstructed from these anchors. This architecture is compatible with data-localisation and critical-infrastructure regimes in every jurisdiction operating a sovereign node, including GDPR (EU), PDPA (Singapore), LGPD (Brazil), APPI (Japan), PIPL (China), and equivalent frameworks. <a href="data-sovereignty.html" style="color:var(--green);text-decoration:none;border-bottom:1px solid var(--green-dim);">Read the full architecture &rarr;</a></p></div></div>
     <div class="solution-row"><div class="solution-label">API LAYER</div><div><h3>Verification Queries</h3><p>AI agents, institutions, and smart contracts query biological state data via the BCCS API. Every verification query is priced in $BCCS, creating protocol-native demand proportional to verification consumption. RESTful and WebSocket interfaces for real-time state transition events.</p></div></div>
   </div>
 </section>
@@ -420,6 +423,7 @@
   <div class="docs-grid fade-in">
     <a href="BCCS_Whitepaper_v1.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v1.0</div><h3>Whitepaper</h3><p>Complete protocol specification, tokenomics, oracle design, and governance model. 15 sections.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_Executive_Brief_v3.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v3</div><h3>Executive Brief</h3><p>Strategic overview for institutional partners and infrastructure operators.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
+    <a href="data-sovereignty.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Data Sovereignty Architecture</h3><p>How BCCS interoperates with national registry systems. Data locality, cryptographic anchors, jurisdictional compatibility.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
     <a href="activation-sequence.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Activation Sequence</h3><p>Public framework governing phase activation. Conditions, not dates. The operating discipline of the economic layer.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
     <a href="BCCS_Tokenomics_Litepaper_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>Tokenomics Litepaper</h3><p>Verification unit economy, infrastructure access, and protocol mechanics.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
     <a href="BCCS_BAIN_ID_Specification_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>BAIN ID Specification</h3><p>21-character identifier format, 8-state lifecycle, asset taxonomy, API schema.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
@@ -503,11 +507,12 @@
     { text: '  <span class="key">"tier_2"</span>:         <span class="value">"IoT soil moisture nominal"</span>,', cls: '' },
     { text: '  <span class="key">"tier_3"</span>:         <span class="value">"Physical inspection pending"</span>,', cls: '' },
     { text: '  <span class="key">"consensus"</span>:      <span class="value">"2-of-3 tiers confirmed"</span>,', cls: '' },
+    { text: '  <span class="key">"data_locality"</span>:  <span class="value">"Evidence retained in BRA jurisdiction"</span>,', cls: '' },
     { text: '  <span class="key">"query_fee"</span>:      <span class="value">"0.012 $BCCS"</span>', cls: '' },
     { text: '}', cls: 'string' },
     { text: '', cls: '' },
     { text: '> POST /bain/BRA-TF-7f3a9c2b1e4d-A1C7/verify', cls: 'prompt' },
-    { text: '  <span class="key">validator</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence</span>: <span class="value">sentinel_2B_spectral</span>', cls: '' },
+    { text: '  <span class="key">validator</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence_hash</span>: <span class="value">0xb29c...f4a8</span>', cls: '' },
     { text: '  <span class="key">status</span>:    <span class="value">Attestation accepted. State confirmed: Verified-Stable.</span>', cls: '' },
   ];
   function runTerminal() {
