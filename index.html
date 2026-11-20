@@ -1,556 +1,285 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-GB">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BCCS — The Verification Layer for Biological Capital</title>
-<meta name="description" content="BCCS is a decentralized protocol that makes biological assets computationally verifiable on-chain. Deployed on Base Layer 2.">
-<meta property="og:title" content="BCCS — The Verification Layer for Biological Capital">
-<meta property="og:description" content="A decentralized verification protocol for biological capital. Proof-of-Physical-State consensus on Base L2.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BCCS: re-runnable satellite evidence for mangrove and coastal claims</title>
+<meta name="description" content="Independent, re-runnable satellite evidence records for mangrove and coastal ecosystem claims. Fixed scope, written limits, and a live public record to inspect.">
+<link rel="canonical" href="https://bccs.bio/">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0f2d2a">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://bccs.bio">
-<meta property="og:image" content="https://bccs.bio/og-image.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0A0C0B;
-    --bg-elevated: #111413;
-    --bg-card: #161A18;
-    --border: #1E2422;
-    --border-accent: #2A3A30;
-    --text: #E8EBE9;
-    --text-dim: #7A8580;
-    --text-muted: #4A5550;
-    --green: #3ECF8E;
-    --green-dim: #1B4D3E;
-    --green-glow: rgba(62, 207, 142, 0.12);
-    --bronze: #C4982A;
-    --red: #EF4444;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; font-size: 16px; }
-  body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
-  .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 80px 80px; opacity: 0.3; pointer-events: none; z-index: 0; mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 0%, transparent 100%); }
-  nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(10, 12, 11, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 500; color: var(--green); letter-spacing: 0.15em; text-decoration: none; }
-  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-  .nav-right { display: flex; gap: 1rem; align-items: center; }
-  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-  .nav-badge { font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.35rem 0.7rem; border: 1px solid var(--border-accent); border-radius: 4px; color: var(--green); background: var(--green-glow); letter-spacing: 0.05em; }
-  .nav-mint { display: inline-flex; align-items: center; padding: 0.45rem 1rem; background: var(--green); color: #0A0C0B !important; font-weight: 700 !important; font-size: 0.8rem !important; border-radius: 5px; letter-spacing: 0.03em; transition: all 0.25s; }
-  .nav-mint:hover { background: #4FE09F; box-shadow: 0 0 20px rgba(62, 207, 142, 0.25); }
-  .hero { position: relative; z-index: 1; min-height: auto; display: flex; flex-direction: column; justify-content: center; padding: 5rem 2rem 4rem; max-width: 1100px; margin: 0 auto; }
-  .hero-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
-  .hero-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
-  .hero h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 1.5rem; max-width: 900px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
-  .hero h1 em { font-style: italic; color: var(--green); }
-  .hero-sub { font-size: 1.15rem; color: var(--text-dim); max-width: 640px; line-height: 1.7; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s; }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s; }
-  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
-  .btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); transform: translateY(-1px); }
-  .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: transparent; color: var(--text-dim); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.25s; }
-  .btn-secondary:hover { color: var(--text); border-color: var(--text-muted); }
-  .stats-bar { position: relative; z-index: 1; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2.5rem 2rem; }
-  .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .stat { text-align: center; }
-  .stat-value { font-family: 'DM Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--green); margin-bottom: 0.3rem; }
-  .stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
-  section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .section-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
-  .section-title { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.15; margin-bottom: 1.5rem; }
-  .section-desc { color: var(--text-dim); font-size: 1.05rem; max-width: 680px; line-height: 1.7; margin-bottom: 3rem; }
-  .section-divider { width: 100%; border: none; border-top: 1px solid var(--border); margin: 0; }
-  .solution-stack { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; }
-  .solution-row { display: grid; grid-template-columns: 200px 1fr; background: var(--bg-card); padding: 2rem; gap: 2rem; align-items: start; transition: background 0.3s; }
-  .solution-row:hover { background: var(--bg-elevated); }
-  .solution-label { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.1em; padding-top: 0.15rem; }
-  .solution-row h3 { font-family: 'Instrument Serif', serif; font-size: 1.15rem; font-weight: 400; margin-bottom: 0.5rem; }
-  .solution-row p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-  .terminal-section { position: relative; z-index: 1; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .terminal-window { background: #0D0F0E; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-family: 'DM Mono', monospace; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
-  .terminal-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.2rem; background: var(--bg-elevated); border-bottom: 1px solid var(--border); }
-  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); }
-  .terminal-dot.red { background: #EF4444; } .terminal-dot.yellow { background: #F59E0B; } .terminal-dot.green { background: #3ECF8E; }
-  .terminal-title { font-size: 0.7rem; color: var(--text-muted); margin-left: 0.5rem; letter-spacing: 0.05em; }
-  .terminal-body { padding: 1.5rem; font-size: 0.82rem; line-height: 1.8; color: var(--text-dim); min-height: 380px; }
-  .terminal-body .prompt { color: var(--green); } .terminal-body .comment { color: var(--text-muted); font-style: italic; }
-  .terminal-body .key { color: var(--bronze); } .terminal-body .value { color: var(--green); } .terminal-body .string { color: #E8EBE9; }
-  .terminal-body .terminal-line { opacity: 0; animation: termLine 0.3s ease forwards; }
-  @keyframes termLine { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: translateX(0); } }
-  .tier-stack { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; }
-  .tier-row { display: grid; grid-template-columns: 120px 140px 1fr 140px; background: var(--bg-card); padding: 1.5rem 2rem; gap: 1.5rem; align-items: center; }
-  .tier-row.tier-header { background: var(--bg-elevated); }
-  .tier-row.tier-header span { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
-  .tier-name { font-weight: 600; color: var(--text); } .tier-name small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
-  .tier-price { font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--green); }
-  .tier-desc { color: var(--text-dim); font-size: 0.88rem; }
-  .tier-cum { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--text-dim); text-align: right; }
-  .tier-note { margin-top: 2rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--green-dim); }
-  .contract-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-  .contract-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; }
-  .contract-card-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8rem; }
-  .contract-card-name { font-size: 1.1rem; color: var(--text); font-weight: 600; margin-bottom: 1rem; }
-  .contract-detail { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-  .contract-detail span { color: var(--text-dim); }
-  .contract-link { display: inline-block; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--green); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
-  .contract-link:hover { border-bottom-color: var(--green); }
-  .roadmap-list { position: relative; padding-left: 2rem; }
-  .roadmap-list::before { content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem; width: 1px; background: linear-gradient(to bottom, var(--green), var(--border)); }
-  .roadmap-item { position: relative; margin-bottom: 2.5rem; padding-left: 2rem; }
-  .roadmap-item::before { content: ''; position: absolute; left: -2.35rem; top: 0.5rem; width: 9px; height: 9px; border-radius: 50%; background: var(--green); border: 2px solid var(--bg); box-shadow: 0 0 10px var(--green-glow); }
-  .roadmap-item.completed::before { background: var(--green); }
-  .roadmap-item.current::before { background: var(--green); box-shadow: 0 0 16px rgba(62,207,142,0.4); }
-  .roadmap-item.future::before { background: var(--text-muted); box-shadow: none; }
-  .roadmap-phase { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-  .roadmap-item.future .roadmap-phase { color: var(--text-muted); }
-  .roadmap-item h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; }
-  .roadmap-item p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-  .apply-section { position: relative; z-index: 1; padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .apply-form { max-width: 560px; }
-  .form-group { margin-bottom: 1.5rem; }
-  .form-group label { display: block; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; }
-  .form-group input, .form-group textarea { width: 100%; padding: 0.9rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
-  .form-group input:focus, .form-group textarea:focus { border-color: var(--green-dim); }
-  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
-  .form-group textarea { resize: vertical; min-height: 100px; font-family: 'DM Sans', sans-serif; }
-  .form-disclaimer { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; padding: 1.2rem 1.5rem; background: var(--bg-card); border-left: 3px solid var(--green-dim); border-radius: 0 6px 6px 0; }
-  .form-submit { padding: 0.9rem 2.5rem; background: var(--green); color: #0A0C0B; border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.03em; cursor: pointer; transition: all 0.25s; }
-  .form-submit:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
-  #form-message { margin-top: 1rem; font-size: 0.85rem; display: none; }
-  .docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; }
-  .doc-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem; text-decoration: none; transition: border-color 0.3s, transform 0.3s; }
-  .doc-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
-  .doc-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
-  .doc-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.6rem; }
-  .doc-meta { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-muted); letter-spacing: 0.05em; }
-  .doc-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.6rem; padding: 0.15rem 0.4rem; background: var(--green-glow); border: 1px solid var(--border-accent); border-radius: 3px; color: var(--green); letter-spacing: 0.05em; margin-bottom: 0.6rem; }
-  .founder-section { position: relative; z-index: 1; padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .founder-card { display: flex; align-items: center; gap: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2.5rem; }
-  .founder-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-accent); flex-shrink: 0; }
-  .founder-info h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.2rem; }
-  .founder-role { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
-  .founder-info p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; }
-  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
-  .footer-brand a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; } .footer-brand a:hover { color: var(--text); }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; } .footer-links a:hover { color: var(--text-dim); }
-  .footer-disclaimer { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0; border-top: 1px solid var(--border); margin-top: 2rem; }
-  .footer-disclaimer p { font-size: 0.7rem; color: var(--text-muted); line-height: 1.7; }
-  .footer-legal-links { display: flex; gap: 1.5rem; margin-top: 1rem; }
-  .footer-legal-links a { font-size: 0.72rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; } .footer-legal-links a:hover { color: var(--text-dim); }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-  @media (max-width: 768px) {
-    nav { padding: 0.8rem 1.2rem; } .nav-links { display: none !important; } .nav-badge { display: none !important; } .nav-hamburger { display: block !important; }
-    .hero { padding: 4rem 1.5rem 3rem; } .stats-inner { grid-template-columns: repeat(2, 1fr); }
-    section, .apply-section { padding: 4rem 1.5rem; } .solution-row { grid-template-columns: 1fr; gap: 0.5rem; }
-    .tier-row { grid-template-columns: 1fr 1fr; gap: 0.8rem; } .tier-row.tier-header { display: none; } .tier-desc { grid-column: span 2; }
-    .contract-grid { grid-template-columns: 1fr; } .footer-inner { flex-direction: column; text-align: center; } .footer-legal-links { justify-content: center; }
-    .terminal-body { font-size: 0.72rem; padding: 1rem; } .docs-grid { grid-template-columns: 1fr; }
-    .founder-card { flex-direction: column; text-align: center; gap: 1.2rem; }
-    .bc-sim-grid { grid-template-columns: 1fr !important; }
-  }
-  .s00 { position: relative; z-index: 1; padding: 5rem 2rem 4rem; border-bottom: 1px solid var(--border); }
-  .s00-inner { max-width: 900px; margin: 0 auto; }
-  .s00-tag { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2rem; }
-  .s00-tag span { display: inline-block; padding: 0.3rem 0.6rem; border: 1px solid var(--border-accent); border-radius: 3px; background: var(--green-glow); margin-right: 0.5rem; }
-  .s00-headline { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 400; line-height: 1.2; margin-bottom: 3rem; max-width: 800px; }
-  .s00-headline em { font-style: italic; color: var(--green); }
-  .s00-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; }
-  .s00-card { background: var(--bg-card); padding: 2rem; }
-  .s00-card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; } .s00-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.8rem; }
-  .s00-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 0.8rem; } .s00-card p:last-child { margin-bottom: 0; }
-  .s00-card em { color: var(--text); font-style: italic; } .s00-card strong { color: var(--text); }
-  .s00-highlight { background: rgba(62, 207, 142, 0.08); border-left: 2px solid var(--green); padding: 0.6rem 0.8rem; border-radius: 0 4px 4px 0; font-size: 0.85rem; color: var(--green); line-height: 1.5; }
-  .s00-divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; height: 0; }
-  .s00-subhead { font-family: 'Instrument Serif', Georgia, serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem; }
-  .s00-who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; }
-  .s00-who { background: var(--bg-card); padding: 1.8rem; }
-  .s00-who-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
-  .s00-who p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
-  .s00-explain { margin-bottom: 3rem; }
-  .s00-explain > p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.5rem; max-width: 720px; } .s00-explain strong { color: var(--text); }
-  .s00-what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; }
-  .s00-what-item { background: var(--bg-card); padding: 1.8rem; }
-  .s00-what-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--bronze); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
-  .s00-what-item p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; } .s00-what-item strong { color: var(--text); }
-  .s00-cta-box { background: var(--bg-card); border: 2px solid var(--green-dim); border-radius: 10px; padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 3rem; }
-  .s00-cta-text h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem; } .s00-cta-text p { font-size: 0.88rem; color: var(--text-dim); }
-  .s00-cta-buttons { display: flex; gap: 1rem; flex-shrink: 0; }
-  .s00-btn-primary { display: inline-flex; align-items: center; padding: 0.8rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; font-size: 0.85rem; border-radius: 6px; text-decoration: none; transition: all 0.25s; }
-  .s00-btn-primary:hover { background: #4FE09F; box-shadow: 0 0 30px rgba(62, 207, 142, 0.3); }
-  .s00-btn-secondary { display: inline-flex; align-items: center; padding: 0.8rem 2rem; border: 1px solid var(--border-accent); color: var(--text-dim); font-size: 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.2s; }
-  .s00-btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
-  @media (max-width: 768px) {
-    .s00 { padding: 7rem 1.5rem 3rem; } .s00-grid { grid-template-columns: 1fr; } .s00-who-grid { grid-template-columns: 1fr; }
-    .s00-what-grid { grid-template-columns: 1fr; } .s00-cta-box { flex-direction: column; text-align: center; }
-    .s00-cta-buttons { flex-direction: column; width: 100%; } .s00-btn-primary, .s00-btn-secondary { justify-content: center; width: 100%; }
-  }
-
-  /* ── MOBILE MENU ── */
-  .nav-hamburger { display: none; background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 8px; }
-  .nav-hamburger svg { display: block; }
-  .mob-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 12, 11, 0.97); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
-  .mob-menu.open { display: flex; }
-  .mob-menu a { font-family: 'DM Mono', monospace; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); text-decoration: none; transition: color 0.2s; }
-  .mob-menu a:hover { color: var(--text); }
-  .mob-menu .mob-mint { display: inline-flex; padding: 0.7rem 2rem; background: var(--green); color: #0A0C0B; font-weight: 700; border-radius: 5px; margin-top: 1rem; }
-  .mob-x { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 24px; font-family: 'DM Mono', monospace; }
-
-  /* ── BioClearing Simulator Section ── */
-  .bc-sim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 2rem; }
-  .bc-sim-card { background: var(--bg-card); padding: 2rem; }
-  .bc-sim-metric { font-family: 'DM Mono', monospace; font-size: 1.5rem; font-weight: 500; color: var(--green); margin-bottom: 0.5rem; }
-  .bc-sim-card h4 { font-family: 'Instrument Serif', serif; font-size: 1.05rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
-  .bc-sim-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
-
-</style>
+<meta property="og:site_name" content="BCCS">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Evidence for coastal ecosystem claims that a third party can re-run">
+<meta property="og:description" content="Independent, re-runnable satellite evidence records for mangrove and coastal ecosystem claims. Fixed scope, written limits, and a live public record to inspect.">
+<meta property="og:url" content="https://bccs.bio/">
+<meta property="og:image" content="https://bccs.bio/share-card.png?v=36c451dbfc">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BCCS. Evidence for coastal ecosystem claims that a third party can re-run, and that refuses when it should.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Evidence for coastal ecosystem claims that a third party can re-run">
+<meta name="twitter:description" content="Independent, re-runnable satellite evidence records for mangrove and coastal ecosystem claims. Fixed scope, written limits, and a live public record to inspect.">
+<meta name="twitter:image" content="https://bccs.bio/share-card.png?v=36c451dbfc">
+<meta name="twitter:image:alt" content="BCCS. Evidence for coastal ecosystem claims that a third party can re-run, and that refuses when it should.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.className="js"</script>
+<link rel="stylesheet" href="/assets/site.css?v=49ad7519d8">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://bccs.bio/#organisation","name":"BCCS","legalName":"KRYONIS Sovereign Systems Limited","url":"https://bccs.bio/","logo":"https://bccs.bio/apple-touch-icon.png","email":"hq@kryonis.global","description":"Re-runnable satellite evidence records for mangrove and coastal ecosystem claims.","parentOrganization":{"@type":"Organization","name":"KRYONIS Sovereign Systems Limited","url":"https://kryonis.global/"},"sameAs":["https://observatory.bccs.bio/","https://kryonis.global/"]},{"@context":"https://schema.org","@type":"WebSite","name":"BCCS","url":"https://bccs.bio/","publisher":{"@id":"https://bccs.bio/#organisation"}}]</script>
 </head>
 <body>
-<div class="grid-bg"></div>
-
-<nav>
-  <a href="#" class="nav-logo">BCCS</a>
-  <div class="nav-links">
-    <a href="#why">Why BCCS</a>
-    <a href="#protocol">Protocol</a>
-    <a href="#access">Access</a>
-    <a href="not-carbon.html">Not Carbon</a>
-    <a href="data-sovereignty.html">Sovereignty</a>
-    <a href="activation-sequence.html">Sequence</a>
-    <a href="#contracts">Contracts</a>
-    <a href="implementation.html">Implementation</a>
-    <a href="audit.html">Audit</a>
-    <a href="#docs">Docs</a>
-    <a href="bioclearing.html">BioClearing</a>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap site-head__in">
+    <a class="brand" href="/" aria-current="page"><svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#0f2d2a"/><path d="M7 21.5c3.2-5.5 6.1-8.2 9-8.2s5.8 2.7 9 8.2" fill="none" stroke="#9be2bd" stroke-width="2.2" stroke-linecap="round"/><path d="M11 21.5c1.7-2.6 3.3-3.9 5-3.9s3.3 1.3 5 3.9" fill="none" stroke="#bb8657" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9.2" r="1.8" fill="#9be2bd"/></svg><span class="brand__name">BCCS</span><span class="brand__what">Evidence services</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">Menu</span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul><li><a href="/observatory.html">Live record</a></li><li><a href="/services.html">Services and prices</a></li><li><a href="/method.html">Method and limits</a></li><li><a href="/use-cases.html">Who it is for</a></li><li><a href="/insights/">Notes</a></li><li><a href="/company.html">Company</a></li></ul>
+      <a class="btn btn--small" href="/contact.html">Request a proposal</a>
+    </nav>
   </div>
-  <div class="nav-right">
-    <a href="mint.html" class="nav-mint">Buy License</a>
-    <span class="nav-badge">BASE L2</span>
-    <button class="nav-hamburger" onclick="document.getElementById('mob-menu').classList.add('open')" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg></button>
+</header>
+<main id="main" tabindex="-1">
+
+<section class="hero">
+  <div class="wrap hero__in">
+    <div>
+      <p class="eyebrow">BCCS · Evidence services</p>
+      <h1>Evidence for coastal ecosystem claims that a third party can re-run</h1>
+      <p class="lead">BCCS gives the people who pay for, regulate or rely on coastal ecosystem outcomes a record of what the satellite evidence actually supports. Each record can be re-run from stored data, states its uncertainty, and refuses when the evidence is insufficient.</p>
+      <p class="actions">
+        <a class="btn btn--light" href="https://observatory.bccs.bio/" rel="noopener">Open the live Observatory<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a>
+        <a class="btn btn--ghost-light" href="/services.html">Services and prices</a>
+      </p>
+      <p class="hero__under">One record is public and working today. It ends in a refusal, and it shows why. <a href="/observatory.html">What that record contains</a></p>
+    </div>
+    <aside class="record" aria-label="The public evidence record of claim C-01">
+  <p class="record__kicker"><span>Evidence record</span><span>Claim C-01</span></p>
+  <p class="record__title">Mangrove canopy extent, Cần Giờ, Viet Nam</p>
+  <dl class="record__facts">
+    <div><dt>Period</dt><dd>Dry season 2020</dd></div>
+    <div><dt>Research area</dt><dd>1,937 ha</dd></div>
+    <div><dt>Optical scenes</dt><dd>24, 16 admitted</dd></div>
+    <div><dt>Radar acquisitions</dt><dd>19</dd></div>
+    <div><dt>Request receipts</dt><dd>296</dd></div>
+    <div><dt>Method fixed before the data</dt><dd><code>d001-c01-0.1</code></dd></div>
+  </dl>
+  <div class="record__outcome">
+    <p class="record__label">Evidence outcome</p>
+    <p><span class="badge badge--refuse">INSUFFICIENT EVIDENCE</span></p>
+    <p class="record__note">No extent is claimed. The result changed when the pre-registered thresholds were moved within their brackets, so the method refused.</p>
   </div>
-</nav>
-<div class="mob-menu" id="mob-menu">
-  <button class="mob-x" onclick="this.parentElement.classList.remove('open')">&times;</button>
-  <a href="#why" onclick="this.parentElement.classList.remove('open')">Why BCCS</a>
-  <a href="#protocol" onclick="this.parentElement.classList.remove('open')">Protocol</a>
-  <a href="#access" onclick="this.parentElement.classList.remove('open')">Access</a>
-  <a href="not-carbon.html" onclick="this.parentElement.classList.remove('open')">Not Carbon</a>
-  <a href="data-sovereignty.html" onclick="this.parentElement.classList.remove('open')">Sovereignty</a>
-  <a href="activation-sequence.html" onclick="this.parentElement.classList.remove('open')">Sequence</a>
-  <a href="#contracts" onclick="this.parentElement.classList.remove('open')">Contracts</a>
-  <a href="implementation.html" onclick="this.parentElement.classList.remove('open')">Implementation</a>
-  <a href="audit.html" onclick="this.parentElement.classList.remove('open')">Audit</a>
-  <a href="#docs" onclick="this.parentElement.classList.remove('open')">Docs</a>
-  <a href="bioclearing.html" onclick="this.parentElement.classList.remove('open')">BioClearing</a>
-  <a href="#apply" onclick="this.parentElement.classList.remove('open')">Apply</a>
-  <a href="mint.html" class="mob-mint" onclick="this.parentElement.classList.remove('open')">Buy License</a>
-</div>
+  <p class="record__foot"><a href="https://observatory.bccs.bio/claims/c-01" rel="noopener">Read the record<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a><span>As published on 20 November 2026</span></p>
+</aside>
+  </div>
+</section>
 
-
-<section id="why" class="s00">
-  <div class="s00-inner">
-    <div class="s00-tag"><span>00</span> Why This Exists</div>
-    <h2 class="s00-headline">The world runs on biological assets<br><em>None of them are verified</em></h2>
-    <div class="s00-grid">
-      <div class="s00-card"><div class="s00-card-icon">🌍</div><h3>The Problem</h3><p>Forests, soil, oceans, organisms — they represent over $150 trillion in global natural capital. Governments tax them. Companies trade them. Carbon credits are sold against them. But nobody can computationally verify whether these assets are actually in the state they claim to be.</p><p class="s00-highlight">A forest can be logged while its carbon credits are still being traded. Nobody would know until it's too late.</p></div>
-      <div class="s00-card"><div class="s00-card-icon">🔬</div><h3>Why It Matters Now</h3><p>AI can generate fake satellite images. Sensor data can be fabricated. Reports can be forged. As AI becomes more powerful, the gap between <em>claimed</em> biological state and <em>actual</em> biological state will only grow.</p><p>This is the <strong>Biological Computing Verification Gap</strong> — the fundamental inability to trust biological data at scale.</p></div>
-      <div class="s00-card"><div class="s00-card-icon">⛓️</div><h3>What BCCS Does</h3><p>BCCS is a protocol that makes biological assets <strong>computationally verifiable</strong>. Every asset gets a unique 21-character ID. Its state is verified through three independent data sources — satellites, ground sensors, and physical inspection. No single source can fake a verification.</p><p>The <strong>verification attestation</strong> is recorded on-chain as a cryptographic proof. Raw sensor data stays in sovereign infrastructure. The attestation is queryable by any AI, institution, or smart contract; the underlying data never leaves its jurisdiction of origin.</p></div>
+<section class="band" aria-labelledby="why-h">
+  <div class="wrap">
+    <div class="band__head">
+      <p class="eyebrow">The problem</p>
+      <h2 id="why-h">An area figure that nobody else can run again is a statement, not evidence</h2>
+      <p>Coastal and blue-carbon finance relies on claims about where mangroves are and whether they persist. A restoration report, a monitoring map or a project description gives the hectares. The data and the steps behind the figure are rarely something a funder, a verifier or a journalist can run for themselves.</p>
     </div>
-    <div class="s00-divider"></div>
-    <h2 class="s00-subhead">Who needs this?</h2>
-    <div class="s00-who-grid">
-      <div class="s00-who"><div class="s00-who-label">Governments</div><p>You regulate natural resources but can't verify them. Your environmental agencies rely on self-reported data. BCCS gives you machine-readable, independently verified biological state for every asset under your jurisdiction.</p></div>
-      <div class="s00-who"><div class="s00-who-label">Corporations</div><p>Your ESG reporting is based on trust, not verification. Your supply chain claims are unauditable. BCCS provides cryptographic proof that the biological assets in your value chain are in the state you claim.</p></div>
-      <div class="s00-who"><div class="s00-who-label">Carbon Markets</div><p>Credits are traded against assets nobody can verify. Double-counting is rampant. BCCS makes every carbon-linked biological asset independently verifiable — no more phantom credits.</p></div>
-      <div class="s00-who"><div class="s00-who-label">Node Operators</div><p>You run the infrastructure. You operate verification nodes, submit evidence data, and earn $BCCS tokens for honest work. False submissions are economically penalized. This is DePIN for the physical world.</p></div>
-    </div>
-    <div class="s00-divider"></div>
-    <h2 class="s00-subhead">What is a Node License?</h2>
-    <div class="s00-explain">
-      <p>A <strong>Node License</strong> is your access credential to operate within the BCCS verification network. It is a non-transferable (soulbound) digital certificate on the Base blockchain.</p>
-      <div class="s00-what-grid">
-        <div class="s00-what-item"><div class="s00-what-label">What you get</div><p>The right to operate a BCCS verification node. When the network goes live, you process verification requests, submit evidence data, and earn $BCCS tokens for honest validation work.</p></div>
-        <div class="s00-what-item"><div class="s00-what-label">What it costs</div><p>Alpha tier: <strong>$1,000 USDC</strong> on Base. This is a one-time payment. Five tiers exist (Alpha through Epsilon), each at increasing prices as the network expands.</p></div>
-        <div class="s00-what-item"><div class="s00-what-label">What it is NOT</div><p>It is NOT an investment product. It is NOT a token. You do NOT receive $BCCS tokens by buying a license. You earn them by doing real verification work when the network is operational.</p></div>
-        <div class="s00-what-item"><div class="s00-what-label">Why soulbound</div><p>Licenses cannot be resold or transferred. This prevents speculation and ensures every license holder is a committed infrastructure operator, not a flipper.</p></div>
+    <div class="grid grid--3">
+      <div class="card">
+        <h3>Global maps answer a different question</h3>
+        <p>Open global maps are valuable, and they are built for the globe. Global Mangrove Watch v3.0 reports an estimated accuracy of 87.4 % for its extent maps and 58.1 % and 60.6 % for its gain and loss classes.</p>
+        <p class="small muted">Bunting et al. (2022), Remote Sensing 14, 3657, as quoted in the programme record of the Observatory.</p>
+      </div>
+      <div class="card">
+        <h3>The party that is checked usually pays the checker</h3>
+        <p>A verifier is engaged by the project it verifies. A record that anyone can re-run does not ask the reader to trust who paid for it: the inputs, the rule and the computation are there to be repeated.</p>
+      </div>
+      <div class="card">
+        <h3>A method that can only say yes proves little</h3>
+        <p>A BCCS record ends in one of three outcomes: supported, with an interval; conflicting; or insufficient evidence. The rule that decides between them is fixed before any data is opened.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="hero">
-  <div class="hero-tag"><span>DePIN</span> Biological Computing Control Standard</div>
-  <h1>The <em>Verification Layer</em> for Biological Capital</h1>
-  <p class="hero-sub">BCCS is a decentralized protocol that makes biological assets &mdash; forests, soil, organisms, aquatic ecosystems &mdash; computationally verifiable on-chain. Multi-source consensus. Machine-readable biological state. <strong style="color:var(--text)">Sovereign-compliant by design.</strong></p>
-  <div class="hero-actions"><a href="mint.html" class="btn-primary">Acquire Node License &rarr;</a><a href="#protocol" class="btn-secondary">Read the Protocol &darr;</a></div>
-</section>
-
-<!-- POSITIONING SECTION — full-width balanced, Category clarity -->
-<section style="position:relative;z-index:1;padding:2.5rem 2rem 4rem;max-width:1100px;margin:0 auto">
-  <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-muted);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1rem">Category &amp; Positioning</div>
-  <h2 style="font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.15;margin-bottom:1.5rem;color:var(--text);max-width:26ch">BCCS is <span style="color:var(--text-muted);text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;font-style:normal">not</span> a carbon project. <em style="color:var(--green);font-style:italic">It sits one layer below.</em></h2>
-  <p style="color:var(--text-dim);font-size:1.05rem;max-width:68ch;line-height:1.75;margin-bottom:2.5rem">BCCS is verification and clearing infrastructure for territorial bio-capital. It does not issue credits, operate a marketplace, or tokenise claims. <strong style="color:var(--text);font-weight:600">It records the verified state of biological assets and the finality of clearing obligations.</strong> Any serious carbon market will eventually require infrastructure of this kind.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:2.5rem" class="positioning-trio">
-    <div style="background:var(--bg-card);padding:2rem 1.8rem">
-      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--green);letter-spacing:0.25em;margin-bottom:1rem">01</div>
-      <div style="font-family:'Instrument Serif',serif;font-size:1.3rem;font-style:italic;color:var(--text);line-height:1.35;margin-bottom:0.7rem"><span style="color:var(--green)">Infrastructure</span>, not instrument.</div>
-      <div style="color:var(--text-dim);font-size:0.88rem;line-height:1.65">BCCS does not issue a claim you can trade. It records the verified state of an asset. The distinction is the same as SWIFT (infrastructure) vs a bank bond (instrument).</div>
+<section class="band band--tint" aria-labelledby="offer-h">
+  <div class="wrap">
+    <div class="band__head">
+      <p class="eyebrow">What you can commission</p>
+      <h2 id="offer-h">Three fixed-scope services and one small first step</h2>
+      <p>Each ends in a written deliverable. The fee is the same whatever the answer turns out to be.</p>
     </div>
-    <div style="background:var(--bg-card);padding:2rem 1.8rem">
-      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--green);letter-spacing:0.25em;margin-bottom:1rem">02</div>
-      <div style="font-family:'Instrument Serif',serif;font-size:1.3rem;font-style:italic;color:var(--text);line-height:1.35;margin-bottom:0.7rem"><span style="color:var(--green)">Standard</span>, not commodity.</div>
-      <div style="color:var(--text-dim);font-size:0.88rem;line-height:1.65">The value is in BAIN ID adoption as the universal identifier for territorial bio-assets. A standard compounds through use. A commodity degrades through oversupply.</div>
+    <div class="grid grid--3">
+      <div class="card">
+        <p class="card__kicker">One site, one period, one question</p>
+        <h3>Site evidence check</h3>
+        <p>An independent, dated answer to one area question, from open Sentinel-1 and Sentinel-2 data, under a method you see before the data is opened.</p>
+        <p class="card__price"><strong>Fixed price per site</strong>Stated in the written scope before any work starts. Run as a pilot: the method has one public run and no field validation yet.</p>
+        <p class="card__more"><a href="/services.html#site-check">What you receive<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
+      <div class="card">
+        <p class="card__kicker">Before verification, rating or a funding decision</p>
+        <h3>Evidence readiness review</h3>
+        <p>You send the claims and the material behind them. You receive each claim marked as supported, not supported or not checkable, and the gaps in order of consequence.</p>
+        <p class="card__price"><strong>USD 9,500</strong>Fixed. Delivered 21 days after the material arrives.</p>
+        <p class="card__more"><a href="/services.html#review">What you receive<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
+      <div class="card">
+        <p class="card__kicker">Your records, kept the way ours are</p>
+        <h3>Evidence room</h3>
+        <p>A dedicated installation of the software behind the Observatory: immutable records, intake that checks every byte, controlled publication, an audit trail and a public reading room.</p>
+        <p class="card__price"><strong>By written proposal</strong>One installation per programme. Not a self-service product.</p>
+        <p class="card__more"><a href="/services.html#room">What it includes<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
     </div>
-    <div style="background:var(--bg-card);padding:2rem 1.8rem">
-      <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--green);letter-spacing:0.25em;margin-bottom:1rem">03</div>
-      <div style="font-family:'Instrument Serif',serif;font-size:1.3rem;font-style:italic;color:var(--text);line-height:1.35;margin-bottom:0.7rem"><span style="color:var(--green)">Registry</span>, not market.</div>
-      <div style="color:var(--text-dim);font-size:0.88rem;line-height:1.65">The BCCS Global Registry records clearing states. It does not match buyers and sellers. Markets can be built on top of the registry; the registry is not itself a market.</div>
+    <p class="note note--plain" style="margin-top:1.1rem"><strong>Not sure which of these fits?</strong> Put one question in writing and receive a written answer with its reasoning in five working days, for USD 850. <a href="/services.html#question">One question, answered<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+  </div>
+</section>
+
+<section class="band band--dark" aria-labelledby="how-h">
+  <div class="wrap">
+    <div class="band__head">
+      <p class="eyebrow">How a record is made</p>
+      <h2 id="how-h">The rule comes first. The data comes second.</h2>
     </div>
-  </div>
-
-  <p style="color:var(--text-dim);font-size:0.95rem;max-width:68ch;line-height:1.75;margin-bottom:1.5rem">The comparables are Chainlink, SWIFT, DTCC, Torrens &mdash; <em style="color:var(--green);font-style:italic">not Toucan or Regen</em>. An investor or counterparty evaluating BCCS on carbon-project comparables will misprice it by an order of magnitude in either direction.</p>
-
-  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
-    <a href="not-carbon.html" class="btn-primary">Read the full positioning &rarr;</a>
-    <a href="bioclearing.html" class="btn-secondary">BioClearing Architecture</a>
-  </div>
-</section>
-
-<style>
-  @media (max-width: 820px) {
-    .positioning-trio { grid-template-columns: 1fr !important; }
-  }
-</style>
-
-<div class="stats-bar"><div class="stats-inner">
-  <div class="stat"><div class="stat-value">21-Char</div><div class="stat-label">BAIN ID Standard</div></div>
-  <div class="stat"><div class="stat-value">8-State</div><div class="stat-label">Verification Lifecycle</div></div>
-  <div class="stat"><div class="stat-value">3-Tier</div><div class="stat-label">Oracle Consensus</div></div>
-  <div class="stat"><div class="stat-value">Base L2</div><div class="stat-label">Coinbase Network</div></div>
-</div></div>
-
-<div class="terminal-section fade-in"><div class="terminal-window"><div class="terminal-header"><div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div><span class="terminal-title">bccs-api &mdash; verification query</span></div><div class="terminal-body" id="terminal"></div></div></div>
-
-<section id="protocol">
-  <div class="section-tag fade-in">01 &mdash; Protocol Architecture</div>
-  <h2 class="section-title fade-in">How biological state becomes verifiable</h2>
-  <p class="section-desc fade-in">Biological assets represent over $150 trillion in global natural capital, yet no computational infrastructure exists to verify their state. BCCS provides the missing verification layer.</p>
-  <div class="solution-stack fade-in">
-    <div class="solution-row"><div class="solution-label">BAIN ID</div><div><h3>Bio-Asset Identification Number</h3><p>A 21-character immutable identifier for every biological asset. Encodes region (ISO 3166-1), asset class, unique reference, and current verification state checksum. Anchored on Base. Eight possible states from Unverified through Verified-Stable to Decommissioned.</p></div></div>
-    <div class="solution-row"><div class="solution-label">3-TIER ORACLE</div><div><h3>Multi-Source Verification Consensus</h3><p>State transitions require consensus from at least two of three independent data tiers: Tier 1 &mdash; satellite remote sensing (Sentinel-2, Landsat, Planet Labs). Tier 2 &mdash; ground-based IoT sensors (soil moisture, air quality, biomass density). Tier 3 &mdash; physical inspection with timestamped GPS evidence. No single data source can trigger a state change. <strong style="color:var(--text)">Evidence data is processed within its jurisdiction of origin; only the cryptographic attestation of verified state crosses the protocol layer.</strong></p></div></div>
-    <div class="solution-row"><div class="solution-label">PoPS</div><div><h3>Proof-of-Physical-State</h3><p>Validators operate verification nodes, submit evidence data, and confirm biological state transitions on-chain. False data submissions are penalized through economic slashing &mdash; slashed verification units are permanently burned. Active participation required.</p></div></div>
-    <div class="solution-row"><div class="solution-label">DATA LOCALITY</div><div><h3>Sovereign-Compliant by Design</h3><p>Raw biological data &mdash; satellite imagery, sensor telemetry, inspection records, genetic information &mdash; never leaves its jurisdiction of origin. The BCCS protocol layer records only cryptographic attestations: hashes, Merkle roots, and state transition signatures. Original data cannot be reconstructed from these anchors. This architecture is compatible with data-localisation and critical-infrastructure regimes in every jurisdiction operating a sovereign node, including GDPR (EU), PDPA (Singapore), LGPD (Brazil), APPI (Japan), PIPL (China), and equivalent frameworks. <a href="data-sovereignty.html" style="color:var(--green);text-decoration:none;border-bottom:1px solid var(--green-dim);">Read the full architecture &rarr;</a></p></div></div>
-    <div class="solution-row"><div class="solution-label">API LAYER</div><div><h3>Verification Queries</h3><p>AI agents, institutions, and smart contracts query biological state data via the BCCS API. Every verification query is priced in $BCCS, creating protocol-native demand proportional to verification consumption. RESTful and WebSocket interfaces for real-time state transition events.</p></div></div>
+    <ol class="steps">
+      <li><h3>Fix the question</h3><p>The claim, the boundary, the period, the thresholds and the decision rule are written down and hashed. Nothing has been computed yet.</p></li>
+      <li><h3>Acquire with receipts</h3><p>Open optical and radar scenes and an external reference map are fetched. Every request is recorded with its size and SHA-256.</p></li>
+      <li><h3>Compute offline</h3><p>The measurement runs from the frozen bytes, with no network. Two sensor groups and the reference are compared under the rule from step one.</p></li>
+      <li><h3>Decide, including no</h3><p>Each threshold is moved to both ends of its pre-registered bracket. If the answer changes, the outcome is insufficient evidence.</p></li>
+      <li><h3>Publish what holds</h3><p>Only an approved set leaves the registry. For a refused result, no extent figure is published at all.</p></li>
+    </ol>
+    <p style="margin-top:1.75rem"><a href="/method.html">Method and limits in full<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
   </div>
 </section>
 
-<hr class="section-divider">
-
-<section id="access">
-  <div class="section-tag fade-in">02 &mdash; Infrastructure Access</div>
-  <h2 class="section-title fade-in">Non-transferable credentials for node operation</h2>
-  <p class="section-desc fade-in">Each Infrastructure Access License is a soulbound ERC-721 credential on Base granting the right to operate a verification node. Acquired through application and whitelist approval. USDC payment only.</p>
-  <div class="tier-stack fade-in">
-    <div class="tier-row tier-header"><span>Tier</span><span>Price (USDC)</span><span>Description</span><span style="text-align:right">Licenses</span></div>
-    <div class="tier-row"><div class="tier-name">Alpha<small>Application open</small></div><div class="tier-price">$1,000</div><div class="tier-desc">Whitelisted infrastructure operators</div><div class="tier-cum">500</div></div>
-    <div class="tier-row"><div class="tier-name">Beta<small>Coming</small></div><div class="tier-price">$1,500</div><div class="tier-desc">Expanded operator cohort</div><div class="tier-cum">1,000</div></div>
-    <div class="tier-row"><div class="tier-name">Gamma<small>Coming</small></div><div class="tier-price">$2,200</div><div class="tier-desc">DePIN infrastructure participants</div><div class="tier-cum">2,000</div></div>
-    <div class="tier-row"><div class="tier-name">Delta<small>Coming</small></div><div class="tier-price">$3,000</div><div class="tier-desc">Global verification network expansion</div><div class="tier-cum">3,000</div></div>
-    <div class="tier-row"><div class="tier-name">Epsilon<small>Coming</small></div><div class="tier-price">$3,500</div><div class="tier-desc">Full network coverage</div><div class="tier-cum">5,000</div></div>
-  </div>
-  <div class="tier-note fade-in">An Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. The BCCS verification unit ($BCCS) is earned exclusively through active validator operation when the mainnet verification network is operational. No representation is made regarding the future value of any digital asset associated with this protocol.</div>
-</section>
-
-<hr class="section-divider">
-
-<section id="contracts">
-  <div class="section-tag fade-in">03 &mdash; On-Chain Verification</div>
-  <h2 class="section-title fade-in">Contract status</h2>
-  <p class="section-desc fade-in">All contracts are deployed on Base Layer 2 and source-verified on BaseScan.</p>
-  <div class="contract-grid fade-in">
-    <div class="contract-card"><div class="contract-card-label">Verification Unit</div><div class="contract-card-name">$BCCS &mdash; ERC-20</div><div class="contract-detail">Standard: <span>ERC-20 (OpenZeppelin)</span></div><div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div><div class="contract-detail">Supply: <span>1,000,000,000 (hard cap, non-mintable)</span></div><div class="contract-detail">Decimals: <span>18</span></div><div class="contract-detail">Pausable: <span>Yes</span></div><div class="contract-detail">Owner: <span>Safe Multisig</span></div><div class="contract-detail">Address: <span>0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7</span></div><a href="https://basescan.org/address/0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7" target="_blank" rel="noopener noreferrer" class="contract-link">View on BaseScan &rarr;</a></div>
-    <div class="contract-card"><div class="contract-card-label">Infrastructure Access License</div><div class="contract-card-name">Node License &mdash; ERC-721</div><div class="contract-detail">Standard: <span>ERC-721 + EIP-5192 (Soulbound)</span></div><div class="contract-detail">Chain: <span>Base (Chain ID 8453)</span></div><div class="contract-detail">Transferable: <span>No &mdash; non-transferable credential</span></div><div class="contract-detail">Tiers: <span>5 (Alpha through Epsilon)</span></div><div class="contract-detail">Total: <span>11,500 licenses</span></div><div class="contract-detail">Payment: <span>Native USDC on Base</span></div><div class="contract-detail">Address: <span>0x44B46f9D170ae8122cce71332884252934b66FBd</span></div><a href="https://basescan.org/address/0x44B46f9D170ae8122cce71332884252934b66FBd" target="_blank" rel="noopener noreferrer" class="contract-link">View on BaseScan &rarr;</a></div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<section id="roadmap">
-  <div class="section-tag fade-in">04 &mdash; Protocol Phases</div>
-  <h2 class="section-title fade-in">Phase-gated development</h2>
-  <p class="section-desc fade-in">Each phase transitions when measurable criteria are met. No phase is triggered by time alone. <a href="activation-sequence.html" style="color:var(--green);">Full activation framework &rarr;</a></p>
-  <div class="roadmap-list fade-in">
-    <div class="roadmap-item completed"><div class="roadmap-phase">PHASE 0 &mdash; FOUNDATION</div><h3>Development environment and legal preparation</h3><p>Testnet deployment, legal document drafting, multisig setup, language control finalization, landing page, waitlist form.</p></div>
-    <div class="roadmap-item completed"><div class="roadmap-phase">PHASE 1 &mdash; MAINNET DEPLOY</div><h3>Contracts deployed and verified on BaseScan</h3><p>ERC-20 and ERC-721 contracts deployed to Base mainnet. Source verified. Treasury mint to Safe multisig. Completed April 15, 2026.</p></div>
-    <div class="roadmap-item completed"><div class="roadmap-phase">PHASE 2 &mdash; COMMUNITY BUILD</div><h3>Public channels and content pipeline</h3><p>Social presence established. Waitlist open. Protocol documentation published. Prerequisite: contracts live on BaseScan.</p></div>
-    <div class="roadmap-item completed"><div class="roadmap-phase">PHASE 3 &mdash; SECURITY REVIEW</div><h3>Internal security assessment completed</h3><p>KRYONIS Sovereign Systems Limited internal security review completed April 15, 2026. All functions reviewed. No critical or high severity issues. <a href="audit.html" style="color:var(--green);">Full report &rarr;</a></p></div>
-    <div class="roadmap-item current"><div class="roadmap-phase">PHASE 4 &mdash; ALPHA ACTIVATION</div><h3>Infrastructure access for whitelisted applicants</h3><p>Alpha tier enabled for approved addresses. Prerequisite: clean audit, legal documents approved, waitlist threshold met.</p></div>
-    <div class="roadmap-item future"><div class="roadmap-phase">PHASE 5+ &mdash; NETWORK EXPANSION</div><h3>Additional tiers, verification network, protocol governance</h3><p>Beta through Epsilon tiers activated sequentially. Testnet verification. Mainnet oracle network. Governance transition. Each gate requires measurable criteria.</p></div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<section class="apply-section" id="apply">
-  <div class="section-tag fade-in">Apply for Infrastructure Access</div>
-  <h2 class="section-title fade-in">Verification node operator application</h2>
-  <p class="section-desc fade-in">Infrastructure Access Licenses are distributed through an application process. Submit your Base wallet address and qualification to be reviewed for whitelist inclusion.</p>
-  <div class="apply-form fade-in">
-    <div class="form-group"><label for="wallet-input">Base Wallet Address</label><input type="text" placeholder="0x..." id="wallet-input"></div>
-    <div class="form-group"><label for="email-input">Email</label><input type="email" placeholder="you@example.com" id="email-input"></div>
-    <div class="form-group"><label for="qual-input">Qualification</label><textarea id="qual-input" placeholder="Describe your experience with DePIN infrastructure, biological systems, verification networks, or node operation."></textarea></div>
-    <div class="form-disclaimer">A BCCS Infrastructure Access License is a software permit, not an investment product. It does not include any verification unit allocation. Validator emissions begin only when the mainnet verification network is operational and you are actively running a verification node. No representation is made regarding the future value of any digital asset associated with this protocol.</div>
-    <button class="form-submit" onclick="submitApplication()">Submit Application</button>
-    <div id="form-message"></div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<section id="docs">
-  <div class="section-tag fade-in">05 &mdash; Protocol Documentation</div>
-  <h2 class="section-title fade-in">Published specifications</h2>
-  <p class="section-desc fade-in">Protocol architecture, verification mechanics, economic model, and governance framework. All documents versioned and maintained by KRYONIS.</p>
-  <div class="docs-grid fade-in">
-    <a href="BCCS_Whitepaper_v1.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v1.0</div><h3>Whitepaper</h3><p>Complete protocol specification, tokenomics, oracle design, and governance model. 15 sections.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="BCCS_Executive_Brief_v3.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v3</div><h3>Executive Brief</h3><p>Strategic overview for institutional partners and infrastructure operators.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="data-sovereignty.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Data Sovereignty Architecture</h3><p>How BCCS interoperates with national registry systems. Data locality, cryptographic anchors, jurisdictional compatibility.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
-    <a href="activation-sequence.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Activation Sequence</h3><p>Public framework governing phase activation. Conditions, not dates. The operating discipline of the economic layer.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
-    <a href="BCCS_Tokenomics_Litepaper_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>Tokenomics Litepaper</h3><p>Verification unit economy, infrastructure access, and protocol mechanics.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="BCCS_BAIN_ID_Specification_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>BAIN ID Specification</h3><p>21-character identifier format, 8-state lifecycle, asset taxonomy, API schema.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="BCCS_PoPS_Methodology_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>PoPS Methodology</h3><p>Three-tier verification, confidence scoring, slashing, and dispute resolution.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="BCCS_Token_Economic_Model_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>Token Economic Model</h3><p>Emission schedule, fee mechanics, staking, stress tests, security budget.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="BCCS_BAIN_Governance_v2.0.pdf" target="_blank" rel="noopener noreferrer" class="doc-card"><div class="doc-badge">v2.0</div><h3>BAIN Governance</h3><p>IP framework, consortium migration, standards body, open licensing path.</p><span class="doc-meta">PDF &middot; April 2026</span></a>
-    <a href="implementation.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Implementation Architecture</h3><p>Complete technical blueprint. Satellite pipeline, IoT sensors, oracle consensus, software stack, API, and Founding Oracle deployment plan.</p><span class="doc-meta">HTML &middot; April 2026</span></a>
-    <a href="audit.html" class="doc-card"><div class="doc-badge">v1.0</div><h3>Security Review</h3><p>Internal security assessment of BCCSToken and BCCSNodeLicense. PASS &mdash; no critical issues.</p><span class="doc-meta">KRYONIS &middot; April 2026</span></a>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- BioClearing Teaser — links to dedicated deep-dive page -->
-<section id="bioclearing">
-  <div class="section-tag fade-in">06 &mdash; Clearing Layer</div>
-  <h2 class="section-title fade-in">BioClearing &mdash; <em style="color:var(--green);font-style:italic">the registry layer</em> above BCCS</h2>
-  <p class="section-desc fade-in">BCCS verifies biological state. The BCCS Global Registry records the clearing-state progression that turns verification into settlement. Same BAIN ID. Same protocol discipline. Extended into sovereign-grade infrastructure across 175 jurisdictions.</p>
-  <div class="bc-sim-grid fade-in">
-    <div class="bc-sim-card"><div class="bc-sim-metric">175</div><h4>Sovereign Territories</h4><p>Every sovereign operates its own node. Same BAIN ID standard across every jurisdiction. Protocol connects nodes, does not centralise data.</p></div>
-    <div class="bc-sim-card"><div class="bc-sim-metric">7-State</div><h4>Irreversible Ratchet</h4><p>Observed &rarr; Measured &rarr; Verified &rarr; Registered &rarr; Final (+ R). Atomic transitions. Forward-only motion. Transparent reversal. No rollback.</p></div>
-    <div class="bc-sim-card"><div class="bc-sim-metric">HK&middot;UAE&middot;SG</div><h4>Tri-Jurisdiction</h4><p>Primary Hong Kong, synchronous mirrors UAE and Singapore. Sub-second cross-jurisdiction finality. No single government can compel data modification.</p></div>
-  </div>
-  <p class="section-desc fade-in" style="margin-bottom:1.5rem">The BAIN ID is the bridge. What begins as a 21-character verification identifier on BCCS becomes the atomic unit of a global clearing registry for territorial bio-capital. <strong style="color:var(--text)">One identifier. Every layer. Forever.</strong></p>
-  <div class="fade-in" style="display:flex;gap:1rem;flex-wrap:wrap">
-    <a href="bioclearing.html" class="btn-primary">Read the Architecture &rarr;</a>
-    <a href="https://bioclearing.global" target="_blank" rel="noopener noreferrer" class="btn-secondary">Open Registry &rarr;</a>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<div class="founder-section">
-  <div class="section-tag fade-in">07 &mdash; Architect</div>
-  <div class="founder-card fade-in">
-    <img src="steven-alber.jpeg" alt="Steven Alber" class="founder-photo" loading="lazy">
-    <div class="founder-info">
-      <h3>Steven Alber</h3>
-      <div class="founder-role">Founder &amp; Protocol Architect</div>
-      <p>Two decades in strategic systems design across Asia-Pacific. KRYONIS Sovereign Systems Limited, Hong Kong.</p>
+<section class="band" aria-labelledby="is-h">
+  <div class="wrap">
+    <div class="band__head">
+      <p class="eyebrow">Read this before you write to us</p>
+      <h2 id="is-h">What a record is, and what it is not</h2>
+    </div>
+    <div class="pair">
+      <div class="card">
+        <h3>A record is</h3>
+        <ul class="list-yes">
+          <li>A dated statement about one area, one period and one question</li>
+          <li>Re-runnable from stored inputs, byte for byte</li>
+          <li>Explicit about uncertainty and about what was not examined</li>
+          <li>Able to end in “insufficient evidence”</li>
+          <li>Marked with who commissioned it and who paid</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>A record is not</h3>
+        <ul class="list-no">
+          <li>A certificate, a carbon credit or a rating</li>
+          <li>A verification under any carbon or biodiversity standard, or the opinion of an accredited verification body</li>
+          <li>Field truth: satellites see canopy, not seedlings, species, biomass or carbon</li>
+          <li>A statement about a site today, unless today’s data was commissioned</li>
+          <li>Independent scientific validation of the method. That has not started, and the public record says so</li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand"><a href="https://kryonislab.org">KRYONIS</a> Sovereign Systems Limited &mdash; Hong Kong<br>&copy; 2026</div>
-    <div class="footer-links">
-      <a href="https://kryonislab.org" target="_blank" rel="noopener noreferrer">KRYONIS Lab</a>
-      <a href="https://bioclearing.global" target="_blank" rel="noopener noreferrer">bioclearing.global</a>
+<section class="band band--tint" aria-labelledby="who-h">
+  <div class="wrap">
+    <div class="band__head">
+      <p class="eyebrow">Who it is for</p>
+      <h2 id="who-h">People who have to act on someone else’s area claim</h2>
+      <p>These are intended uses, written as hypotheses in the programme record. BCCS has no customer yet and does not name any.</p>
+    </div>
+    <div class="grid grid--3">
+      <div class="card"><h3>Funders and programmes</h3><p>You release money against restoration or protection milestones, or you evaluate a programme afterwards. You need area evidence that does not come only from the implementer.</p><p class="card__more"><a href="/use-cases.html#funders">For funders<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p></div>
+      <div class="card"><h3>Project developers, verifiers and raters</h3><p>You want to know whether an area claim will survive examination before the verification visit, the rating or the press does the examining.</p><p class="card__more"><a href="/use-cases.html#projects">For projects<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p></div>
+      <div class="card"><h3>Researchers and reporters</h3><p>You publish a figure and want others to be able to re-run it, or you are looking into a figure somebody else published.</p><p class="card__more"><a href="/use-cases.html#research">For research<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p></div>
     </div>
   </div>
-  <div class="footer-disclaimer">
-    <p>BCCS is not an investment product. The BCCS verification unit ($BCCS) is a protocol access mechanism, not a financial instrument. Node Licenses are non-transferable software permits granting operational rights within the BCCS verification network. License holders perform work and receive protocol emissions in exchange for that work. There is no guarantee of value, profit, or return. This website does not constitute financial, legal, or investment advice. KRYONIS Sovereign Systems Limited is incorporated in Hong Kong SAR.</p>
-    <div class="footer-legal-links">
-      <a href="terms.html">Terms of Service</a>
-      <a href="risk.html">Risk Disclosure</a>
-      <a href="privacy.html">Privacy Policy</a>
+</section>
+
+<section class="band" aria-labelledby="status-h">
+  <div class="wrap">
+    <div class="band__head">
+      <p class="eyebrow">Where things stand</p>
+      <h2 id="status-h">What operates, what is being built, what is a concept</h2>
+      <p>As of 20 November 2026. The first two rows can be inspected today. Nothing below them is offered as finished.</p>
     </div>
+    <table class="table">
+      <thead><tr><th scope="col">Part</th><th scope="col">State</th><th scope="col">What that means</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">BCCS Evidence Observatory</th><td data-label="State"><span class="badge badge--ok">OPERATING</span></td><td data-label="What that means">Public registry and reading room, private workspace, byte-checked intake, controlled publication. <a href="https://observatory.bccs.bio/" rel="noopener">observatory.bccs.bio<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a></td></tr>
+        <tr><th scope="row">Demonstrator 001, claim C-01</th><td data-label="State"><span class="badge badge--ok">PUBLISHED</span></td><td data-label="What that means">One pre-registered measurement for one site and one period, measured on 13 October 2026. Outcome: insufficient evidence. 5 replays passed, all by the programme itself.</td></tr>
+        <tr><th scope="row">Independent validation</th><td data-label="State"><span class="badge badge--pending">NOT STARTED</span></td><td data-label="What that means">No field campaign, no probability reference sample and no external review of the method yet. <a href="/company.html#review">Reviewers are invited</a>.</td></tr>
+        <tr><th scope="row">Change between periods, more sites, an evidence API</th><td data-label="State"><span class="badge badge--pending">IN DEVELOPMENT</span></td><td data-label="What that means">Planned in the programme record. Not funded, not contracted, not under way.</td></tr>
+        <tr><th scope="row">Customers and partners</th><td data-label="State"><span class="badge badge--pending">NONE YET</span></td><td data-label="What that means">The first engagements are run as pilots, at a fixed price agreed in writing.</td></tr>
+        <tr><th scope="row">BCCS protocol: identifiers, node network, token</th><td data-label="State"><span class="badge badge--pending">CONCEPT</span></td><td data-label="What that means">Design documents of April 2026. No verification network operates. <a href="/protocol.html">Status of every part</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="cta-h">
+  <div class="wrap cta__in">
+    <div>
+      <h2 id="cta-h">Have a claim that someone else must be able to check?</h2>
+      <p>Describe the site, the claim and the decision it feeds. You receive a written scope with a deliverable, a date and a price within two working days. If open satellite data cannot answer the question, the reply says so.</p>
+    </div>
+    <p class="cta__actions">
+      <a class="btn btn--light" href="/contact.html">Request a proposal</a>
+      <a class="btn btn--ghost-light" href="mailto:hq@kryonis.global">hq@kryonis.global</a>
+    </p>
+  </div>
+</section>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap site-foot__in">
+    <div class="site-foot__who">
+      <p class="site-foot__brand"><svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#0f2d2a"/><path d="M7 21.5c3.2-5.5 6.1-8.2 9-8.2s5.8 2.7 9 8.2" fill="none" stroke="#9be2bd" stroke-width="2.2" stroke-linecap="round"/><path d="M11 21.5c1.7-2.6 3.3-3.9 5-3.9s3.3 1.3 5 3.9" fill="none" stroke="#bb8657" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9.2" r="1.8" fill="#9be2bd"/></svg><span>BCCS</span></p>
+      <p>Evidence records for coastal ecosystem claims: fixed before the data is opened, stored with their digests, re-runnable, and able to refuse.</p>
+      <p>KRYONIS Sovereign Systems Limited, Hong Kong SAR.<br><a href="mailto:hq@kryonis.global">hq@kryonis.global</a></p>
+    </div>
+    <nav aria-label="Evidence services">
+      <h2>Evidence services</h2>
+      <ul>
+        <li><a href="/observatory.html">The live record</a></li>
+        <li><a href="/services.html">Services and prices</a></li>
+        <li><a href="/method.html">Method and limits</a></li>
+        <li><a href="/use-cases.html">Who it is for</a></li>
+        <li><a href="/evidence-readiness-checklist.html">Evidence readiness checklist</a></li>
+        <li><a href="/contact.html">Request a proposal</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Reading">
+      <h2>Reading</h2>
+      <ul>
+        <li><a href="/insights/">Notes</a></li>
+        <li><a href="https://observatory.bccs.bio/" rel="noopener">BCCS Evidence Observatory<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a></li>
+        <li><a href="/protocol.html">Protocol research (concept)</a></li>
+        <li><a href="https://kryonis.global/" rel="noopener">KRYONIS<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens kryonis.global)</span></a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Company">
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/company.html">Who does the work</a></li>
+        <li><a href="/company.html#review">Review this work</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Protocol terms</a></li>
+        <li><a href="/risk.html">Protocol risk disclosure</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap site-foot__base">
+    <p>An evidence record is not a certificate, a carbon credit, a verification under any standard or independent scientific validation. <a href="/method.html#words">What the words mean</a>.</p>
+    <p>© 2026 KRYONIS Sovereign Systems Limited · Page updated 2026-11-20</p>
   </div>
 </footer>
+<script defer src="/assets/site.js?v=b77563aa24"></script>
 
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-  const terminalLines = [
-    { text: '# Verification query — biological asset state via BCCS API', cls: 'comment' },
-    { text: '', cls: '' },
-    { text: '> GET /bain/BRA-TF-7f3a9c2b1e4d-A1C7/state', cls: 'prompt' },
-    { text: '', cls: '' },
-    { text: '{', cls: 'string' },
-    { text: '  <span class="key">"bain_id"</span>:        <span class="value">"BRA-TF-7f3a9c2b1e4d-A1C7"</span>,', cls: '' },
-    { text: '  <span class="key">"asset_class"</span>:    <span class="value">"Tropical Forest"</span>,', cls: '' },
-    { text: '  <span class="key">"region"</span>:         <span class="value">"BRA"</span>,', cls: '' },
-    { text: '  <span class="key">"state"</span>:          <span class="value">"Verified-Stable"</span>,', cls: '' },
-    { text: '  <span class="key">"confidence"</span>:     <span class="value">0.94</span>,', cls: '' },
-    { text: '  <span class="key">"last_verified"</span>:  <span class="value">"2026-04-01T09:14:00Z"</span>,', cls: '' },
-    { text: '  <span class="key">"tier_1"</span>:         <span class="value">"Sentinel-2 spectral confirmed"</span>,', cls: '' },
-    { text: '  <span class="key">"tier_2"</span>:         <span class="value">"IoT soil moisture nominal"</span>,', cls: '' },
-    { text: '  <span class="key">"tier_3"</span>:         <span class="value">"Physical inspection pending"</span>,', cls: '' },
-    { text: '  <span class="key">"consensus"</span>:      <span class="value">"2-of-3 tiers confirmed"</span>,', cls: '' },
-    { text: '  <span class="key">"data_locality"</span>:  <span class="value">"Evidence retained in BRA jurisdiction"</span>,', cls: '' },
-    { text: '  <span class="key">"query_fee"</span>:      <span class="value">"0.012 $BCCS"</span>', cls: '' },
-    { text: '}', cls: 'string' },
-    { text: '', cls: '' },
-    { text: '> POST /bain/BRA-TF-7f3a9c2b1e4d-A1C7/verify', cls: 'prompt' },
-    { text: '  <span class="key">validator</span>: <span class="value">0x7a3f...9c12</span>  <span class="key">evidence_hash</span>: <span class="value">0xb29c...f4a8</span>', cls: '' },
-    { text: '  <span class="key">status</span>:    <span class="value">Attestation accepted. State confirmed: Verified-Stable.</span>', cls: '' },
-  ];
-  function runTerminal() {
-    const el = document.getElementById('terminal'); if (!el) return; el.innerHTML = '';
-    let i = 0;
-    function addLine() {
-      if (i >= terminalLines.length) return;
-      const line = terminalLines[i]; const div = document.createElement('div');
-      div.className = 'terminal-line'; if (line.cls) div.classList.add(line.cls);
-      div.innerHTML = line.text || '&nbsp;'; el.appendChild(div); i++;
-      setTimeout(addLine, line.text ? 120 : 60);
-    }
-    addLine();
-  }
-  const termObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) { runTerminal(); termObs.unobserve(entry.target); } });
-  }, { threshold: 0.3 });
-  const termEl = document.querySelector('.terminal-section');
-  if (termEl) termObs.observe(termEl);
-  async function submitApplication() {
-    const wallet = document.getElementById('wallet-input').value.trim();
-    const email = document.getElementById('email-input').value.trim();
-    const qual = document.getElementById('qual-input').value.trim();
-    if (!wallet || !wallet.startsWith('0x') || wallet.length !== 42) { showMsg('Please enter a valid Base wallet address (0x..., 42 characters).', false); return; }
-    if (!email || !email.includes('@') || !email.includes('.')) { showMsg('Please enter a valid email address.', false); return; }
-    if (!qual || qual.length < 20) { showMsg('Please describe your qualification (minimum 20 characters).', false); return; }
-    const btn = document.querySelector('.form-submit'); btn.textContent = 'Submitting...'; btn.style.opacity = '0.7'; btn.style.pointerEvents = 'none';
-    try {
-      const FORMSPREE_ID = 'xojkwqbg';
-      const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ wallet, email, qualification: qual, _subject: 'BCCS Infrastructure Access Application', source: 'bccs.bio' })
-      });
-      if (res.ok) { showMsg('Application received. You will be notified if approved for whitelist inclusion.', true); document.getElementById('wallet-input').value = ''; document.getElementById('email-input').value = ''; document.getElementById('qual-input').value = ''; btn.textContent = 'Submitted'; }
-      else { throw new Error('Failed'); }
-    } catch (err) { showMsg('Submission failed. Please try again or contact us directly.', false); btn.textContent = 'Submit Application'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
-  }
-  function showMsg(text, success) { const msg = document.getElementById('form-message'); msg.style.display = 'block'; msg.style.color = success ? '#3ECF8E' : '#EF4444'; msg.textContent = text; }
-</script>
 </body>
 </html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method and limits · BCCS</title>
+<meta name="description" content="How a BCCS evidence record is made and what it cannot tell you: pre-registration, receipts, replay, the three outcomes, and why a hash match is not validation.">
+<link rel="canonical" href="https://bccs.bio/method.html">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0f2d2a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BCCS">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Method and limits">
+<meta property="og:description" content="How a BCCS evidence record is made and what it cannot tell you: pre-registration, receipts, replay, the three outcomes, and why a hash match is not validation.">
+<meta property="og:url" content="https://bccs.bio/method.html">
+<meta property="og:image" content="https://bccs.bio/share-card.png?v=36c451dbfc">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BCCS. Evidence for coastal ecosystem claims that a third party can re-run, and that refuses when it should.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Method and limits">
+<meta name="twitter:description" content="How a BCCS evidence record is made and what it cannot tell you: pre-registration, receipts, replay, the three outcomes, and why a hash match is not validation.">
+<meta name="twitter:image" content="https://bccs.bio/share-card.png?v=36c451dbfc">
+<meta name="twitter:image:alt" content="BCCS. Evidence for coastal ecosystem claims that a third party can re-run, and that refuses when it should.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.className="js"</script>
+<link rel="stylesheet" href="/assets/site.css?v=49ad7519d8">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://bccs.bio/#organisation","name":"BCCS","legalName":"KRYONIS Sovereign Systems Limited","url":"https://bccs.bio/","logo":"https://bccs.bio/apple-touch-icon.png","email":"hq@kryonis.global","description":"Re-runnable satellite evidence records for mangrove and coastal ecosystem claims.","parentOrganization":{"@type":"Organization","name":"KRYONIS Sovereign Systems Limited","url":"https://kryonis.global/"},"sameAs":["https://observatory.bccs.bio/","https://kryonis.global/"]}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap site-head__in">
+    <a class="brand" href="/"><svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#0f2d2a"/><path d="M7 21.5c3.2-5.5 6.1-8.2 9-8.2s5.8 2.7 9 8.2" fill="none" stroke="#9be2bd" stroke-width="2.2" stroke-linecap="round"/><path d="M11 21.5c1.7-2.6 3.3-3.9 5-3.9s3.3 1.3 5 3.9" fill="none" stroke="#bb8657" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9.2" r="1.8" fill="#9be2bd"/></svg><span class="brand__name">BCCS</span><span class="brand__what">Evidence services</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">Menu</span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul><li><a href="/observatory.html">Live record</a></li><li><a href="/services.html">Services and prices</a></li><li><a href="/method.html" aria-current="page">Method and limits</a></li><li><a href="/use-cases.html">Who it is for</a></li><li><a href="/insights/">Notes</a></li><li><a href="/company.html">Company</a></li></ul>
+      <a class="btn btn--small" href="/contact.html">Request a proposal</a>
+    </nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+
+<header class="page-head"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">BCCS</a></li><li aria-current="page">Method and limits</li></ol></nav><p class="eyebrow">Method and limits</p><h1>How a record is made, and what it cannot tell you</h1><p class="lead">The value of a record lies in what it lets a stranger check. This page describes the mechanism and then spends as long on its limits.</p></div></header>
+
+<section class="band" aria-labelledby="axes-h">
+  <div class="wrap">
+    <div class="band__head">
+      <h2 id="axes-h">Four things that are kept apart</h2>
+      <p>Most confusion about “verified” data comes from folding these into one word. In a BCCS record each has its own field and its own value.</p>
+    </div>
+    <table class="table">
+      <thead><tr><th scope="col">Axis</th><th scope="col">The question it answers</th><th scope="col">Demonstrator 001 today</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Processing state</th><td data-label="The question it answers">Did the computation run to its end?</td><td data-label="Demonstrator 001 today"><span class="badge badge--ok">SUCCEEDED</span></td></tr>
+        <tr><th scope="row">Evidence outcome</th><td data-label="The question it answers">What does the evidence support under the rule fixed beforehand?</td><td data-label="Demonstrator 001 today"><span class="badge badge--refuse">INSUFFICIENT EVIDENCE</span></td></tr>
+        <tr><th scope="row">Replay</th><td data-label="The question it answers">Does the computation give the same result when run again, and who ran it?</td><td data-label="Demonstrator 001 today">5 passed, 1 not run, 0 independent</td></tr>
+        <tr><th scope="row">Independent review</th><td data-label="The question it answers">Has someone outside the programme examined the method and the result?</td><td data-label="Demonstrator 001 today"><span class="badge badge--pending">NOT REVIEWED</span></td></tr>
+      </tbody>
+    </table>
+    <p class="small muted" style="margin-top:.75rem">A run that succeeds can still end in a refusal, and a result that replays perfectly can still be wrong. <a href="https://observatory.bccs.bio/claims/c-01" rel="noopener">See all four on the live record<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a></p>
+  </div>
+</section>
+
+<section class="band band--tint" aria-labelledby="words-h" id="words">
+  <div class="wrap">
+    <div class="band__head">
+      <h2 id="words-h">Five words that are not synonyms</h2>
+      <p>A hash match is not a replay. A replay is not validation. Validation by the author is not independent review. None of them is certification.</p>
+    </div>
+    <table class="table">
+      <thead><tr><th scope="col">Word</th><th scope="col">What it establishes</th><th scope="col">What it does not</th><th scope="col">BCCS today</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Integrity</th><td data-label="What it establishes">These are the same bytes that were recorded: sizes and SHA-256 digests match.</td><td data-label="What it does not">That the bytes are right, or mean what is said of them.</td><td data-label="BCCS today">In place: 46 of 46 files match.</td></tr>
+        <tr><th scope="row">Reproducibility</th><td data-label="What it establishes">The same inputs and the same code give the same result again.</td><td data-label="What it does not">That the method measures the thing it names.</td><td data-label="BCCS today">Shown by the programme’s own runs. A full recomputation on the public server has not been run.</td></tr>
+        <tr><th scope="row">Validity</th><td data-label="What it establishes">The method measures what it claims to, within a stated error, tested against data it was not built on.</td><td data-label="What it does not">That every later run is right.</td><td data-label="BCCS today">Not established. There is no probability reference sample and no field campaign.</td></tr>
+        <tr><th scope="row">Independent review</th><td data-label="What it establishes">A qualified party with no stake has examined method and result and put their name to a report.</td><td data-label="What it does not">A guarantee, or conformity with a standard.</td><td data-label="BCCS today">Not started. <a href="/company.html#review">Reviewers are invited.</a></td></tr>
+        <tr><th scope="row">Certification</th><td data-label="What it establishes">An accredited body attests conformity with a named standard.</td><td data-label="What it does not">Anything outside that standard’s scope.</td><td data-label="BCCS today">None, and none is offered. BCCS is not a verification body.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="mech-h">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <h2 id="mech-h">The mechanism</h2>
+        <h3>The rule is registered before the result exists</h3>
+        <p>The claim, the area boundary, the period, the thresholds with a bracket around each, the tolerances and the decision rule are written into one method file. Its SHA-256 is recorded before any measurement is computed. That is what shows the rule was not adjusted once the answer was known.</p>
+        <h3>Every request leaves a receipt</h3>
+        <p>Each call to a data source is recorded when it is made: what was asked, when, what came back, its size and its digest. Demonstrator 001 holds 296 of them. The inputs are then frozen.</p>
+        <h3>The computation replays offline</h3>
+        <p>The measurement runs from the stored bytes inside an environment with no network, so it cannot quietly fetch something newer. Run again from the same bytes, it must give the same record.</p>
+        <h3>Two sensor groups and an external reference</h3>
+        <p>Optical evidence (Sentinel-2) and radar evidence (Sentinel-1) are computed separately and compared with each other and with a published reference map, Global Mangrove Watch. Agreement has to hold within tolerances that were fixed beforehand.</p>
+        <h3>Three outcomes, one of which is no</h3>
+        <ul>
+          <li><span class="badge badge--ok">SUPPORTED</span> with an interval, when the groups and the reference agree and the decision survives every bracket.</li>
+          <li><span class="badge badge--conflict">CONFLICTING</span> when the evidence groups disagree beyond the tolerance.</li>
+          <li><span class="badge badge--refuse">INSUFFICIENT EVIDENCE</span> when coverage is too thin, or when the answer depends on where inside its bracket a threshold sits.</li>
+        </ul>
+        <p>Refusing to conclude is a designed result, not a failure.</p>
+        <h3>Publication is a separate decision</h3>
+        <p>Nothing in the registry is public until a named person approves a publication set. For a refused result the programme publishes no extent figure and no map from which one could be read.</p>
+        <p><a href="https://observatory.bccs.bio/method" rel="noopener">The pre-registered method on the Observatory<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a></p>
+      </div>
+      <aside class="card" aria-labelledby="lim-h">
+        <h2 id="lim-h" style="font-size:1.35rem">How independent the evidence is</h2>
+        <p class="small muted">From the programme record, word for word:</p>
+        <ul class="list-no">
+          <li>Optical imagery, radar and the reference map are all satellite remote sensing. They are one tier of evidence, not three independent lines.</li>
+          <li>All three use the same area polygon and pixel rule. The optical and radar groups also share the evaluation grid, the epoch and the programme's processing code, so a shared error would move them together.</li>
+          <li>Tidal state is the main correlated failure mode. It is addressed by compositing over many dates and by a tide sensitivity.</li>
+          <li>The reference is a published map, not ground truth. Part of its lineage is optical.</li>
+          <li>Radar detects any woody canopy and does not identify species. Mangrove attribution rests on the optical group and the reference.</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band band--tint" aria-labelledby="cant-h">
+  <div class="wrap">
+    <div class="band__head">
+      <h2 id="cant-h">What satellite evidence of this kind cannot do</h2>
+    </div>
+    <div class="grid grid--3">
+      <div class="card"><h3>See what is under the canopy</h3><p>Pixels of 10 to 20 metres show closed canopy. Seedlings, sparse young plantations, species and the condition of individual trees are invisible at this scale.</p></div>
+      <div class="card"><h3>Measure carbon or biodiversity</h3><p>An extent is an area. Biomass, carbon stock, species richness and ecosystem health need other measurements, most of them on the ground.</p></div>
+      <div class="card"><h3>Replace the tide table and the boots</h3><p>Tidal state changes what a sensor sees on a mudflat. Compositing over many dates and a tide sensitivity reduce the effect; they do not remove it. Field truth remains field truth.</p></div>
+    </div>
+    <div class="note" style="margin-top:1.25rem">
+      <h3>What would change this picture</h3>
+      <p>The programme record sets out the work: Independent validation in the field and against very-high-resolution imagery, with external methodology review.</p>
+      <p class="small muted">Month 1 would start on a grant agreement, indicatively mid-2027. Nothing in this plan is funded, contracted or under way, and no partner or pilot host has been named.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="cta-h">
+  <div class="wrap cta__in">
+    <div>
+      <h2 id="cta-h">Think the method is wrong somewhere?</h2>
+      <p>Say where. The method file, the decision steps and the public inputs are open, and a qualified reviewer can be given the withheld files under a short agreement. Criticism that holds is published with the record.</p>
+    </div>
+    <p class="cta__actions">
+      <a class="btn btn--light" href="/contact.html">Request a proposal</a>
+      <a class="btn btn--ghost-light" href="mailto:hq@kryonis.global">hq@kryonis.global</a>
+    </p>
+  </div>
+</section>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap site-foot__in">
+    <div class="site-foot__who">
+      <p class="site-foot__brand"><svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#0f2d2a"/><path d="M7 21.5c3.2-5.5 6.1-8.2 9-8.2s5.8 2.7 9 8.2" fill="none" stroke="#9be2bd" stroke-width="2.2" stroke-linecap="round"/><path d="M11 21.5c1.7-2.6 3.3-3.9 5-3.9s3.3 1.3 5 3.9" fill="none" stroke="#bb8657" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9.2" r="1.8" fill="#9be2bd"/></svg><span>BCCS</span></p>
+      <p>Evidence records for coastal ecosystem claims: fixed before the data is opened, stored with their digests, re-runnable, and able to refuse.</p>
+      <p>KRYONIS Sovereign Systems Limited, Hong Kong SAR.<br><a href="mailto:hq@kryonis.global">hq@kryonis.global</a></p>
+    </div>
+    <nav aria-label="Evidence services">
+      <h2>Evidence services</h2>
+      <ul>
+        <li><a href="/observatory.html">The live record</a></li>
+        <li><a href="/services.html">Services and prices</a></li>
+        <li><a href="/method.html">Method and limits</a></li>
+        <li><a href="/use-cases.html">Who it is for</a></li>
+        <li><a href="/evidence-readiness-checklist.html">Evidence readiness checklist</a></li>
+        <li><a href="/contact.html">Request a proposal</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Reading">
+      <h2>Reading</h2>
+      <ul>
+        <li><a href="/insights/">Notes</a></li>
+        <li><a href="https://observatory.bccs.bio/" rel="noopener">BCCS Evidence Observatory<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a></li>
+        <li><a href="/protocol.html">Protocol research (concept)</a></li>
+        <li><a href="https://kryonis.global/" rel="noopener">KRYONIS<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens kryonis.global)</span></a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Company">
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/company.html">Who does the work</a></li>
+        <li><a href="/company.html#review">Review this work</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Protocol terms</a></li>
+        <li><a href="/risk.html">Protocol risk disclosure</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap site-foot__base">
+    <p>An evidence record is not a certificate, a carbon credit, a verification under any standard or independent scientific validation. <a href="/method.html#words">What the words mean</a>.</p>
+    <p>© 2026 KRYONIS Sovereign Systems Limited · Page updated 2026-11-20</p>
+  </div>
+</footer>
+<script defer src="/assets/site.js?v=b77563aa24"></script>
+
+</body>
+</html>

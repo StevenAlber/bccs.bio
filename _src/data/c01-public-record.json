@@ -1,0 +1,261 @@
+{
+  "retrieved": "2026-11-20 03:52 UTC",
+  "source": "https://observatory.bccs.bio/api/public/",
+  "publication": {
+    "version": 1,
+    "status": "APPROVED",
+    "approved_at": "2026-11-14T17:46:36.415Z"
+  },
+  "claim": {
+    "id": "C-01",
+    "title": "Historical mangrove canopy extent of AOI v1 in the 2020 dry season",
+    "type": "EXTENT_LEVEL",
+    "area_m2_stated": 19373342.34,
+    "epoch": {
+      "name": "dry season 2020",
+      "start": "2020-01-01T00:00:00Z",
+      "end": "2020-04-30T23:59:59Z"
+    },
+    "processing_state": "SUCCEEDED",
+    "evidence_outcome": "INSUFFICIENT_EVIDENCE",
+    "reason_codes": [
+      "U_THRESHOLD_SENSITIVE"
+    ],
+    "extent_stated": false,
+    "extent_explanation": "The method states an extent interval only for a SUPPORTED outcome, and this outcome is INSUFFICIENT_EVIDENCE.",
+    "record_as_of": "2026-10-13",
+    "public_statement": "BCCS ran a pre-registered measurement of the 2020 mangrove canopy extent of a 1,937 ha research area in Cần Giờ from 24 Sentinel-2 scenes (16 admitted) and 19 Sentinel-1 acquisitions, with every input frozen and every step replayable offline. The result was not robust to the pre-registered threshold brackets, so the method returned INSUFFICIENT EVIDENCE and no extent is claimed."
+  },
+  "method": {
+    "id": "d001-c01-0.1",
+    "sha256": "3e1a40fa372ccfcfe860884bb6db17afcf766bcb265c1684d93153b07a7a12e4"
+  },
+  "inputs": {
+    "scenes_total": 24,
+    "scenes_admitted": 16,
+    "scenes_used": 16,
+    "acquisitions_total": 19,
+    "acquisitions_used": 19,
+    "receipts": 296,
+    "bytes_received": 144244440
+  },
+  "inventory": {
+    "files_listed": 46,
+    "files_matching": 46
+  },
+  "decision_steps": [
+    {
+      "step": 1,
+      "rule": "Each group covers at least 99.00 % of the AOI and has valid observations for at least 90.00 %",
+      "met": true,
+      "detail": "Coverage 100.00 % (optical) and 100.00 % (radar); valid fraction 99.50 % (optical) and 100.00 % (radar)"
+    },
+    {
+      "step": 2,
+      "rule": "Both evidence groups and the external reference are present",
+      "met": true,
+      "detail": "Reference covers 100.00 % of the AOI"
+    },
+    {
+      "step": 3,
+      "rule": "Temporal rules: every acquisition inside the epoch; the reference period contains the epoch",
+      "met": true,
+      "detail": "Met"
+    },
+    {
+      "step": 4,
+      "rule": "Primary decision: groups within 10.00 % of each other, reference within 10.00 % of each",
+      "met": true,
+      "detail": "SUPPORTED"
+    },
+    {
+      "step": 5,
+      "rule": "Robustness: the decision is the same with each threshold moved to either end of its pre-registered bracket",
+      "met": false,
+      "detail": "primary SUPPORTED, mvi_low SUPPORTED, mvi_high CONFLICTING, vh_low SUPPORTED, vh_high CONFLICTING"
+    },
+    {
+      "step": 6,
+      "rule": "A SUPPORTED outcome states an extent interval",
+      "met": null,
+      "detail": "No interval: the outcome is not SUPPORTED"
+    }
+  ],
+  "decisions_by_variant": {
+    "mvi_high": "CONFLICTING",
+    "mvi_low": "SUPPORTED",
+    "primary": "SUPPORTED",
+    "vh_high": "CONFLICTING",
+    "vh_low": "SUPPORTED"
+  },
+  "sensitivity": {
+    "inner_buffer": {
+      "rule": "IC-14: the AOI mask of each grid eroded by one pixel",
+      "status": "PERFORMED",
+      "outcome": "INSUFFICIENT_EVIDENCE"
+    },
+    "tide": {
+      "rule": "IC-15: the quarter of acquisitions with the highest predicted tide removed from each group",
+      "status": "PERFORMED",
+      "outcome": "INSUFFICIENT_EVIDENCE"
+    }
+  },
+  "replay": [
+    {
+      "kind": "CI_CROSS_VERSION",
+      "title": "Same result on Python 3.12 and 3.13",
+      "status": "PASS",
+      "performed_by": "Programme CI, GitHub Actions run 38363158970",
+      "independent": false
+    },
+    {
+      "kind": "CI_TAMPER_SUITE",
+      "title": "Modified inputs are refused",
+      "status": "PASS",
+      "performed_by": "Programme CI, GitHub Actions run 38363158970",
+      "independent": false
+    },
+    {
+      "kind": "SEPARATE_COLLECTION",
+      "title": "A separate, earlier collection gives the same result section",
+      "status": "PASS",
+      "performed_by": "Programme CI, GitHub Actions run 38360695036, compared by the programme",
+      "independent": false
+    },
+    {
+      "kind": "CI_REPEAT_COMPUTATION",
+      "title": "Repeat computation from the same frozen inputs",
+      "status": "PASS",
+      "performed_by": "Programme CI, GitHub Actions run 38364436786",
+      "independent": false
+    },
+    {
+      "kind": "DECISION_REPLAY",
+      "title": "Decision replayed from the delivered maps (programme's local run)",
+      "status": "PASS",
+      "performed_by": "WP-02B build agent, in its build environment",
+      "independent": false
+    },
+    {
+      "kind": "FULL_RECOMPUTATION",
+      "title": "Recomputation from the frozen inputs in this deployment",
+      "status": "NOT_RUN",
+      "performed_by": "—",
+      "independent": false
+    }
+  ],
+  "review": {
+    "validation_state": "NOT_REVIEWED",
+    "gate": {
+      "id": 7,
+      "name": "Independent validation",
+      "status": "NOT STARTED"
+    },
+    "internal_acceptance": {
+      "at": "2026-10-13",
+      "by": "The build agent of the measurement stage and the programme's own CI",
+      "note": "An acceptance report written by the stage that produced the result, and reproduction on the programme's own CI, are not independent scientific validation."
+    },
+    "open_questions": [
+      "OD-7 (OPEN): Next step after the threshold-sensitive C-01 result",
+      "A. Accept INSUFFICIENT_EVIDENCE as the C-01 result for the 2020 epoch and keep it unchanged.",
+      "B. Commission an independent calibration of the MVI and VH thresholds for Can Gio (data not used in this result), pre-register a method d001-c01-0.2 from it, and evaluate it as a new, separately versioned measurement.",
+      "C. Treat the bracket widths themselves as the open question for external review (Gate 7) before any new version."
+    ]
+  },
+  "not_claimed": [
+    "any change over time, trend, gain or loss",
+    "any lifecycle state other than 01 Unverified",
+    "canopy cover percentage inside mangrove stands, canopy height, biomass, carbon, biodiversity or ecosystem health",
+    "the condition of the site at any time after 30 April 2020",
+    "an error-adjusted area estimate (no probability reference sample exists)",
+    "an ecosystem-condition assessment for 2026 or any time after 30 April 2020",
+    "a carbon-stock or carbon-credit estimate",
+    "biodiversity or ecosystem-health verification",
+    "a mangrove gain or loss between years",
+    "independent field validation",
+    "a completed production PoPS verification",
+    "a lifecycle transition or a Base attestation",
+    "species identification by radar: G-SAR detects canopy volume scattering, not mangroves"
+  ],
+  "withheld": [
+    {
+      "field": "Group extent fractions, pixel counts and variant intervals",
+      "reason": "The method refused to state an extent. Under the programme's claims discipline no extent figure or range for the site is published for a refused result, including the values of the individual evidence groups. The decisions, thresholds and data-quality figures are shown in full."
+    },
+    {
+      "field": "Agreement table between the groups",
+      "reason": "It is made of group pixel counts."
+    },
+    {
+      "field": "Statement recorded in the result record",
+      "reason": "It quotes the group values. The wording approved for external use is shown instead."
+    },
+    {
+      "field": "6 map layers of the evidence groups and the reference",
+      "reason": "A class map of an evidence group shows that group's extent. The method refused to state an extent, and the programme does not publish group-level extent values for a refused result. Authorised reviewers can inspect the map in the operator workspace. The layers: Optical group: canopy class at the primary threshold; Optical group: valid observations per pixel; Radar group: canopy class at the primary threshold; Radar group: median VH backscatter; Radar group: valid observations per pixel; Reference: Global Mangrove Watch v3.0, 2020."
+    },
+    {
+      "field": "The canonical result record file",
+      "reason": "It carries the group values. Its SHA-256 is shown so that a reviewer given access can confirm they hold the same bytes."
+    }
+  ],
+  "credits": [
+    {
+      "family": "GMW-V3",
+      "text": "Bunting, P. et al. (2022) Global Mangrove Watch (1996-2020) Version 3.0 Dataset. Zenodo. doi:10.5281/zenodo.6894273",
+      "licence": "Creative Commons Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/)"
+    },
+    {
+      "family": "S1-GRD",
+      "text": "Contains modified Copernicus Sentinel data 2020, processed by ESA; hosted by Microsoft Planetary Computer",
+      "licence": "Copernicus Sentinel data legal notice: free, full and open; redistribution allowed with attribution (Planetary Computer licence field 'proprietary' refers to these terms)"
+    },
+    {
+      "family": "S2-L2A",
+      "text": "Contains modified Copernicus Sentinel data 2020, processed by ESA; COG conversion and STAC by Element 84 (Earth Search, Registry of Open Data on AWS)",
+      "licence": "Copernicus Sentinel data legal notice (https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice): free, full and open; redistribution allowed with attribution"
+    },
+    {
+      "family": "EOT20",
+      "text": "Hart-Davis M., Piccioni G., Dettmering D., Schwatke C., Passaro M., Seitz F. (2021). EOT20 - A global Empirical Ocean Tide model from multi-mission satellite altimetry. SEANOE. https://doi.org/10.17882/79489",
+      "licence": "CC-BY-4.0"
+    }
+  ],
+  "run": {
+    "collected_started_utc": "2026-10-13T07:34:46.189042Z",
+    "assembled_utc": "2026-10-13T07:42:05Z"
+  },
+  "programme": {
+    "as_of": "2026-10-13",
+    "one_sentence": "BCCS gives the people who pay for, regulate or rely on coastal ecosystem outcomes a record of what the satellite evidence actually supports. Each record can be re-run from stored data, states its uncertainty, and refuses when the evidence is insufficient.",
+    "approach": [
+      "The measurement method, thresholds and area are pre-registered and hashed before any result is computed.",
+      "Two sensor groups are used: Sentinel-2 optical and Sentinel-1 radar.",
+      "An external reference is used: Global Mangrove Watch.",
+      "Every request to a data source leaves a receipt, and every record replays offline from stored bytes.",
+      "The outcome may be SUPPORTED with an interval, CONFLICTING or INSUFFICIENT EVIDENCE. Refusing to conclude is a designed result, not a failure."
+    ],
+    "independence_limits": [
+      "Optical imagery, radar and the reference map are all satellite remote sensing. They are one tier of evidence, not three independent lines.",
+      "All three use the same area polygon and pixel rule. The optical and radar groups also share the evaluation grid, the epoch and the programme's processing code, so a shared error would move them together.",
+      "Tidal state is the main correlated failure mode. It is addressed by compositing over many dates and by a tide sensitivity.",
+      "The reference is a published map, not ground truth. Part of its lineage is optical.",
+      "Radar detects any woody canopy and does not identify species. Mangrove attribution rests on the optical group and the reference."
+    ],
+    "not_claimed": [
+      "No carbon tonnes, credits, biodiversity or ecosystem-health scores.",
+      "No statement about the present-day condition of any site.",
+      "No customer, partner, pilot host, revenue or award.",
+      "No independent scientific validation and no technology readiness level."
+    ],
+    "future": [
+      "Annual dry-season extent records for 2020–2026 at Cần Giờ.",
+      "A change claim (C-02) between epochs, pre-registered before it is evaluated.",
+      "Replication at a second Vietnamese site, Mũi Cà Mau.",
+      "Independent validation in the field and against very-high-resolution imagery, with external methodology review.",
+      "Attestation of record hashes on Base. This is tamper-evident timestamping of records; it is not a token, a credit or a proof that a record is true."
+    ],
+    "pilot_start_note": "Month 1 would start on a grant agreement, indicatively mid-2027. Nothing in this plan is funded, contracted or under way, and no partner or pilot host has been named."
+  }
+}

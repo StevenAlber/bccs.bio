@@ -1,0 +1,41 @@
+{
+  "origin": "https://bccs.bio",
+  "name": "BCCS",
+  "tagline": "Evidence for coastal ecosystem claims",
+  "language": "en-GB",
+  "observatory": "https://observatory.bccs.bio",
+  "company": {
+    "legal_name": "KRYONIS Sovereign Systems Limited",
+    "place": "Hong Kong SAR",
+    "parent_site": "https://kryonis.global",
+    "status_page": "https://kryonis.global/status.html",
+    "commissions_page": "https://kryonis.global/commissions.html",
+    "founder": "Steven Alber",
+    "founder_role": "Founder; strategy and programme direction"
+  },
+  "contact": {
+    "email": "hq@kryonis.global",
+    "reply_within": "two working days"
+  },
+  "form": {
+    "endpoint": "",
+    "note": "Empty: the request page writes the request as an email in the visitor's own mail program. Set it to the address of a form service that accepts a JSON POST from https://bccs.bio and answers {\"ok\":true}; the page then sends directly and keeps the email route as the fallback."
+  },
+  "analytics": {
+    "provider": "none",
+    "token": "",
+    "note": "provider: none | cloudflare (token = the site token of Cloudflare Web Analytics) | plausible (token = the domain registered with Plausible) | goatcounter (token = the full count address, e.g. https://stats.example.org/count). The privacy page follows this setting."
+  },
+  "verification": {
+    "google": "",
+    "bing": "",
+    "note": "The content of the verification meta tags that Google Search Console and Bing Webmaster Tools give out. Empty: no tag is written."
+  },
+  "prices": {
+    "question": { "amount": "USD 850", "basis": "fixed", "source": "Published by KRYONIS as commission C-00 (Diagnostic Memo)." },
+    "review": { "amount": "USD 9,500", "basis": "fixed", "source": "Published by KRYONIS as commission C-03 (Verification Readiness Audit)." },
+    "site_check": { "amount": "", "basis": "Fixed price per site and period, stated in the written scope before any work starts" },
+    "room": { "amount": "", "basis": "By written proposal" }
+  },
+  "updated": "2026-11-20"
+}

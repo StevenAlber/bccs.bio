@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protocol research (concept): status of every part · BCCS</title>
+<meta name="description" content="The BCCS protocol is a design published in April 2026: identifiers, a node network and a token. What is deployed, what operates and what does not.">
+<link rel="canonical" href="https://bccs.bio/protocol.html">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0f2d2a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BCCS">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Protocol research (concept): status of every part">
+<meta property="og:description" content="The BCCS protocol is a design published in April 2026: identifiers, a node network and a token. What is deployed, what operates and what does not.">
+<meta property="og:url" content="https://bccs.bio/protocol.html">
+<meta property="og:image" content="https://bccs.bio/share-card.png?v=36c451dbfc">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BCCS. Evidence for coastal ecosystem claims that a third party can re-run, and that refuses when it should.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Protocol research (concept): status of every part">
+<meta name="twitter:description" content="The BCCS protocol is a design published in April 2026: identifiers, a node network and a token. What is deployed, what operates and what does not.">
+<meta name="twitter:image" content="https://bccs.bio/share-card.png?v=36c451dbfc">
+<meta name="twitter:image:alt" content="BCCS. Evidence for coastal ecosystem claims that a third party can re-run, and that refuses when it should.">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.className="js"</script>
+<link rel="stylesheet" href="/assets/site.css?v=49ad7519d8">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://bccs.bio/#organisation","name":"BCCS","legalName":"KRYONIS Sovereign Systems Limited","url":"https://bccs.bio/","logo":"https://bccs.bio/apple-touch-icon.png","email":"hq@kryonis.global","description":"Re-runnable satellite evidence records for mangrove and coastal ecosystem claims.","parentOrganization":{"@type":"Organization","name":"KRYONIS Sovereign Systems Limited","url":"https://kryonis.global/"},"sameAs":["https://observatory.bccs.bio/","https://kryonis.global/"]}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap site-head__in">
+    <a class="brand" href="/"><svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#0f2d2a"/><path d="M7 21.5c3.2-5.5 6.1-8.2 9-8.2s5.8 2.7 9 8.2" fill="none" stroke="#9be2bd" stroke-width="2.2" stroke-linecap="round"/><path d="M11 21.5c1.7-2.6 3.3-3.9 5-3.9s3.3 1.3 5 3.9" fill="none" stroke="#bb8657" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9.2" r="1.8" fill="#9be2bd"/></svg><span class="brand__name">BCCS</span><span class="brand__what">Evidence services</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">Menu</span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul><li><a href="/observatory.html">Live record</a></li><li><a href="/services.html">Services and prices</a></li><li><a href="/method.html">Method and limits</a></li><li><a href="/use-cases.html">Who it is for</a></li><li><a href="/insights/">Notes</a></li><li><a href="/company.html">Company</a></li></ul>
+      <a class="btn btn--small" href="/contact.html">Request a proposal</a>
+    </nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+
+<header class="page-head"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">BCCS</a></li><li aria-current="page">Protocol research</li></ol></nav><p class="eyebrow">Protocol research · concept</p><h1>The BCCS protocol is a design, not an operating network</h1><p class="lead">In April 2026 KRYONIS published a protocol concept: an identifier for biological assets, a network of verification nodes and a token on the Base chain. The documents remain here, unchanged. This page says what state each part is in.</p></div></header>
+
+<section class="band" aria-labelledby="st-h">
+  <div class="wrap">
+    <div class="note note--refuse" style="margin-bottom:1.5rem">
+      <h2 id="st-h" style="font-size:1.3rem">The short version</h2>
+      <p>Two contracts are deployed on Base. No verification network operates. No biological asset has been verified through the protocol and no attestation exists. The pages of April 2026 describe the design in the present tense; where they differ from this page, this page and <a href="https://kryonis.global/status.html" rel="noopener">the status page of KRYONIS<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens kryonis.global)</span></a> take precedence.</p>
+    </div>
+    <table class="table">
+      <thead><tr><th scope="col">Part</th><th scope="col">State</th><th scope="col">What that means</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Protocol documents: whitepaper, BAIN ID, PoPS, governance, economic model</th><td data-label="State"><span class="badge badge--pending">DOCUMENTED</span></td><td data-label="What that means">They describe an architecture and an intent. They are not an account of a running system.</td></tr>
+        <tr><th scope="row">$BCCS contract (ERC-20, Base)</th><td data-label="State"><span class="badge badge--pending">DEPLOYED · NOT OPERATING</span></td><td data-label="What that means">A contract on a public chain. It is not offered as an investment and no public sale is active. <a href="https://basescan.org/address/0xb86174c4c1ca01f0639ce3067306bdf6eeba17a7" rel="noopener">Contract on BaseScan<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens basescan.org)</span></a></td></tr>
+        <tr><th scope="row">Node licence contract (ERC-721, Base)</th><td data-label="State"><span class="badge badge--pending">DEPLOYED · NOT OPERATING</span></td><td data-label="What that means">A non-transferable credential for a network that does not yet exist. It gives no income and no allocation of any unit, and payments are not refunded. Acquired only by application and approval. <a href="https://basescan.org/address/0x44B46f9D170ae8122cce71332884252934b66FBd" rel="noopener">Contract on BaseScan<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens basescan.org)</span></a></td></tr>
+        <tr><th scope="row">Verification network: nodes, three-tier consensus, slashing</th><td data-label="State"><span class="badge badge--pending">NOT BUILT</span></td><td data-label="What that means">Planned in the documents. Nothing of it runs.</td></tr>
+        <tr><th scope="row">Verification API and BAIN ID registry</th><td data-label="State"><span class="badge badge--pending">NOT BUILT</span></td><td data-label="What that means">The query and answer shown on the April home page are an illustration of the design. No such service or asset record exists.</td></tr>
+        <tr><th scope="row">BioClearing registry</th><td data-label="State"><span class="badge badge--pending">CONCEPT</span></td><td data-label="What that means">Registry and clearing logic are described. Operation is not claimed.</td></tr>
+        <tr><th scope="row">Security of the contracts</th><td data-label="State"><span class="badge badge--pending">INTERNAL REVIEW ONLY</span></td><td data-label="What that means">Reviewed by KRYONIS itself in April 2026. No independent audit has been done.</td></tr>
+        <tr><th scope="row">Anchoring the digests of evidence records on a public chain</th><td data-label="State"><span class="badge badge--pending">PLANNED</span></td><td data-label="What that means">Attestation of record hashes on Base. This is tamper-evident timestamping of records; it is not a token, a credit or a proof that a record is true. Not done for any record.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="band band--tint" aria-labelledby="rel-h">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <h2 id="rel-h">How the concept relates to the evidence service</h2>
+        <p>The protocol asks a large question: how could the verified state of a living asset be recorded and relied on between institutions?</p>
+        <p>The evidence service answers a smaller and earlier one: for one claim about one area, what does the evidence actually support? The <a href="https://observatory.bccs.bio/" rel="noopener">BCCS Evidence Observatory<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a> is where that question has been worked through on real data.</p>
+        <p>The answer so far is sobering and useful. In the protocol’s own lifecycle the demonstrator site stands at state 01, Unverified: the public record claims no “lifecycle state other than 01 Unverified”, no “completed production PoPS verification” and no “lifecycle transition or a Base attestation”.</p>
+        <p>A verification layer is only as good as the evidence underneath it. That is why the evidence work comes first, and why it is offered on its own.</p>
+      </div>
+      <aside class="card">
+        <h3>What an evidence engagement does not involve</h3>
+        <ul class="list-no">
+          <li>No token and no licence</li>
+          <li>No wallet and no blockchain transaction</li>
+          <li>No payment other than by invoice</li>
+          <li>No reliance on any part of the table above</li>
+        </ul>
+        <p class="card__more"><a href="/services.html">Services and prices</a></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="docs-h">
+  <div class="wrap narrow">
+    <h2 id="docs-h">The documents of April 2026</h2>
+    <p>Kept at their original addresses. Each page carries a note with its status.</p>
+    <ul>
+      <li><a href="/BCCS_Whitepaper_v1.0.pdf">Whitepaper v1.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_Executive_Brief_v3.pdf">Executive brief v3</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_BAIN_ID_Specification_v2.0.pdf">BAIN ID specification v2.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_PoPS_Methodology_v2.0.pdf">PoPS methodology v2.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_BAIN_Governance_v2.0.pdf">BAIN governance v2.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_Tokenomics_Litepaper_v2.0.pdf">Tokenomics litepaper v2.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_Token_Economic_Model_v2.0.pdf">Token economic model v2.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/BCCS_Internal_Security_Review_v1.0.pdf">Internal security review v1.0</a> <span class="muted small">(PDF)</span></li>
+      <li><a href="/implementation.html">Implementation architecture</a> <span class="muted small">(page)</span></li>
+      <li><a href="/data-sovereignty.html">Data sovereignty architecture</a> <span class="muted small">(page)</span></li>
+      <li><a href="/activation-sequence.html">Activation sequence</a> <span class="muted small">(page)</span></li>
+      <li><a href="/not-carbon.html">Category and positioning: not a carbon project</a> <span class="muted small">(page)</span></li>
+      <li><a href="/bioclearing.html">BioClearing: the clearing layer</a> <span class="muted small">(page)</span></li>
+      <li><a href="/audit.html">Internal security review of the contracts</a> <span class="muted small">(page)</span></li>
+      <li><a href="/mint.html">Node licence page</a> <span class="muted small">(page)</span></li>
+      <li><a href="/terms.html">Protocol terms of service</a> <span class="muted small">(page)</span></li>
+      <li><a href="/risk.html">Protocol risk disclosure</a> <span class="muted small">(page)</span></li>
+      <li><a href="/protocol-home-2026-04.html">The home page of this site as it was in April 2026</a> <span class="muted small">(page)</span></li>
+    </ul>
+    <p class="small muted">The protocol is the intellectual property of KRYONIS Sovereign Systems Limited. Questions about it go to <a href="mailto:hq@kryonis.global">hq@kryonis.global</a>.</p>
+  </div>
+</section>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap site-foot__in">
+    <div class="site-foot__who">
+      <p class="site-foot__brand"><svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="6" fill="#0f2d2a"/><path d="M7 21.5c3.2-5.5 6.1-8.2 9-8.2s5.8 2.7 9 8.2" fill="none" stroke="#9be2bd" stroke-width="2.2" stroke-linecap="round"/><path d="M11 21.5c1.7-2.6 3.3-3.9 5-3.9s3.3 1.3 5 3.9" fill="none" stroke="#bb8657" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="9.2" r="1.8" fill="#9be2bd"/></svg><span>BCCS</span></p>
+      <p>Evidence records for coastal ecosystem claims: fixed before the data is opened, stored with their digests, re-runnable, and able to refuse.</p>
+      <p>KRYONIS Sovereign Systems Limited, Hong Kong SAR.<br><a href="mailto:hq@kryonis.global">hq@kryonis.global</a></p>
+    </div>
+    <nav aria-label="Evidence services">
+      <h2>Evidence services</h2>
+      <ul>
+        <li><a href="/observatory.html">The live record</a></li>
+        <li><a href="/services.html">Services and prices</a></li>
+        <li><a href="/method.html">Method and limits</a></li>
+        <li><a href="/use-cases.html">Who it is for</a></li>
+        <li><a href="/evidence-readiness-checklist.html">Evidence readiness checklist</a></li>
+        <li><a href="/contact.html">Request a proposal</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Reading">
+      <h2>Reading</h2>
+      <ul>
+        <li><a href="/insights/">Notes</a></li>
+        <li><a href="https://observatory.bccs.bio/" rel="noopener">BCCS Evidence Observatory<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens observatory.bccs.bio)</span></a></li>
+        <li><a href="/protocol.html">Protocol research (concept)</a></li>
+        <li><a href="https://kryonis.global/" rel="noopener">KRYONIS<svg class="ico" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr"> (opens kryonis.global)</span></a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Company">
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/company.html">Who does the work</a></li>
+        <li><a href="/company.html#review">Review this work</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Protocol terms</a></li>
+        <li><a href="/risk.html">Protocol risk disclosure</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap site-foot__base">
+    <p>An evidence record is not a certificate, a carbon credit, a verification under any standard or independent scientific validation. <a href="/method.html#words">What the words mean</a>.</p>
+    <p>© 2026 KRYONIS Sovereign Systems Limited · Page updated 2026-11-20</p>
+  </div>
+</footer>
+<script defer src="/assets/site.js?v=b77563aa24"></script>
+
+</body>
+</html>
