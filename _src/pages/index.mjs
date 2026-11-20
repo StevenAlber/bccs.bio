@@ -64,7 +64,7 @@ export default (ctx) => {
       <div class="card">
         <p class="card__kicker">One site, one period, one question</p>
         <h3>Site evidence check</h3>
-        <p>An independent, dated answer to one area question, from open Sentinel-1 and Sentinel-2 data, under a method you see before the data is opened.</p>
+        <p>An independent, dated answer to one area question before a verification, a rating, a tender or a report to a funder. From open Sentinel-1 and Sentinel-2 data, under a method you see before the data is opened.</p>
         <p class="card__price"><strong>${e(p.site_check.amount || "Fixed price per site")}</strong>${p.site_check.amount ? "Per site and period, fixed." : "Stated in the written scope before any work starts."} Run as a pilot: the method has one public run and no field validation yet.</p>
         <p class="card__more">${more("/services.html#site-check", "What you receive")}</p>
       </div>
@@ -143,8 +143,8 @@ export default (ctx) => {
       <p>These are intended uses, written as hypotheses in the programme record. BCCS has no customer yet and does not name any.</p>
     </div>
     <div class="grid grid--3">
+      <div class="card"><h3>Projects facing a dated gate</h3><p>A validation or verification visit, a rating, a credit tender or a report to a funder is coming. You want to know whether your area claim will survive it before someone else does the examining.</p><p class="card__more">${more("/use-cases.html#projects", "For projects")}</p></div>
       <div class="card"><h3>Funders and programmes</h3><p>You release money against restoration or protection milestones, or you evaluate a programme afterwards. You need area evidence that does not come only from the implementer.</p><p class="card__more">${more("/use-cases.html#funders", "For funders")}</p></div>
-      <div class="card"><h3>Project developers, verifiers and raters</h3><p>You want to know whether an area claim will survive examination before the verification visit, the rating or the press does the examining.</p><p class="card__more">${more("/use-cases.html#projects", "For projects")}</p></div>
       <div class="card"><h3>Researchers and reporters</h3><p>You publish a figure and want others to be able to re-run it, or you are looking into a figure somebody else published.</p><p class="card__more">${more("/use-cases.html#research", "For research")}</p></div>
     </div>
   </div>

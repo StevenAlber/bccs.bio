@@ -4,8 +4,7 @@ Read `README.md` first. Owner: Steven Alber. Site text and repository documents:
 owner: Estonian.
 
 - This repository is public. Everything pushed to any branch can be read by anyone. Strategy, prices that the owner
-  has not decided, research notes and anything internal belong in the private repository `bccs-d001`
-  (`commercial/`), never here.
+  has not decided, research notes and anything internal belong in the private programme repository, never here.
 - `main` is the live site: GitHub Pages publishes it within minutes. Work on a branch; putting a branch into
   service is the owner's action.
 - Generated files are never edited by hand. Change `_src/`, run `node _src/build.mjs`, then

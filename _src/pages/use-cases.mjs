@@ -6,8 +6,8 @@ export default (ctx) => {
     path: "use-cases.html",
     nav: "use-cases",
     priority: "0.8",
-    title: "Who it is for: funders, projects, researchers",
-    description: "Where a re-runnable area record helps: funding against mangrove restoration milestones, preparing for verification or rating, publishing figures others can re-run.",
+    title: "Who it is for: projects, funders, researchers",
+    description: "Where a re-runnable area record helps: preparing for verification or a rating, funding against mangrove restoration milestones, publishing figures others can re-run.",
     body: `
 ${pageHead({
   crumbs: [["BCCS", "/"], ["Who it is for"]],
@@ -16,7 +16,33 @@ ${pageHead({
   lead: "These are the uses BCCS was built for. They are hypotheses, stated as such in the programme record: there is no customer yet, and none is named here.",
 })}
 
-<section class="band" id="funders" aria-labelledby="fu-h">
+<section class="band" id="projects" aria-labelledby="pr-h">
+  <div class="wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">Project developers, verification bodies, rating agencies, insurers</p>
+        <h2 id="pr-h">A dated gate is coming, and your area claim has to pass it</h2>
+        <p>A verification visit, a rating and an investigative article all do the same thing to a project: they test its claims against whatever evidence can be found. It is cheaper to run that test yourself, first.</p>
+        <h3>What a review adds</h3>
+        <ul>
+          <li>Every claim set against the evidence supplied for it: supported, not supported, or not checkable.</li>
+          <li>An attempt to regenerate the headline figures from your own material.</li>
+          <li>The gaps in order of consequence, so that the fixing starts with what matters.</li>
+        </ul>
+        <h3>Where it stops</h3>
+        <p>BCCS is not an accredited validation and verification body. A review prepares for verification and cannot stand in for it. It does not apply a registry’s methodology on the registry’s behalf, and it does not involve a field visit.</p>
+        <p>${more("/services.html#review", "Evidence readiness review")} · ${more("/evidence-readiness-checklist.html", "Try the checklist first")}</p>
+      </div>
+      <aside class="card">
+        <h3>For those who examine</h3>
+        <p>If you verify, rate or insure projects, a re-runnable area record is a second line of evidence that did not originate with the project. It costs you nothing to read, and you can repeat it.</p>
+        <p class="small muted">A record states who commissioned it and who paid.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band band--tint" id="funders" aria-labelledby="fu-h">
   <div class="wrap">
     <div class="split">
       <div class="prose">
@@ -37,32 +63,6 @@ ${pageHead({
         <h3>A question worth asking your implementer</h3>
         <p>“If we handed your area figure, your boundary file and your data to a stranger, could they arrive at the same number without calling you?”</p>
         <p class="small muted">If the answer is no, the figure rests on trust. That may be acceptable. It should be a decision and not an accident.</p>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<section class="band band--tint" id="projects" aria-labelledby="pr-h">
-  <div class="wrap">
-    <div class="split">
-      <div class="prose">
-        <p class="eyebrow">Project developers, verification bodies, rating agencies, insurers</p>
-        <h2 id="pr-h">You want to know whether a claim will survive examination</h2>
-        <p>A verification visit, a rating and an investigative article all do the same thing to a project: they test its claims against whatever evidence can be found. It is cheaper to run that test yourself, first.</p>
-        <h3>What a review adds</h3>
-        <ul>
-          <li>Every claim set against the evidence supplied for it: supported, not supported, or not checkable.</li>
-          <li>An attempt to regenerate the headline figures from your own material.</li>
-          <li>The gaps in order of consequence, so that the fixing starts with what matters.</li>
-        </ul>
-        <h3>Where it stops</h3>
-        <p>BCCS is not an accredited validation and verification body. A review prepares for verification and cannot stand in for it. It does not apply a registry’s methodology on the registry’s behalf, and it does not involve a field visit.</p>
-        <p>${more("/services.html#review", "Evidence readiness review")} · ${more("/evidence-readiness-checklist.html", "Try the checklist first")}</p>
-      </div>
-      <aside class="card">
-        <h3>For those who examine</h3>
-        <p>If you verify, rate or insure projects, a re-runnable area record is a second line of evidence that did not originate with the project. It costs you nothing to read, and you can repeat it.</p>
-        <p class="small muted">A record states who commissioned it and who paid.</p>
       </aside>
     </div>
   </div>
